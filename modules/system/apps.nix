@@ -6,6 +6,7 @@
     vscode
     wechat
     google-chrome
+    gemini-cli
   ];
   
 }
