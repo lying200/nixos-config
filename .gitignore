@@ -1,0 +1,14 @@
+# Nix build results
+result
+result-*
+
+# Nix temporary files
+.direnv/
+
+# IDE - JetBrains
+.idea/
+
+# Backup files
+*~
+*.swp
+*.swo
