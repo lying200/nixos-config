@@ -10,6 +10,7 @@
     htop             # 系统资源监控
     gnome-tweaks     # GNOME 调整工具
     gnomeExtensions.vitals   # 系统监控扩展(CPU/内存/温度)
+    gnomeExtensions.appindicator  # 系统托盘支持 (显示 Toolbox 等应用图标)
   ];
 
   # 自动启用 GNOME 扩展
@@ -21,6 +22,7 @@
       "org/gnome/shell" = {
         enabled-extensions = [
           "Vitals@CoreCoding.com"
+          "appindicatorsupport@rgcjonas.gmail.com"
         ];
       };
 

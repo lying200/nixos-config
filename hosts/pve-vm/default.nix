@@ -12,7 +12,7 @@
     ../../modules/system/fcitx5.nix
     ../../modules/system/sunshine.nix
     ../../modules/system/apps.nix
-    ../../modules/system/monitoring.nix
+    ../../modules/system/desktop.nix
   ];
 
   
