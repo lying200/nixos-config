@@ -69,8 +69,4 @@
       };
     };
   };
-
-  boot.kernelParams = [ 
-    "video=DP-1:2560x1440@60D" 
-  ];
 }
