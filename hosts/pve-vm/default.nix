@@ -5,12 +5,12 @@
     # 1. 硬件相关 (Host Specific)
     ./hardware-configuration.nix
     ./amd-gpu.nix
-    ./sunshine.nix  # Sunshine 串流配置 (仅此主机需要)
 
     # 2. 通用功能 (Common Modules)
     ../../modules/system/base.nix
     ../../modules/system/tailscale.nix
     ../../modules/system/fcitx5.nix
+    ../../modules/system/sunshine.nix
     ../../modules/system/apps.nix
     ../../modules/system/desktop.nix
   ];
