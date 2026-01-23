@@ -12,6 +12,9 @@
     wechat
     google-chrome
     gemini-cli
+
+    ulauncher
+    wmctrl
   ];
 
   # IntelliJ IDEA Wayland 支持配置
