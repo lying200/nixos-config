@@ -2,7 +2,7 @@
 
 {
   # 硬件传感器支持
-  boot.kernelModules = [ "coretemp" "k10temp" ];
+  boot.kernelModules = [ "amdgpu" "k10temp" ];
 
   # 安装温度监控工具
   environment.systemPackages = with pkgs; [
