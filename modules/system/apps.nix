@@ -15,6 +15,7 @@
 
     ulauncher
     wmctrl
+    snipaste
   ];
 
   # IntelliJ IDEA Wayland 支持配置

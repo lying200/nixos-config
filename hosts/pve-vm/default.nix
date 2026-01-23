@@ -26,6 +26,7 @@
 
   # 桌面环境
   services.xserver.enable = true;
+  services.displayManager.gdm.wayland = true;
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
   
