@@ -5,6 +5,7 @@
     # 开发工具
     jetbrains-toolbox
     vscode
+    antigravity
 
     # 浏览器
     google-chrome
