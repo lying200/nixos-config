@@ -32,5 +32,6 @@
     ../../modules/programs/app-shortcuts.nix
     ../../modules/programs/autostart.nix
     ../../modules/programs/git.nix
+    ../../modules/programs/default-shell.nix
   ];
 }
