@@ -62,20 +62,5 @@
       StartupNotify=false
       X-GNOME-Autostart-enabled=true
     '';
-
-    # CopyQ 剪贴板管理器
-    # 注意：Wayland 环境下需要使用 XWayland (xcb) 才能正常访问剪贴板
-    "xdg/autostart/copyq.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=CopyQ
-      Comment=Clipboard Manager
-      Exec=env QT_QPA_PLATFORM=xcb ${pkgs.copyq}/bin/copyq
-      Icon=copyq
-      Terminal=false
-      Categories=Utility;
-      StartupNotify=false
-      X-GNOME-Autostart-enabled=true
-    '';
   };
 }

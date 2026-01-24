@@ -229,13 +229,10 @@ environment.systemPackages = with pkgs; [
 - ✅ **ulauncher** - 应用启动器（后台运行）
 - ✅ **Snipaste** - 截图工具（快捷键随时可用）
 - ✅ **Variety** - 壁纸自动切换
-- ✅ **CopyQ** - 剪贴板历史管理（通过 XWayland 运行）
 
 **注意**：
 - JetBrains Toolbox 启动后会最小化到系统托盘，方便快速打开 IDE
 - **Snipaste 延迟 5 秒启动**，等待 GNOME Shell 完全初始化，避免缩放异常
-- CopyQ 在 Wayland 下需要使用 XWayland (xcb) 才能正常访问剪贴板
-- 配置已自动添加 `QT_QPA_PLATFORM=xcb` 环境变量
 - 如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置
 
 ## 🏠 添加新主机
@@ -276,6 +273,7 @@ sudo nixos-rebuild switch --flake .#new-host
 - ✅ HiDPI 缩放支持
 - ✅ 系统监控工具
 - ✅ Variety 自动壁纸切换
+- ✅ GNOME 扩展（Vitals、AppIndicator、Clipboard Indicator、Kimpanel）
 
 ### 输入法
 - ✅ Fcitx5 + 雾凇拼音
@@ -318,7 +316,6 @@ sudo nixos-rebuild switch --flake .#new-host
 - **ulauncher** - 应用启动器 (Alt+Space)
 - **Snipaste** - 截图工具 (F1)
 - **Variety** - 壁纸自动切换
-- **CopyQ** - 剪贴板历史管理
 - **Motrix** - 下载工具（支持 HTTP/BT/磁力）
 
 ### AI 工具

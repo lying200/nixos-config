@@ -38,7 +38,6 @@
     rclone                 # 云存储管理
 
     # 实用工具
-    copyq                  # 剪贴板管理器
     motrix                 # 下载工具（支持 HTTP/BT/磁力）
     thunderbird            # 邮件客户端
   ];
