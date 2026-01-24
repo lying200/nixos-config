@@ -5,6 +5,20 @@
   # 使用 XDG autostart 规范，适用于 GNOME 等桌面环境
 
   environment.etc = {
+    # JetBrains Toolbox
+    "xdg/autostart/jetbrains-toolbox.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=JetBrains Toolbox
+      Comment=JetBrains IDE Manager
+      Exec=${pkgs.jetbrains-toolbox}/bin/jetbrains-toolbox --minimize
+      Icon=jetbrains-toolbox
+      Terminal=false
+      Categories=Development;
+      StartupNotify=false
+      X-GNOME-Autostart-enabled=true
+    '';
+
     # ulauncher 应用启动器
     "xdg/autostart/ulauncher.desktop".text = ''
       [Desktop Entry]

@@ -225,12 +225,14 @@ environment.systemPackages = with pkgs; [
 
 ### 开机自启动应用
 以下应用已配置为开机自动启动（`modules/programs/autostart.nix`）：
+- ✅ **JetBrains Toolbox** - IDE 管理器（最小化启动）
 - ✅ **ulauncher** - 应用启动器（后台运行）
 - ✅ **Snipaste** - 截图工具（快捷键随时可用）
 - ✅ **Variety** - 壁纸自动切换
 - ✅ **CopyQ** - 剪贴板历史管理（通过 XWayland 运行）
 
 **注意**：
+- JetBrains Toolbox 启动后会最小化到系统托盘，方便快速打开 IDE
 - CopyQ 在 Wayland 下需要使用 XWayland (xcb) 才能正常访问剪贴板
 - 配置已自动添加 `QT_QPA_PLATFORM=xcb` 环境变量
 - 如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置
