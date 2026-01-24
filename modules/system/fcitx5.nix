@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 
 {
   i18n.inputMethod = {
@@ -28,7 +28,26 @@
       fcitx5-nord
       fcitx5-material-color
       fcitx5-fluent
+      gnomeExtensions.kimpanel
+      qt6Packages.fcitx5-configtool
     ];
+  };
+
+  services.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.settings-daemon.plugins.xsettings]
+    overrides={'Gtk/IMModule': <'fcitx'>}
+    [org.gnome.mutter]
+    experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
+  '';
+
+  environment.variables = {
+    GTK_IM_MODULE = lib.mkForce "";
+  };
+
+  environment.sessionVariables = {
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
   };
 
 }
