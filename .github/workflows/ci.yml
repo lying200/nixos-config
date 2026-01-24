@@ -10,6 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -24,4 +35,6 @@ jobs:
 
       - name: Build NixOS configuration
         run: |
-          nix build .#nixosConfigurations.nixos.config.system.build.toplevel
+          nix build .#nixosConfigurations.nixos.config.system.build.toplevel \
+            --print-build-logs \
+            --keep-going
