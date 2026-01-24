@@ -2,8 +2,8 @@ name: Update Flake Inputs
 
 on:
   schedule:
-    # 每天凌晨 2 点自动运行
-    - cron: '0 2 * * *'
+    # 每周一凌晨 2 点自动运行
+    - cron: '0 2 * * 1'
   workflow_dispatch: # 允许手动触发
 
 jobs:
