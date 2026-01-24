@@ -34,8 +34,6 @@
   };
 
   services.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org.gnome.shell]
-    enabled-extensions=['kimpanel@kde.org']
     [org.gnome.settings-daemon.plugins.xsettings]
     overrides={'Gtk/IMModule': <'fcitx'>}
   '';

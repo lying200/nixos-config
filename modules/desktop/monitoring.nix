@@ -13,44 +13,31 @@
     gnomeExtensions.clipboard-indicator  # 剪贴板历史管理器（原生 GNOME 扩展）
   ];
 
-  # 自动启用 GNOME 扩展
-  programs.dconf.enable = true;
+  # GNOME 扩展配置（通过 dconf/gsettings）
+  # 注意：这里的配置仅作为默认值，用户手动启用/禁用扩展后会被覆盖
+  # 如需强制启用扩展，需要使用 home-manager 或通过脚本定期重置
+  services.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.shell]
+    enabled-extensions=['Vitals@CoreCoding.com', 'appindicatorsupport@rgcjonas.gmail.com', 'clipboard-indicator@tudmotu.com', 'kimpanel@kde.org']
 
-  # 为所有用户设置默认扩展
-  programs.dconf.profiles.user.databases = [{
-    settings = {
-      "org/gnome/shell" = {
-        enabled-extensions = [
-          "Vitals@CoreCoding.com"
-          "appindicatorsupport@rgcjonas.gmail.com"
-          "clipboard-indicator@tudmotu.com"
-          "kimpanel@kde.org"  # Fcitx5 输入法面板
-        ];
-      };
+    [org.gnome.shell.extensions.vitals]
+    hot-sensors=['_processor_usage_', '_memory_usage_', '_temperature_processor_']
+    position-in-panel=2
+    show-temperature=true
+    show-voltage=false
+    show-fan=true
+    show-memory=true
+    show-processor=true
+    show-network=false
+    show-storage=false
 
-      # Vitals 扩展配置
-      "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [ "_processor_usage_" "_memory_usage_" "_temperature_processor_" ];
-        position-in-panel = lib.gvariant.mkInt32 2;  # 0=left, 1=center, 2=right
-        show-temperature = true;
-        show-voltage = false;
-        show-fan = true;
-        show-memory = true;
-        show-processor = true;
-        show-network = false;
-        show-storage = false;
-      };
-
-      # Clipboard Indicator 扩展配置
-      "org/gnome/shell/extensions/clipboard-indicator" = {
-        history-size = lib.gvariant.mkInt32 50;  # 保存 50 条历史
-        preview-size = lib.gvariant.mkInt32 50;  # 预览长度
-        cache-only-favorites = false;
-        display-mode = lib.gvariant.mkInt32 0;   # 0=图标模式
-        enable-keybindings = true;
-        notify-on-copy = false;  # 复制时不显示通知
-        move-item-first = true;  # 新复制的项目排在最前
-      };
-    };
-  }];
+    [org.gnome.shell.extensions.clipboard-indicator]
+    history-size=50
+    preview-size=50
+    cache-only-favorites=false
+    display-mode=0
+    enable-keybindings=true
+    notify-on-copy=false
+    move-item-first=true
+  '';
 }
