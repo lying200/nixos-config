@@ -28,6 +28,7 @@
     ../../modules/programs/fcitx5.nix
     ../../modules/programs/qqmusic.nix
     ../../modules/programs/applications.nix
+    ../../modules/programs/dev-tools.nix
     ../../modules/programs/app-shortcuts.nix
     ../../modules/programs/autostart.nix
     ../../modules/programs/git.nix
