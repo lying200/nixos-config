@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 
 {
-  # 硬件传感器支持
-  boot.kernelModules = [ "amdgpu" "k10temp" ];
-
   # 安装温度监控工具
   environment.systemPackages = with pkgs; [
     lm_sensors       # 传感器检测工具 (sensors 命令)

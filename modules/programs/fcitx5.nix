@@ -34,10 +34,10 @@
   };
 
   services.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.shell]
+    enabled-extensions=['kimpanel@kde.org']
     [org.gnome.settings-daemon.plugins.xsettings]
     overrides={'Gtk/IMModule': <'fcitx'>}
-    [org.gnome.mutter]
-    experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
   '';
 
   environment.variables = {
