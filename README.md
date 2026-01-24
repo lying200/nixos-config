@@ -228,10 +228,12 @@ environment.systemPackages = with pkgs; [
 - ✅ **ulauncher** - 应用启动器（后台运行）
 - ✅ **Snipaste** - 截图工具（快捷键随时可用）
 - ✅ **Variety** - 壁纸自动切换
-- ✅ **CopyQ** - 剪贴板历史管理
-- ✅ **KeePassXC** - 密码管理器（可选）
+- ✅ **CopyQ** - 剪贴板历史管理（通过 XWayland 运行）
 
-如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置。
+**注意**：
+- CopyQ 在 Wayland 下需要使用 XWayland (xcb) 才能正常访问剪贴板
+- 配置已自动添加 `QT_QPA_PLATFORM=xcb` 环境变量
+- 如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置
 
 ## 🏠 添加新主机
 
@@ -313,7 +315,6 @@ sudo nixos-rebuild switch --flake .#new-host
 - **ulauncher** - 应用启动器 (Alt+Space)
 - **Snipaste** - 截图工具 (F1)
 - **Variety** - 壁纸自动切换
-- **KeePassXC** - 密码管理器
 - **CopyQ** - 剪贴板历史管理
 - **Motrix** - 下载工具（支持 HTTP/BT/磁力）
 
