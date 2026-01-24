@@ -28,7 +28,7 @@
     ../../modules/programs/fcitx5.nix
     ../../modules/programs/applications.nix
     ../../modules/programs/app-shortcuts.nix
-    ../../modules/programs/variety.nix
+    ../../modules/programs/autostart.nix
     ../../modules/programs/git.nix
   ];
 }

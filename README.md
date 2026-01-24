@@ -41,6 +41,8 @@ nixos-config/
 │       ├── fcitx5.nix          # Fcitx5 输入法（雾凇拼音）
 │       ├── applications.nix    # 应用软件列表
 │       ├── app-shortcuts.nix   # GNOME 自定义快捷键
+│       ├── autostart.nix       # 开机自启动应用
+│       ├── variety.nix         # Variety 壁纸配置
 │       └── git.nix             # Git 全局配置
 │
 ├── .github/workflows/           # GitHub Actions
@@ -220,6 +222,16 @@ environment.systemPackages = with pkgs; [
 ### 当前快捷键
 - `F1` - Snipaste 截图
 - `Alt+Space` - ulauncher 启动器
+
+### 开机自启动应用
+以下应用已配置为开机自动启动（`modules/programs/autostart.nix`）：
+- ✅ **ulauncher** - 应用启动器（后台运行）
+- ✅ **Snipaste** - 截图工具（快捷键随时可用）
+- ✅ **Variety** - 壁纸自动切换
+- ✅ **CopyQ** - 剪贴板历史管理
+- ✅ **KeePassXC** - 密码管理器（可选）
+
+如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置。
 
 ## 🏠 添加新主机
 
