@@ -258,6 +258,7 @@ sudo nixos-rebuild switch --flake .#new-host
 - ✅ Pipewire 音频
 - ✅ HiDPI 缩放支持
 - ✅ 系统监控工具
+- ✅ Variety 自动壁纸切换
 
 ### 输入法
 - ✅ Fcitx5 + 雾凇拼音
@@ -268,6 +269,44 @@ sudo nixos-rebuild switch --flake .#new-host
 - ✅ AMD GPU (AMDGPU 驱动)
 - ✅ OpenCL 支持
 - ✅ 硬件传感器监控
+
+## 📦 已安装软件列表
+
+### 开发工具
+- **JetBrains Toolbox** - JetBrains IDE 管理器
+- **VSCode** - 代码编辑器
+
+### 浏览器
+- **Google Chrome** - 主流浏览器
+
+### 通讯
+- **微信** - 即时通讯
+- **QQ** - QQ for Linux
+- **Thunderbird** - 邮件客户端
+
+### 多媒体
+- **VLC** - 全能视频播放器
+- **MPV** - 轻量级播放器
+- **OBS Studio** - 录屏/直播工具
+
+### 办公/文档
+- **LibreOffice** - Office 套件（Writer/Calc/Impress）
+- **Obsidian** - Markdown 笔记/知识库
+
+### 文件管理
+- **Syncthing** - P2P 文件同步
+- **rclone** - 云存储管理工具
+
+### 实用工具
+- **ulauncher** - 应用启动器 (Alt+Space)
+- **Snipaste** - 截图工具 (F1)
+- **Variety** - 壁纸自动切换
+- **KeePassXC** - 密码管理器
+- **CopyQ** - 剪贴板历史管理
+- **Motrix** - 下载工具（支持 HTTP/BT/磁力）
+
+### AI 工具
+- **Gemini CLI** - Google Gemini 命令行工具
 
 ## 📚 参考资源
 
