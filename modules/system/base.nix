@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # 时区与语言
@@ -112,6 +112,11 @@
     QT_QPA_PLATFORM = "wayland";
     GDK_BACKEND = "wayland";
     SDL_VIDEODRIVER = "wayland";
+
+    GTK_IM_MODULE = lib.mkForce "";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
   };  
 
   services.openssh.enable = true;
