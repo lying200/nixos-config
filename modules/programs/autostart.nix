@@ -34,17 +34,19 @@
     '';
 
     # Snipaste 截图工具
+    # 延迟启动以确保 GNOME Shell 完全初始化
     "xdg/autostart/snipaste.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=Snipaste
       Comment=Screenshot Tool
-      Exec=${pkgs.snipaste}/bin/snipaste
+      Exec=sh -c 'sleep 5 && ${pkgs.snipaste}/bin/snipaste'
       Icon=snipaste
       Terminal=false
       Categories=Utility;Graphics;
       StartupNotify=false
       X-GNOME-Autostart-enabled=true
+      X-GNOME-Autostart-Delay=3
     '';
 
     # Variety 壁纸管理器

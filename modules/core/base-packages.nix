@@ -14,6 +14,10 @@
     lshw             # 硬件信息详细查看
     inxi             # 系统信息汇总工具
 
+    # 进程管理
+    psmisc           # killall, pstree 等工具
+    procps           # ps, top, pgrep 等工具
+
     # 网络工具
     nmap             # 网络扫描
     iperf3           # 网络性能测试
