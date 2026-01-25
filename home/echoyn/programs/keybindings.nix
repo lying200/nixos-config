@@ -3,6 +3,12 @@
 {
   # GNOME 快捷键配置（Home Manager）
   dconf.settings = {
+    # 窗口管理快捷键
+    "org/gnome/desktop/wm/keybindings" = {
+      # 修改 activate window menu 快捷键为 Ctrl+Alt+Shift+W
+      activate-window-menu = ["<Ctrl><Alt><Shift>w"];
+    };
+
     "org/gnome/settings-daemon/plugins/media-keys" = {
       # 禁用默认的终端快捷键
       terminal = [];
