@@ -108,14 +108,30 @@ userEmail = "your@email.com";       # 👈 Git 邮箱
 networking.hostName = "your-hostname";  # 👈 你的主机名
 ```
 
-#### 步骤 4：更新硬件配置
+#### 步骤 4：配置显卡
+
+```nix
+# 编辑 hosts/desktop/default.nix
+mySystem.hardware = {
+  amdgpu.enable = true;      # 👈 AMD 显卡（默认配置）
+  # nvidia.enable = true;    # 👈 NVIDIA 显卡（取消注释并禁用 AMD）
+  # intelgpu.enable = true;  # 👈 Intel 核显（取消注释）
+};
+```
+
+**⚠️ 注意：**
+- 默认配置是 **AMD 显卡**
+- 如果你使用 **NVIDIA** 或 **Intel** 显卡，**必须修改此配置**，否则系统可能无法正常启动图形界面
+- NVIDIA 和 Intel 配置**未经实际测试**，可能需要根据你的硬件微调，建议结合 AI（Claude/ChatGPT）或 [NixOS Wiki](https://nixos.wiki/) 调整
+
+#### 步骤 5：更新硬件配置
 
 ```bash
 # 生成当前机器的硬件配置
 sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware.nix
 ```
 
-#### 步骤 5：构建并应用
+#### 步骤 6：构建并应用
 
 ```bash
 # 测试构建
@@ -129,6 +145,11 @@ reboot
 ```
 
 **完成！** 🎉 你的新机器已经配置好了！
+
+> 💡 **提示**：如果遇到显卡相关问题，可以：
+> 1. 检查 `hosts/desktop/default.nix` 中的 GPU 配置是否匹配你的硬件
+> 2. 使用 `lspci | grep -i vga` 查看你的显卡型号
+> 3. 咨询 AI 助手（Claude/ChatGPT）获取针对你硬件的配置建议
 
 ---
 
@@ -145,6 +166,12 @@ reboot
 ```nix
 # 编辑 hosts/desktop/default.nix
 mySystem = {
+  hardware = {
+    amdgpu.enable = true;      # AMD 显卡
+    # nvidia.enable = true;    # NVIDIA 显卡（按需切换）
+    # intelgpu.enable = true;  # Intel 核显（按需切换）
+  };
+
   desktop = {
     gnome.enable = true;       # 桌面环境
     wayland.enable = true;     # Wayland 支持
@@ -235,6 +262,16 @@ mySystem.desktop.gnome.enable = false;
 | fonts.nix | 字体配置 | modules/core/ |
 | base-packages.nix | 基础工具 | modules/core/ |
 | nix.nix | Nix 设置 | modules/core/ |
+
+### 硬件模块（可选）
+
+| 模块 | 功能 | 开关 | 状态 |
+|------|------|------|------|
+| amd-gpu.nix | AMD 显卡驱动 + OpenCL | `mySystem.hardware.amdgpu.enable` | ✅ 已验证 |
+| nvidia-gpu.nix | NVIDIA 专有驱动 + Prime | `mySystem.hardware.nvidia.enable` | ⚠️ 未测试 |
+| intel-gpu.nix | Intel 核显 + VA-API | `mySystem.hardware.intelgpu.enable` | ⚠️ 未测试 |
+
+> **注意**：NVIDIA 和 Intel 配置基于 NixOS 最佳实践编写，但未在实际硬件上测试。建议结合 [NixOS Wiki](https://nixos.wiki/) 或 AI 助手根据你的硬件调整。
 
 ### 桌面模块（可选）
 
@@ -446,6 +483,35 @@ A: 每个主机目录下的 `hardware.nix`，由 `nixos-generate-config` 自动�
 
 ### Q: 如何备份配置？
 A: 只需推送到 Git 仓库，所有配置都已版本化。
+
+### Q: 如何切换显卡？
+A: 编辑 `hosts/desktop/default.nix`，修改 `mySystem.hardware` 配置：
+
+**⚠️ 重要提示**：NVIDIA 和 Intel GPU 配置未经实际测试，可能需要微调。建议：
+- 参考 [NixOS Wiki - NVIDIA](https://nixos.wiki/wiki/Nvidia) 或 [Intel Graphics](https://nixos.wiki/wiki/Intel_Graphics)
+- 使用 AI 助手（Claude/ChatGPT）根据你的硬件生成配置
+- 在虚拟机或测试环境中先验证
+
+```nix
+# AMD 显卡（已验证 ✅）
+mySystem.hardware.amdgpu.enable = true;
+
+# NVIDIA 显卡（未测试 ⚠️ - 建议结合 AI 调整）
+mySystem.hardware.nvidia.enable = true;
+
+# Intel 核显（未测试 ⚠️ - 建议结合 AI 调整）
+mySystem.hardware.intelgpu.enable = true;
+
+# 混合显卡笔记本（NVIDIA Prime，未测试 ⚠️）
+mySystem.hardware.nvidia = {
+  enable = true;
+  prime = {
+    enable = true;
+    nvidiaBusId = "PCI:1:0:0";  # 使用 lspci | grep -i nvidia 查询
+    intelBusId = "PCI:0:2:0";   # 使用 lspci | grep -i vga 查询
+  };
+};
+```
 
 ---
 

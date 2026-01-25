@@ -14,6 +14,8 @@
 
     # 硬件模块
     ../../modules/hardware/amd-gpu.nix
+    ../../modules/hardware/nvidia-gpu.nix
+    ../../modules/hardware/intel-gpu.nix
 
     # 桌面环境
     ../../modules/desktop/wayland.nix
@@ -34,12 +36,21 @@
 
   # 启用功能模块
   mySystem = {
+    # 硬件配置
+    hardware = {
+      amdgpu.enable = true;      # AMD 显卡
+      # nvidia.enable = false;   # NVIDIA 显卡（按需启用）
+      # intelgpu.enable = false; # Intel 核显（按需启用）
+    };
+
+    # 桌面环境
     desktop = {
       gnome.enable = true;
       wayland.enable = true;
       monitoring.enable = true;
     };
 
+    # 系统服务
     services = {
       tailscale.enable = true;
       sunshine.enable = true;
