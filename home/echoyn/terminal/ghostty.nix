@@ -27,6 +27,9 @@
       shell-integration = "fish";
       shell-integration-features = "cursor,sudo,title";
 
+      # 终端类型 - 使用 xterm-256color 以保证 SSH 兼容性
+      term = "xterm-256color";
+
       # 性能优化
       window-vsync = true;
 
