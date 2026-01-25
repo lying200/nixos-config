@@ -18,14 +18,14 @@
       system = "x86_64-linux";
     in {
       nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
+        desktop = nixpkgs.lib.nixosSystem {
           inherit system;
 
           # 传递 inputs 给所有模块
           specialArgs = { inherit inputs; };
 
           modules = [
-            ./hosts/pve-vm/default.nix
+            ./hosts/desktop/default.nix
 
             # Home Manager 集成
             home-manager.nixosModules.home-manager

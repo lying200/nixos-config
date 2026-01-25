@@ -13,7 +13,7 @@ nixos-config/
 ├── update.sh                    # 系统更新脚本
 │
 ├── hosts/                       # 🖥️ 主机特定配置
-│   └── pve-vm/                 # PVE 虚拟机
+│   └── desktop/                # 桌面主机
 │       ├── default.nix         # 模块导入入口
 │       ├── hardware.nix        # 硬件配置（自动生成）
 │       └── configuration.nix   # 主机配置（bootloader、用户、网络）
@@ -62,7 +62,7 @@ git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 
 # 2. 构建并切换到新配置
-sudo nixos-rebuild switch --flake .#nixos
+sudo nixos-rebuild switch --flake .#desktop
 
 # 3. 重启系统
 reboot
@@ -88,10 +88,10 @@ reboot
 nix flake update
 
 # 2. 测试新配置（不切换）
-sudo nixos-rebuild test --flake .#nixos
+sudo nixos-rebuild test --flake .#desktop
 
 # 3. 切换到新配置
-sudo nixos-rebuild switch --flake .#nixos
+sudo nixos-rebuild switch --flake .#desktop
 ```
 
 #### 更新特定依赖
@@ -110,10 +110,10 @@ nix flake lock --update-input rime-ice
 vim modules/programs/applications.nix
 
 # 2. 测试配置
-sudo nixos-rebuild test --flake .#nixos
+sudo nixos-rebuild test --flake .#desktop
 
 # 3. 确认无误后切换
-sudo nixos-rebuild switch --flake .#nixos
+sudo nixos-rebuild switch --flake .#desktop
 
 # 4. 提交到 Git
 git add .
@@ -243,7 +243,7 @@ sudo nixos-generate-config --show-hardware-config > hardware.nix
 
 # 2. 创建主机目录
 mkdir -p hosts/new-host
-cp hosts/pve-vm/{default.nix,configuration.nix} hosts/new-host/
+cp hosts/desktop/{default.nix,configuration.nix} hosts/new-host/
 mv hardware.nix hosts/new-host/
 
 # 3. 修改 configuration.nix 中的主机名和用户
