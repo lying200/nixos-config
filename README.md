@@ -75,131 +75,92 @@ nixos-config/
 
 ## 🚀 新机器快速部署
 
-### 前置要求
+> 💡 **提示**：第一次使用可以直接复用现有配置，只需修改用户名和主机名即可！
 
-- NixOS 已安装（最小化安装即可）
-- 有网络连接
-- 有 GitHub 访问权限
+### 方案 A：快速开始
 
-### 步骤 1：启用 Flakes 和 Git
+直接使用现有的 `desktop` 配置
+
+#### 步骤 1：启用 Flakes 和 Git
 
 ```bash
 # 临时启用 Flakes（安装 Git）
 nix-shell -p git nixFlakes
-
-# 配置 Git（如果需要）
-git config --global user.name "Your Name"
-git config --global user.email "your@email.com"
 ```
 
-### 步骤 2：克隆配置仓库
+#### 步骤 2：克隆配置仓库
 
 ```bash
 # 克隆到 ~/nixos-config
-git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
+git clone https://github.com/lying200/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 ```
 
-### 步骤 3：生成硬件配置
+#### 步骤 3：修改基本信息
+
+```nix
+# 编辑 flake.nix（只需修改这 3 行）
+username = "yourname";              # 👈 你的用户名
+userFullName = "Your Full Name";    # 👈 Git 显示名
+userEmail = "your@email.com";       # 👈 Git 邮箱
+
+# 编辑 hosts/desktop/configuration.nix
+networking.hostName = "your-hostname";  # 👈 你的主机名
+```
+
+#### 步骤 4：更新硬件配置
 
 ```bash
-# 生成新机器的硬件配置
-sudo nixos-generate-config --show-hardware-config > hardware-new.nix
-
-# 创建新主机目录（如果需要）
-mkdir -p hosts/new-host
-
-# 复制模板配置
-cp hosts/desktop/{default.nix,configuration.nix} hosts/new-host/
-mv hardware-new.nix hosts/new-host/hardware.nix
+# 生成当前机器的硬件配置
+sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware.nix
 ```
 
-### 步骤 4：修改配置
-
-#### 4.1 修改 flake.nix（单一配置源）
-
-```nix
-# flake.nix
-let
-  # 用户配置（修改这里）
-  username = "yourname";              # 👈 修改用户名
-  userFullName = "Your Full Name";    # 👈 修改 Git 用户名
-  userEmail = "your@email.com";       # 👈 修改邮箱
-in {
-  nixosConfigurations = {
-    # 添加新主机配置
-    new-host = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs username userFullName userEmail;
-      };
-      modules = [
-        ./hosts/new-host/default.nix
-        # ... Home Manager 配置
-      ];
-    };
-  };
-}
-```
-
-#### 4.2 修改主机配置
-
-```nix
-# hosts/new-host/configuration.nix
-{
-  # 主机名（修改这里）
-  networking.hostName = "new-host";  # 👈 修改主机名
-
-  # 其他主机特定配置...
-}
-```
-
-#### 4.3 功能选择性启用
-
-```nix
-# hosts/new-host/default.nix
-{
-  # 启用功能模块
-  mySystem = {
-    desktop = {
-      gnome.enable = true;       # 👈 桌面环境
-      wayland.enable = true;     # 👈 Wayland 支持
-      monitoring.enable = true;  # 👈 系统监控
-    };
-
-    services = {
-      tailscale.enable = true;   # 👈 VPN
-      sunshine.enable = false;   # 👈 游戏串流（按需开启）
-    };
-  };
-}
-```
-
-### 步骤 5：构建并切换
+#### 步骤 5：构建并应用
 
 ```bash
-# 测试构建（不切换）
-sudo nixos-rebuild test --flake .#new-host
+# 测试构建
+sudo nixos-rebuild test --flake .#desktop
 
-# 如果测试通过，切换到新配置
-sudo nixos-rebuild switch --flake .#new-host
+# 应用配置
+sudo nixos-rebuild switch --flake .#desktop
 
-# 重启系统
+# 重启
 reboot
 ```
 
-### 步骤 6：验证
+**完成！** 🎉 你的新机器已经配置好了！
 
+---
+
+### 方案 B：创建独立主机配置
+
+如果你想为新机器创建独立的配置目录，可以参考 [添加新主机](#-添加新主机) 部分。
+
+---
+
+### 🔧 功能调整（可选）
+
+部署完成后，可以根据需要开启/关闭功能：
+
+```nix
+# 编辑 hosts/desktop/default.nix
+mySystem = {
+  desktop = {
+    gnome.enable = true;       # 桌面环境
+    wayland.enable = true;     # Wayland 支持
+    monitoring.enable = true;  # 系统监控
+  };
+
+  services = {
+    tailscale.enable = true;   # VPN
+    sunshine.enable = false;   # 游戏串流（按需开启）
+  };
+};
+```
+
+修改后重新构建：
 ```bash
-# 检查主机名
-hostname
-
-# 检查用户
-whoami
-
-# 检查 Git 配置
-git config --global user.name
-git config --global user.email
+sudo nixos-rebuild switch --flake .#desktop
 ```
 
 ---
@@ -337,31 +298,70 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 ## 🏗️ 添加新主机
 
-### 场景 1：同用户的新机器
+如果你有多台机器，并且希望为每台机器维护独立的配置，可以创建新的主机配置。
+
+### 步骤 1：创建新主机目录
+
+```bash
+# 生成硬件配置
+sudo nixos-generate-config --show-hardware-config > hardware-new.nix
+
+# 创建新主机目录
+mkdir -p hosts/laptop
+
+# 复制模板配置
+cp hosts/desktop/{default.nix,configuration.nix} hosts/laptop/
+mv hardware-new.nix hosts/laptop/hardware.nix
+```
+
+### 步骤 2：修改主机配置
 
 ```nix
-# flake.nix - 只需添加新的 nixosConfiguration
-nixosConfigurations = {
-  desktop = { ... };
+# hosts/laptop/configuration.nix
+{
+  networking.hostName = "laptop";  # 修改主机名
+  # 其他主机特定配置...
+}
+```
 
+### 步骤 3：在 flake.nix 中注册
+
+```nix
+# flake.nix
+nixosConfigurations = {
+  desktop = { ... };  # 现有配置
+
+  # 新增 laptop 配置
   laptop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs username userFullName userEmail;  # 使用相同用户
     };
-    modules = [ ./hosts/laptop/default.nix ];
+    modules = [
+      ./hosts/laptop/default.nix
+      # Home Manager 配置...
+    ];
   };
 };
 ```
 
-### 场景 2：不同用户的新机器
+### 步骤 4：部署到新机器
+
+```bash
+# 在 laptop 机器上
+sudo nixos-rebuild switch --flake .#laptop
+```
+
+### 多用户场景
+
+如果不同机器使用不同用户：
 
 ```nix
-# flake.nix - 为新机器指定不同用户
+# flake.nix
 server = nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs;
-    username = "admin";           # 不同用户名
+    username = "admin";           # 不同用户
     userFullName = "Admin User";
     userEmail = "admin@example.com";
   };
