@@ -9,6 +9,7 @@
   # 导入各模块
   imports = [
     ./terminal
+    ./programs/keybindings.nix
   ];
 
   # 基础包
