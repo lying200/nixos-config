@@ -4,345 +4,448 @@ Echoyn 的模块化 NixOS 配置，基于 Flake 构建。
 
 > 该文档使用 AI 生成
 
+## ✨ 特性
+
+- 🎯 **完全参数化** - 单一配置源，轻松切换用户/主机
+- 🔧 **模块化设计** - 功能独立，可选择性启用
+- 👤 **用户/系统分离** - Home Manager 管理用户配置
+- 🎮 **灵活可配置** - 所有模块支持 enable 开关
+- 🔒 **类型安全** - 使用 NixOS 模块系统
+
+---
+
 ## 📁 项目结构
 
 ```
 nixos-config/
-├── flake.nix                    # Flake 入口配置
+├── flake.nix                    # Flake 入口配置（单一配置源）
 ├── flake.lock                   # 锁定的依赖版本
 ├── update.sh                    # 系统更新脚本
 │
 ├── hosts/                       # 🖥️ 主机特定配置
-│   └── desktop/                # 桌面主机
-│       ├── default.nix         # 模块导入入口
-│       ├── hardware.nix        # 硬件配置（自动生成）
-│       └── configuration.nix   # 主机配置（bootloader、用户、网络）
+│   └── desktop/                 # 桌面主机
+│       ├── default.nix          # 模块导入 + 功能开关
+│       ├── hardware.nix         # 硬件配置（nixos-generate-config 生成）
+│       └── configuration.nix    # 主机配置（bootloader、用户、网络）
 │
-├── modules/                     # 📦 可复用模块
-│   ├── core/                   # 核心系统配置
-│   │   ├── locale.nix          # 时区、语言设置
-│   │   ├── fonts.nix           # 字体配置
-│   │   ├── base-packages.nix   # 基础工具包
-│   │   └── nix.nix             # Nix 配置（Flakes、GC、SSH）
+├── modules/                     # 📦 系统级可复用模块
+│   ├── core/                    # 核心系统配置（必需）
+│   │   ├── locale.nix           # 时区、语言设置
+│   │   ├── fonts.nix            # 字体配置
+│   │   ├── base-packages.nix    # 基础工具包
+│   │   └── nix.nix              # Nix 配置（Flakes、GC、SSH）
 │   │
-│   ├── hardware/               # 硬件支持
-│   │   └── amd-gpu.nix         # AMD GPU 驱动和传感器
+│   ├── hardware/                # 硬件支持
+│   │   └── amd-gpu.nix          # AMD GPU 驱动
 │   │
-│   ├── desktop/                # 桌面环境
-│   │   ├── wayland.nix         # Wayland 环境变量和 Portal
-│   │   ├── gnome.nix           # GNOME 桌面和音频
-│   │   └── monitoring.nix      # 系统监控工具（Vitals、lm_sensors）
+│   ├── desktop/                 # 桌面环境（可选）
+│   │   ├── wayland.nix          # Wayland 支持
+│   │   ├── gnome.nix            # GNOME 桌面
+│   │   └── monitoring.nix       # 系统监控（Vitals 扩展）
 │   │
-│   ├── services/               # 系统服务
-│   │   ├── tailscale.nix       # Tailscale VPN
-│   │   └── sunshine.nix        # 串流服务
+│   ├── services/                # 系统服务（可选）
+│   │   ├── tailscale.nix        # Tailscale VPN
+│   │   └── sunshine.nix         # 游戏串流
 │   │
-│   └── programs/               # 应用程序配置
-│       ├── fcitx5.nix          # Fcitx5 输入法（雾凇拼音）
-│       ├── applications.nix    # 应用软件列表
-│       ├── app-shortcuts.nix   # GNOME 自定义快捷键
-│       ├── autostart.nix       # 开机自启动应用
-│       ├── variety.nix         # Variety 壁纸配置
-│       └── git.nix             # Git 全局配置
+│   └── programs/                # 系统级程序配置
+│       ├── fcitx5.nix           # Fcitx5 输入法（雾凇拼音）
+│       ├── qqmusic.nix          # QQ 音乐
+│       ├── dev-tools.nix        # 开发工具
+│       ├── autostart.nix        # 开机自启动
+│       └── default-shell.nix    # 默认 Shell
 │
-├── .github/workflows/           # GitHub Actions
-│   ├── ci.yml                  # PR 构建检查
-│   └── update-flake.yml        # 自动更新依赖
+├── home/shared/                 # 👤 用户级配置（Home Manager）
+│   ├── default.nix              # Home Manager 入口
+│   ├── programs/
+│   │   ├── git.nix              # Git 配置
+│   │   ├── applications.nix     # 用户应用（GUI 软件）
+│   │   └── keybindings.nix      # 快捷键配置
+│   └── terminal/
+│       ├── fish.nix             # Fish Shell
+│       ├── starship.nix         # Starship 提示符
+│       ├── zellij.nix           # Zellij 终端复用器
+│       └── ghostty.nix          # Ghostty 终端
 │
-└── lib/                         # 辅助函数库（预留）
+└── .github/workflows/           # GitHub Actions
+    ├── ci.yml                   # PR 构建检查
+    └── update-flake.yml         # 自动更新依赖
 ```
 
-## 🚀 快速开始
+---
 
-### 初次部署
+## 🚀 新机器快速部署
+
+### 前置要求
+
+- NixOS 已安装（最小化安装即可）
+- 有网络连接
+- 有 GitHub 访问权限
+
+### 步骤 1：启用 Flakes 和 Git
 
 ```bash
-# 1. 克隆仓库
+# 临时启用 Flakes（安装 Git）
+nix-shell -p git nixFlakes
+
+# 配置 Git（如果需要）
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
+
+### 步骤 2：克隆配置仓库
+
+```bash
+# 克隆到 ~/nixos-config
 git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
 cd ~/nixos-config
+```
 
-# 2. 构建并切换到新配置
-sudo nixos-rebuild switch --flake .#desktop
+### 步骤 3：生成硬件配置
 
-# 3. 重启系统
+```bash
+# 生成新机器的硬件配置
+sudo nixos-generate-config --show-hardware-config > hardware-new.nix
+
+# 创建新主机目录（如果需要）
+mkdir -p hosts/new-host
+
+# 复制模板配置
+cp hosts/desktop/{default.nix,configuration.nix} hosts/new-host/
+mv hardware-new.nix hosts/new-host/hardware.nix
+```
+
+### 步骤 4：修改配置
+
+#### 4.1 修改 flake.nix（单一配置源）
+
+```nix
+# flake.nix
+let
+  # 用户配置（修改这里）
+  username = "yourname";              # 👈 修改用户名
+  userFullName = "Your Full Name";    # 👈 修改 Git 用户名
+  userEmail = "your@email.com";       # 👈 修改邮箱
+in {
+  nixosConfigurations = {
+    # 添加新主机配置
+    new-host = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs username userFullName userEmail;
+      };
+      modules = [
+        ./hosts/new-host/default.nix
+        # ... Home Manager 配置
+      ];
+    };
+  };
+}
+```
+
+#### 4.2 修改主机配置
+
+```nix
+# hosts/new-host/configuration.nix
+{
+  # 主机名（修改这里）
+  networking.hostName = "new-host";  # 👈 修改主机名
+
+  # 其他主机特定配置...
+}
+```
+
+#### 4.3 功能选择性启用
+
+```nix
+# hosts/new-host/default.nix
+{
+  # 启用功能模块
+  mySystem = {
+    desktop = {
+      gnome.enable = true;       # 👈 桌面环境
+      wayland.enable = true;     # 👈 Wayland 支持
+      monitoring.enable = true;  # 👈 系统监控
+    };
+
+    services = {
+      tailscale.enable = true;   # 👈 VPN
+      sunshine.enable = false;   # 👈 游戏串流（按需开启）
+    };
+  };
+}
+```
+
+### 步骤 5：构建并切换
+
+```bash
+# 测试构建（不切换）
+sudo nixos-rebuild test --flake .#new-host
+
+# 如果测试通过，切换到新配置
+sudo nixos-rebuild switch --flake .#new-host
+
+# 重启系统
 reboot
 ```
+
+### 步骤 6：验证
+
+```bash
+# 检查主机名
+hostname
+
+# 检查用户
+whoami
+
+# 检查 Git 配置
+git config --global user.name
+git config --global user.email
+```
+
+---
+
+## 🔧 配置定制指南
+
+### 修改用户名
+
+**只需修改一处：**
+```nix
+# flake.nix
+username = "newuser";
+userFullName = "New User";
+userEmail = "newuser@example.com";
+```
+
+所有其他配置自动继承！
+
+### 添加/删除应用
+
+**用户应用（GUI 软件）：**
+```nix
+# home/shared/programs/applications.nix
+home.packages = with pkgs; [
+  vscode
+  obsidian
+  # 添加新应用
+  gimp
+];
+```
+
+**系统工具：**
+```nix
+# modules/core/base-packages.nix
+environment.systemPackages = with pkgs; [
+  git
+  vim
+  # 添加系统工具
+  htop
+];
+```
+
+### 开启/关闭功能模块
+
+```nix
+# hosts/your-host/default.nix
+mySystem = {
+  desktop.gnome.enable = false;      # 关闭 GNOME
+  services.sunshine.enable = true;   # 开启 Sunshine
+};
+```
+
+### 切换桌面环境
+
+```nix
+# 关闭 GNOME
+mySystem.desktop.gnome.enable = false;
+
+# 可以添加其他桌面环境模块
+# modules/desktop/kde.nix
+```
+
+---
+
+## 📦 模块功能说明
+
+### 核心模块（必需）
+
+| 模块 | 功能 | 位置 |
+|------|------|------|
+| locale.nix | 时区、语言 | modules/core/ |
+| fonts.nix | 字体配置 | modules/core/ |
+| base-packages.nix | 基础工具 | modules/core/ |
+| nix.nix | Nix 设置 | modules/core/ |
+
+### 桌面模块（可选）
+
+| 模块 | 功能 | 开关 |
+|------|------|------|
+| gnome.nix | GNOME 桌面 + 音频 | `mySystem.desktop.gnome.enable` |
+| wayland.nix | Wayland 支持 | `mySystem.desktop.wayland.enable` |
+| monitoring.nix | 系统监控 | `mySystem.desktop.monitoring.enable` |
+
+### 服务模块（可选）
+
+| 模块 | 功能 | 开关 |
+|------|------|------|
+| tailscale.nix | Tailscale VPN | `mySystem.services.tailscale.enable` |
+| sunshine.nix | 游戏串流 | `mySystem.services.sunshine.enable` |
+
+---
 
 ## 🔄 日常使用
 
 ### 更新系统
 
-#### 推荐方式：使用更新脚本
 ```bash
+# 使用脚本（推荐）
 ./update.sh
-```
 
-脚本会自动完成：
-1. ✅ 更新 flake inputs (nixpkgs 等)
-2. ✅ 测试构建新配置
-3. ✅ 询问是否切换到新配置
-
-#### 手动更新流程
-```bash
-# 1. 更新所有依赖
+# 或手动更新
 nix flake update
-
-# 2. 测试新配置（不切换）
-sudo nixos-rebuild test --flake .#desktop
-
-# 3. 切换到新配置
 sudo nixos-rebuild switch --flake .#desktop
-```
-
-#### 更新特定依赖
-```bash
-# 只更新 nixpkgs
-nix flake lock --update-input nixpkgs
-
-# 只更新 rime-ice 输入法词库
-nix flake lock --update-input rime-ice
 ```
 
 ### 修改配置
 
 ```bash
-# 1. 编辑配置文件（任何 modules/ 或 hosts/ 下的 .nix 文件）
+# 1. 编辑配置
 vim modules/programs/applications.nix
 
-# 2. 测试配置
+# 2. 测试
 sudo nixos-rebuild test --flake .#desktop
 
-# 3. 确认无误后切换
+# 3. 应用
 sudo nixos-rebuild switch --flake .#desktop
 
-# 4. 提交到 Git
+# 4. 提交
 git add .
 git commit -m "feat: 添加新应用"
 git push
 ```
 
-## 🛠️ 常用命令
+### 回滚系统
 
-### 系统管理
 ```bash
-# 查看当前系统生成（generation）
-sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
-
-# 回滚到上一个生成
+# 回滚到上一代
 sudo nixos-rebuild switch --rollback
 
-# 回滚到指定生成（如 42）
-sudo nixos-rebuild switch --rollback --to 42
+# 查看所有代
+sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
 
-### Flake 操作
-```bash
-# 查看 flake 结构
-nix flake show
+---
 
-# 检查 flake 配置
-nix flake check
+## 🏗️ 添加新主机
 
-# 查看 flake 元数据
-nix flake metadata
-```
+### 场景 1：同用户的新机器
 
-### 垃圾回收
-```bash
-# 手动清理旧生成（释放空间）
-sudo nix-collect-garbage -d
-
-# 删除超过 7 天的旧生成
-sudo nix-collect-garbage --delete-older-than 7d
-
-# 查看 /nix/store 占用
-du -sh /nix/store
-
-# 优化 store（硬链接重复文件）
-nix-store --optimise
-```
-
-### 包管理
-```bash
-# 搜索软件包
-nix search nixpkgs <package-name>
-
-# 临时安装包（不写入配置）
-nix shell nixpkgs#<package-name>
-
-# 查看包信息
-nix eval nixpkgs#<package-name>.meta.description
-```
-
-## 🤖 自动化
-
-### 自动垃圾回收
-系统已配置自动清理：
-- **频率**: 每周
-- **策略**: 删除 30 天前的旧生成
-- **配置**: `modules/core/nix.nix`
-
-### GitHub Actions
-
-#### CI 构建检查
-- **触发**: PR 和推送到 main 分支
-- **功能**: 验证配置语法和构建
-
-#### 自动依赖更新
-- **触发**: 每周一凌晨 2:00 (也可手动触发)
-- **功能**:
-  1. 自动运行 `nix flake update`
-  2. 测试构建
-  3. 创建 PR 等待 review
-  4. 合并后其他机器只需 `git pull`
-
-## 🎨 自定义配置
-
-### 添加新软件
-
-编辑 `modules/programs/applications.nix`:
 ```nix
-environment.systemPackages = with pkgs; [
-  # ... 现有软件
-  neovim  # 添加新软件
-];
-```
+# flake.nix - 只需添加新的 nixosConfiguration
+nixosConfigurations = {
+  desktop = { ... };
 
-### 添加自定义快捷键
-
-编辑 `modules/programs/app-shortcuts.nix`:
-```nix
-"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-  name = "My Custom Shortcut";
-  command = "your-command";
-  binding = "<Super>x";
+  laptop = nixpkgs.lib.nixosSystem {
+    inherit system;
+    specialArgs = {
+      inherit inputs username userFullName userEmail;  # 使用相同用户
+    };
+    modules = [ ./hosts/laptop/default.nix ];
+  };
 };
 ```
 
-### 当前快捷键
-- `F1` - Snipaste 截图
-- `Alt+Space` - ulauncher 启动器
+### 场景 2：不同用户的新机器
 
-### 开机自启动应用
-以下应用已配置为开机自动启动（`modules/programs/autostart.nix`）：
-- ✅ **JetBrains Toolbox** - IDE 管理器（最小化启动）
-- ✅ **ulauncher** - 应用启动器（后台运行）
-- ✅ **Snipaste** - 截图工具（快捷键随时可用）
-- ✅ **Variety** - 壁纸自动切换
-
-**注意**：
-- JetBrains Toolbox 启动后会最小化到系统托盘，方便快速打开 IDE
-- **Snipaste 延迟 5 秒启动**，等待 GNOME Shell 完全初始化，避免缩放异常
-- 如需禁用某个自启动，编辑 `modules/programs/autostart.nix` 并注释掉对应配置
-
-## 🏠 添加新主机
-
-```bash
-# 1. 在新机器上生成硬件配置
-sudo nixos-generate-config --show-hardware-config > hardware.nix
-
-# 2. 创建主机目录
-mkdir -p hosts/new-host
-cp hosts/desktop/{default.nix,configuration.nix} hosts/new-host/
-mv hardware.nix hosts/new-host/
-
-# 3. 修改 configuration.nix 中的主机名和用户
-
-# 4. 在 flake.nix 中添加新主机
-nixosConfigurations.new-host = nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [ ./hosts/new-host/default.nix ];
+```nix
+# flake.nix - 为新机器指定不同用户
+server = nixpkgs.lib.nixosSystem {
+  specialArgs = {
+    inherit inputs;
+    username = "admin";           # 不同用户名
+    userFullName = "Admin User";
+    userEmail = "admin@example.com";
+  };
+  modules = [ ./hosts/server/default.nix ];
 };
-
-# 5. 在新主机上部署
-sudo nixos-rebuild switch --flake .#new-host
 ```
 
-## 📊 配置特性
+---
 
-### 核心功能
-- ✅ Flakes 支持
-- ✅ 模块化配置
-- ✅ 自动垃圾回收
-- ✅ Store 自动优化
+## 📚 最佳实践
 
-### 桌面环境
-- ✅ GNOME 46+ (Wayland)
-- ✅ Pipewire 音频
-- ✅ HiDPI 缩放支持
-- ✅ 系统监控工具
-- ✅ Variety 自动壁纸切换
-- ✅ GNOME 扩展（Vitals、AppIndicator、Clipboard Indicator、Kimpanel）
+### 1. 配置分层
 
-### 输入法
-- ✅ Fcitx5 + 雾凇拼音
-- ✅ 小鹤双拼方案
-- ✅ GNOME 原生集成
+- **系统级** (`modules/`) - 系统服务、驱动、框架
+- **用户级** (`home/shared/`) - GUI 应用、个人配置
 
-### 硬件支持
-- ✅ AMD GPU (AMDGPU 驱动)
-- ✅ OpenCL 支持
-- ✅ 硬件传感器监控
+### 2. 单一配置源
 
-## 📦 已安装软件列表
+所有个人信息在 `flake.nix` 中定义：
+```nix
+username = "echoyn";
+userFullName = "lying200";
+userEmail = "lying200@outlook.com";
+```
 
-### 开发工具
-- **JetBrains Toolbox** - JetBrains IDE 管理器
-- **VSCode** - 代码编辑器
+### 3. 功能可选
 
-### 浏览器
-- **Google Chrome** - 主流浏览器
+使用 `enable` 开关控制所有可选功能：
+```nix
+mySystem.services.sunshine.enable = false;  # 可关闭不需要的服务
+```
 
-### 通讯
-- **微信** - 即时通讯
-- **QQ** - QQ for Linux
-- **Thunderbird** - 邮件客户端
+### 4. 模块化原则
 
-### 多媒体
-- **VLC** - 全能视频播放器
-- **MPV** - 轻量级播放器
-- **OBS Studio** - 录屏/直播工具
+- 每个功能独立为一个模块
+- 模块间低耦合
+- 通过 `imports` 组合
 
-### 办公/文档
-- **LibreOffice** - Office 套件（Writer/Calc/Impress）
-- **Obsidian** - Markdown 笔记/知识库
+---
 
-### 文件管理
-- **Syncthing** - P2P 文件同步
-- **rclone** - 云存储管理工具
-
-### 实用工具
-- **ulauncher** - 应用启动器 (Alt+Space)
-- **Snipaste** - 截图工具 (F1)
-- **Variety** - 壁纸自动切换
-- **Motrix** - 下载工具（支持 HTTP/BT/磁力）
-
-### AI 工具
-- **Gemini CLI** - Google Gemini 命令行工具
-
-## 📚 参考资源
-
-- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
-- [Nix Flakes Wiki](https://nixos.wiki/wiki/Flakes)
-- [NixOS Options Search](https://search.nixos.org/options)
-- [Home Manager](https://github.com/nix-community/home-manager)
-- [Awesome NixOS](https://github.com/nix-community/awesome-nix)
-
-## 📝 开发说明
-
-### 项目原则
-1. **模块化**: 每个功能独立为单独的 `.nix` 文件
-2. **分层清晰**: hosts (主机) / modules (复用)
-3. **职责分离**: 按功能域分类 (core/hardware/desktop/services/programs)
-4. **声明式**: 所有配置通过 Nix 声明，避免命令式操作
+## 🤝 贡献指南
 
 ### 提交规范
+
 - `feat:` 新功能
 - `fix:` 修复问题
 - `refactor:` 重构代码
-- `chore:` 依赖更新等杂项
 - `docs:` 文档更新
+- `chore:` 依赖更新
+
+### 示例
+
+```bash
+git commit -m "feat: 添加 KDE 桌面支持"
+git commit -m "fix: 修复 Wayland 环境变量问题"
+```
+
+---
+
+## 📖 参考资源
+
+- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
+- [Nix Flakes](https://nixos.wiki/wiki/Flakes)
+- [Home Manager](https://github.com/nix-community/home-manager)
+- [NixOS Options Search](https://search.nixos.org/options)
+
+---
+
+## 📝 常见问题
+
+### Q: 如何切换用户名？
+A: 只需修改 `flake.nix` 中的 `username`、`userFullName`、`userEmail`，然后重新构建。
+
+### Q: 如何添加新应用？
+A: 编辑 `home/shared/programs/applications.nix`，添加到 `home.packages` 列表。
+
+### Q: 如何禁用某个功能？
+A: 在 `hosts/your-host/default.nix` 中设置对应的 `enable = false`。
+
+### Q: 硬件配置文件在哪里？
+A: 每个主机目录下的 `hardware.nix`，由 `nixos-generate-config` 自动生成。
+
+### Q: 如何备份配置？
+A: 只需推送到 Git 仓库，所有配置都已版本化。
 
 ---
 
