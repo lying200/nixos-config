@@ -14,7 +14,7 @@
 
       # UI 设置
       simplified_ui = true;
-      pane_frames = true;
+      pane_frames = false;  # 禁用边框，更简洁
 
       # 鼠标支持
       mouse_mode = true;
@@ -60,7 +60,7 @@
     }
   '';
 
-  # Zellij 主题（Catppuccin Mocha）
+  # Zellij 主题配置
   xdg.configFile."zellij/themes/catppuccin-mocha.kdl".text = ''
     themes {
       catppuccin-mocha {
@@ -75,6 +75,24 @@
         cyan "#94E2D5"
         white "#BAC2DE"
         orange "#FAB387"
+      }
+    }
+  '';
+
+  xdg.configFile."zellij/themes/tokyo-night.kdl".text = ''
+    themes {
+      tokyo-night {
+        fg "#a9b1d6"
+        bg "#1a1b26"
+        black "#32344a"
+        red "#f7768e"
+        green "#9ece6a"
+        yellow "#e0af68"
+        blue "#7aa2f7"
+        magenta "#bb9af7"
+        cyan "#7dcfff"
+        white "#c0caf5"
+        orange "#ff9e64"
       }
     }
   '';
