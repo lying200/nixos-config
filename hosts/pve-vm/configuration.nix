@@ -9,6 +9,11 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
+  # hosts 配置
+  networking.hosts = {
+    "192.168.3.160" = [ "dev.com" ];
+  };
+
   # 用户定义
   users.users.echoyn = {
     isNormalUser = true;
