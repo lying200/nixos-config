@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   # Home Manager 基础配置
-  home.username = "echoyn";
-  home.homeDirectory = "/home/echoyn";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "24.11";
 
   # 导入各模块

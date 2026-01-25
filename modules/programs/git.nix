@@ -1,4 +1,4 @@
-{ ... }:
+{ userFullName, userEmail, ... }:
 
 {
   programs.git = {
@@ -7,8 +7,8 @@
     config = {
       # 1. 身份信息
       user = {
-        name = "lying200";
-        email = "lying200@outlook.com";
+        name = userFullName;
+        email = userEmail;
       };
 
       # 2. 默认分支名

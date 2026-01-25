@@ -1,4 +1,4 @@
-{ ... }:
+{ username, ... }:
 
 {
   # Bootloader (每台机器可能不同，有的双系统，有的单系统)
@@ -15,9 +15,9 @@
   };
 
   # 用户定义
-  users.users.echoyn = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "echoyn";
+    description = username;
     extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" ];
     packages = [ ];
   };

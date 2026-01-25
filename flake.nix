@@ -16,13 +16,20 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
+
+      # 用户配置
+      username = "echoyn";
+      userFullName = "lying200";
+      userEmail = "lying200@outlook.com";
     in {
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
 
-          # 传递 inputs 给所有模块
-          specialArgs = { inherit inputs; };
+          # 传递 inputs 和用户配置给所有模块
+          specialArgs = {
+            inherit inputs username userFullName userEmail;
+          };
 
           modules = [
             ./hosts/desktop/default.nix
@@ -32,8 +39,10 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.echoyn = import ./home/echoyn;
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.${username} = import ./home/shared;
+              home-manager.extraSpecialArgs = {
+                inherit inputs username userFullName userEmail;
+              };
             }
           ];
         };

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   programs.fish = {
@@ -20,25 +20,25 @@
       zoxide init fish | source
 
       # NixOS 配置路径
-      set -gx NIXOS_CONFIG_DIR ~/nixos-config
+      set -gx NIXOS_CONFIG_DIR /home/${username}/nixos-config
     '';
 
     # Shell 别名
     shellAliases = {
       # 系统管理（使用 . 表示当前目录，进入配置目录后直接 rebuild）
-      rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config";
-      update = "cd ~/nixos-config && sudo nix flake update && rebuild";
+      rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config";
+      update = "cd /home/${username}/nixos-config && sudo nix flake update && rebuild";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
 
       # 快速进入配置目录
-      nixcfg = "cd ~/nixos-config";
+      nixcfg = "cd /home/${username}/nixos-config";
 
       # 无 sudo 版本（在 IDEA 中使用）
       # 提示用户需要在外部终端执行
       rebuild-help = "echo '⚠️  Please run this in a real terminal (Ghostty/Gnome Terminal), not in IDEA'";
 
       # 预览配置变更（不需要 sudo）
-      rebuild-check = "nixos-rebuild build --flake ~/nixos-config";
+      rebuild-check = "nixos-rebuild build --flake /home/${username}/nixos-config";
 
       # 常用命令增强
       ll = "eza -la --icons --git";
