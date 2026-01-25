@@ -27,9 +27,22 @@
     # 程序
     ../../modules/programs/fcitx5.nix
     ../../modules/programs/qqmusic.nix
-    ../../modules/programs/applications.nix
     ../../modules/programs/dev-tools.nix
     ../../modules/programs/autostart.nix
     ../../modules/programs/default-shell.nix
   ];
+
+  # 启用功能模块
+  mySystem = {
+    desktop = {
+      gnome.enable = true;
+      wayland.enable = true;
+      monitoring.enable = true;
+    };
+
+    services = {
+      tailscale.enable = true;
+      sunshine.enable = true;
+    };
+  };
 }

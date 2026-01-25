@@ -1,24 +1,27 @@
-{ pkgs, config, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
-  # 1. 启用 Sunshine
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    openFirewall = true;
-    capSysAdmin = true;
+  options.mySystem.services.sunshine = {
+    enable = mkEnableOption "Sunshine game streaming server";
   };
 
-  # setsid 用于启动 Steam/Desktop 环境，xrandr 用于调整分辨率
-  environment.systemPackages = with pkgs; [
-    util-linux    # 包含 setsid
-    xorg.xrandr   # 包含 xrandr
-  ];
+  config = mkIf config.mySystem.services.sunshine.enable {
+    # Sunshine 服务配置
+    services.sunshine = {
+      enable = true;
+      autoStart = true;
+      capSysAdmin = true;
+    };
 
-  # 强制加载 uinput 模块
-  boot.kernelModules = [ "uinput" ];
+    # 防火墙配置
+    networking.firewall = {
+      allowedTCPPorts = [ 47984 47989 48010 ];
+      allowedUDPPorts = [ 47998 47999 48000 48002 48010 ];
+    };
 
-  services.udev.extraRules = ''
-    KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", MODE="0666"
-  '';
+    # 添加 udev 规则支持虚拟输入设备
+    services.udev.packages = [ pkgs.sunshine ];
+  };
 }
