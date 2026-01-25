@@ -9,6 +9,7 @@
   # 导入各模块
   imports = [
     ./terminal
+    ./programs/git.nix
     ./programs/keybindings.nix
   ];
 

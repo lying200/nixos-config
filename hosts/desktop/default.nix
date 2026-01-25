@@ -30,7 +30,6 @@
     ../../modules/programs/applications.nix
     ../../modules/programs/dev-tools.nix
     ../../modules/programs/autostart.nix
-    ../../modules/programs/git.nix
     ../../modules/programs/default-shell.nix
   ];
 }

@@ -4,7 +4,8 @@
   programs.git = {
     enable = true;
 
-    config = {
+    # 使用新的 settings 语法
+    settings = {
       # 1. 身份信息
       user = {
         name = userFullName;
@@ -16,6 +17,7 @@
         defaultBranch = "main";
       };
 
+      # 3. 核心配置
       core = {
         editor = "vim";       # 默认编辑器
         autocrlf = "input";   # 处理换行符
