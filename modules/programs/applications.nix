@@ -42,5 +42,6 @@
     # 实用工具
     motrix                 # 下载工具（支持 HTTP/BT/磁力）
     thunderbird            # 邮件客户端
+    clash-verge-rev
   ];
 }
