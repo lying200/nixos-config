@@ -21,6 +21,7 @@
     fontconfig.defaultFonts = {
       # 终端/代码编辑器默认字体
       monospace = [
+        "JetBrainsMono Nerd Font"
         "Cascadia Code"
         "Sarasa Mono SC"
       ];
