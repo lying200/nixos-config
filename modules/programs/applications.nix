@@ -33,6 +33,7 @@
     # 办公/文档
     libreoffice-fresh      # Office 套件
     obsidian               # Markdown 笔记/知识库
+    typora
 
     # 文件管理
     syncthing              # 文件同步
