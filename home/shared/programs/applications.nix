@@ -14,6 +14,7 @@
     wechat               # 即时通讯
     qq                   # QQ for Linux
     thunderbird          # 邮件客户端
+    telegram-desktop
 
     # AI 工具
     gemini-cli           # Google Gemini CLI
