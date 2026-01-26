@@ -30,7 +30,6 @@
     ../../modules/programs/fcitx5.nix
     ../../modules/programs/qqmusic.nix
     ../../modules/programs/dev-tools.nix
-    ../../modules/programs/autostart.nix
     ../../modules/programs/default-shell.nix
   ];
 

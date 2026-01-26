@@ -1,12 +1,12 @@
 { pkgs, ... }:
 
 {
-  # 常用应用开机自启动配置
-  # 使用 XDG autostart 规范，适用于 GNOME 等桌面环境
+  # 用户应用开机自启动配置
+  # 使用 XDG autostart 规范
 
-  environment.etc = {
-    # JetBrains Toolbox
-    "xdg/autostart/jetbrains-toolbox.desktop".text = ''
+  xdg.configFile = {
+    # JetBrains Toolbox（最小化启动）
+    "autostart/jetbrains-toolbox.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=JetBrains Toolbox
@@ -19,8 +19,8 @@
       X-GNOME-Autostart-enabled=true
     '';
 
-    # ulauncher 应用启动器
-    "xdg/autostart/ulauncher.desktop".text = ''
+    # ulauncher 应用启动器（隐藏窗口启动）
+    "autostart/ulauncher.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=Ulauncher
@@ -33,9 +33,8 @@
       X-GNOME-Autostart-enabled=true
     '';
 
-    # Snipaste 截图工具
-    # 延迟启动以确保 GNOME Shell 完全初始化
-    "xdg/autostart/snipaste.desktop".text = ''
+    # Snipaste 截图工具（延迟启动避免缩放问题）
+    "autostart/snipaste.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=Snipaste
@@ -50,7 +49,7 @@
     '';
 
     # Variety 壁纸管理器
-    "xdg/autostart/variety.desktop".text = ''
+    "autostart/variety.desktop".text = ''
       [Desktop Entry]
       Type=Application
       Name=Variety
