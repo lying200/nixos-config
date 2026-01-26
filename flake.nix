@@ -17,10 +17,10 @@
     let
       system = "x86_64-linux";
 
-      # 用户配置
-      username = "echoyn";
-      userFullName = "lying200";
-      userEmail = "lying200@outlook.com";
+      # 用户配置（单一数据源）
+      username = "echoyn";                      # 系统用户名和家目录名
+      gitUserName = "lying200";                 # Git 提交作者名
+      gitUserEmail = "lying200@outlook.com";    # Git 提交作者邮箱
     in {
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {
@@ -28,7 +28,7 @@
 
           # 传递 inputs 和用户配置给所有模块
           specialArgs = {
-            inherit inputs username userFullName userEmail;
+            inherit inputs username gitUserName gitUserEmail;
           };
 
           modules = [
@@ -41,7 +41,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.${username} = import ./home/shared;
               home-manager.extraSpecialArgs = {
-                inherit inputs username userFullName userEmail;
+                inherit inputs username gitUserName gitUserEmail;
               };
             }
           ];

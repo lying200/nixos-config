@@ -100,9 +100,9 @@ cd ~/nixos-config
 
 ```nix
 # 编辑 flake.nix（只需修改这 3 行）
-username = "yourname";              # 👈 你的用户名
-userFullName = "Your Full Name";    # 👈 Git 显示名
-userEmail = "your@email.com";       # 👈 Git 邮箱
+username = "yourname";                  # 👈 系统用户名和家目录名
+gitUserName = "Your Full Name";         # 👈 Git 提交作者名
+gitUserEmail = "your@email.com";        # 👈 Git 提交作者邮箱
 
 # 编辑 hosts/desktop/configuration.nix
 networking.hostName = "your-hostname";  # 👈 你的主机名
@@ -143,6 +143,11 @@ sudo nixos-rebuild switch --flake .#desktop
 # 重启
 reboot
 ```
+
+> 💡 **提示**：系统配置了 Fish shell 别名，以后可以直接使用：
+> - `rebuild` - 快速应用配置（等同于上面的第二条命令）
+> - `update` - 更新依赖并应用配置
+> - `nixcfg` - 快速进入配置目录
 
 **完成！** 🎉 你的新机器已经配置好了！
 
@@ -200,8 +205,8 @@ sudo nixos-rebuild switch --flake .#desktop
 ```nix
 # flake.nix
 username = "newuser";
-userFullName = "New User";
-userEmail = "newuser@example.com";
+gitUserName = "New User";
+gitUserEmail = "newuser@example.com";
 ```
 
 所有其他配置自动继承！
@@ -294,8 +299,14 @@ mySystem.desktop.gnome.enable = false;
 
 ### 更新系统
 
+**快捷命令（推荐）**：
 ```bash
-# 使用脚本（推荐）
+update    # 自动更新 flake 依赖并重新构建系统
+```
+
+**完整命令**：
+```bash
+# 使用脚本
 ./update.sh
 
 # 或手动更新
@@ -303,8 +314,25 @@ nix flake update
 sudo nixos-rebuild switch --flake .#desktop
 ```
 
+> 💡 `update` 是 Fish shell 别名，定义在 `home/shared/terminal/fish.nix:30`
+
 ### 修改配置
 
+**快捷命令**：
+```bash
+# 1. 编辑配置
+vim modules/programs/applications.nix
+
+# 2. 应用配置
+rebuild    # 等同于 sudo nixos-rebuild switch --flake /home/echoyn/nixos-config
+
+# 3. 提交（使用 Fish 别名）
+ga .
+gc -m "feat: 添加新应用"
+gp
+```
+
+**完整命令**：
 ```bash
 # 1. 编辑配置
 vim modules/programs/applications.nix
@@ -321,6 +349,8 @@ git commit -m "feat: 添加新应用"
 git push
 ```
 
+> 💡 Fish shell 别名：`rebuild`, `ga` (git add), `gc` (git commit), `gp` (git push)
+
 ### 回滚系统
 
 ```bash
@@ -330,6 +360,36 @@ sudo nixos-rebuild switch --rollback
 # 查看所有代
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
+
+### 🐚 Fish Shell 别名速查
+
+配置文件：`home/shared/terminal/fish.nix`
+
+| 别名 | 完整命令 | 说明 |
+|------|---------|------|
+| **系统管理** |
+| `rebuild` | `sudo nixos-rebuild switch --flake /home/echoyn/nixos-config` | 快速应用配置 |
+| `update` | `cd nixos-config && nix flake update && rebuild` | 更新依赖并重新构建 |
+| `clean` | `sudo nix-collect-garbage -d && sudo nix-store --optimise` | 清理垃圾并优化存储 |
+| `nixcfg` | `cd /home/echoyn/nixos-config` | 快速进入配置目录 |
+| `rebuild-check` | `nixos-rebuild build --flake /home/echoyn/nixos-config` | 预览配置变更（无需 sudo） |
+| **Git 简写** |
+| `g` | `git` | Git 命令简写 |
+| `gs` | `git status` | 查看状态 |
+| `ga` | `git add` | 添加文件 |
+| `gc` | `git commit` | 提交 |
+| `gp` | `git push` | 推送 |
+| `gl` | `git log --oneline --graph` | 图形化日志 |
+| **目录导航** |
+| `cd` | `z` (zoxide) | 智能目录跳转 |
+| `..` | `cd ..` | 返回上级目录 |
+| `...` | `cd ../..` | 返回上两级目录 |
+| **命令增强** |
+| `ll` | `eza -la --icons --git` | 详细列表 |
+| `ls` | `eza --icons` | 图标列表 |
+| `l` | `eza -l --icons` | 长格式列表 |
+| `tree` | `eza --tree --icons` | 树形显示 |
+| `cat` | `bat` | 语法高亮查看文件 |
 
 ---
 
@@ -372,7 +432,7 @@ nixosConfigurations = {
   laptop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs username userFullName userEmail;  # 使用相同用户
+      inherit inputs username gitUserName gitUserEmail;  # 使用相同用户
     };
     modules = [
       ./hosts/laptop/default.nix
@@ -398,9 +458,9 @@ sudo nixos-rebuild switch --flake .#laptop
 server = nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs;
-    username = "admin";           # 不同用户
-    userFullName = "Admin User";
-    userEmail = "admin@example.com";
+    username = "admin";              # 不同用户
+    gitUserName = "Admin User";
+    gitUserEmail = "admin@example.com";
   };
   modules = [ ./hosts/server/default.nix ];
 };
@@ -419,9 +479,9 @@ server = nixpkgs.lib.nixosSystem {
 
 所有个人信息在 `flake.nix` 中定义：
 ```nix
-username = "echoyn";
-userFullName = "lying200";
-userEmail = "lying200@outlook.com";
+username = "echoyn";                      # 系统用户名
+gitUserName = "lying200";                 # Git 作者名
+gitUserEmail = "lying200@outlook.com";    # Git 作者邮箱
 ```
 
 ### 3. 功能可选
@@ -470,7 +530,7 @@ git commit -m "fix: 修复 Wayland 环境变量问题"
 ## 📝 常见问题
 
 ### Q: 如何切换用户名？
-A: 只需修改 `flake.nix` 中的 `username`、`userFullName`、`userEmail`，然后重新构建。
+A: 只需修改 `flake.nix` 中的 `username`、`gitUserName`、`gitUserEmail`，然后重新构建。
 
 ### Q: 如何添加新应用？
 A: 编辑 `home/shared/programs/applications.nix`，添加到 `home.packages` 列表。

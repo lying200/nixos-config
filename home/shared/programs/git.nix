@@ -1,4 +1,4 @@
-{ userFullName, userEmail, ... }:
+{ gitUserName, gitUserEmail, ... }:
 
 {
   programs.git = {
@@ -8,8 +8,8 @@
     settings = {
       # 1. 身份信息
       user = {
-        name = userFullName;
-        email = userEmail;
+        name = gitUserName;
+        email = gitUserEmail;
       };
 
       # 2. 默认分支名
