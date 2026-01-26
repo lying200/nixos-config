@@ -43,6 +43,6 @@
 
     # 实用工具
     motrix               # 下载工具（支持 HTTP/BT/磁力）
-    clash-verge-rev      # 代理工具
+    flclash              # 代理工具
   ];
 }
