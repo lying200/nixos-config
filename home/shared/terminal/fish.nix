@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, username, hostname, ... }:
 
 {
   programs.fish = {
@@ -25,8 +25,8 @@
 
     # Shell 别名
     shellAliases = {
-      # 系统管理（使用 . 表示当前目录，进入配置目录后直接 rebuild）
-      rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config";
+      # 系统管理
+      rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config#${hostname}";
       update = "cd /home/${username}/nixos-config && sudo nix flake update && rebuild";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
 
@@ -38,7 +38,7 @@
       rebuild-help = "echo '⚠️  Please run this in a real terminal (Ghostty/Gnome Terminal), not in IDEA'";
 
       # 预览配置变更（不需要 sudo）
-      rebuild-check = "nixos-rebuild build --flake /home/${username}/nixos-config";
+      rebuild-check = "nixos-rebuild build --flake /home/${username}/nixos-config#${hostname}";
 
       # 常用命令增强
       ll = "eza -la --icons --git";

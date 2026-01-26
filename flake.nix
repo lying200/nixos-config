@@ -19,20 +19,21 @@
 
       # 用户配置（单一数据源）
       username = "echoyn";                      # 系统用户名和家目录名
+      hostname = "desktop";                     # 主机名（自动用于配置名和目录名）
       gitUserName = "lying200";                 # Git 提交作者名
       gitUserEmail = "lying200@outlook.com";    # Git 提交作者邮箱
     in {
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
+        ${hostname} = nixpkgs.lib.nixosSystem {
           inherit system;
 
           # 传递 inputs 和用户配置给所有模块
           specialArgs = {
-            inherit inputs username gitUserName gitUserEmail;
+            inherit inputs username hostname gitUserName gitUserEmail;
           };
 
           modules = [
-            ./hosts/desktop/default.nix
+            ./hosts/${hostname}/default.nix
 
             # Home Manager 集成
             home-manager.nixosModules.home-manager
@@ -41,7 +42,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.${username} = import ./home/shared;
               home-manager.extraSpecialArgs = {
-                inherit inputs username gitUserName gitUserEmail;
+                inherit inputs username hostname gitUserName gitUserEmail;
               };
             }
           ];

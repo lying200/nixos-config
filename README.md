@@ -99,19 +99,35 @@ cd ~/nixos-config
 #### 步骤 3：修改基本信息
 
 ```nix
-# 编辑 flake.nix（只需修改这 3 行）
-username = "yourname";                  # 👈 系统用户名和家目录名
+# 编辑 flake.nix
+username = "yourname";                  # 👈 系统用户名
 gitUserName = "Your Full Name";         # 👈 Git 提交作者名
 gitUserEmail = "your@email.com";        # 👈 Git 提交作者邮箱
-
-# 编辑 hosts/desktop/configuration.nix
-networking.hostName = "your-hostname";  # 👈 你的主机名
 ```
 
-#### 步骤 4：配置显卡
+#### 步骤 4：修改主机名（可选）
+
+默认主机名为 `desktop`。如需自定义（如 `my-laptop`）：
+
+```bash
+# 1. 重命名目录
+mv hosts/desktop hosts/my-laptop
+```
 
 ```nix
-# 编辑 hosts/desktop/default.nix
+# 2. 编辑 flake.nix
+hostname = "my-laptop";
+
+# 3. 编辑 hosts/my-laptop/configuration.nix
+networking.hostName = "my-laptop";
+```
+
+> 💡 三处名称必须一致。不修改则保持默认 `desktop`
+
+#### 步骤 5：配置显卡
+
+```nix
+# 编辑 hosts/<hostname>/default.nix（默认是 hosts/desktop/default.nix）
 mySystem.hardware = {
   amdgpu.enable = true;      # 👈 AMD 显卡（默认配置）
   # nvidia.enable = true;    # 👈 NVIDIA 显卡（取消注释并禁用 AMD）
@@ -124,21 +140,21 @@ mySystem.hardware = {
 - 如果你使用 **NVIDIA** 或 **Intel** 显卡，**必须修改此配置**，否则系统可能无法正常启动图形界面
 - NVIDIA 和 Intel 配置**未经实际测试**，可能需要根据你的硬件微调，建议结合 AI（Claude/ChatGPT）或 [NixOS Wiki](https://nixos.wiki/) 调整
 
-#### 步骤 5：更新硬件配置
+#### 步骤 6：更新硬件配置
 
 ```bash
-# 生成当前机器的硬件配置
-sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware.nix
+# 生成当前机器的硬件配置（<hostname> 替换为实际主机名，默认 desktop）
+sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.nix
 ```
 
-#### 步骤 6：构建并应用
+#### 步骤 7：构建并应用
 
 ```bash
-# 测试构建
-sudo nixos-rebuild test --flake .#desktop
+# 测试构建（<hostname> 替换为实际主机名，默认 desktop）
+sudo nixos-rebuild test --flake .#<hostname>
 
 # 应用配置
-sudo nixos-rebuild switch --flake .#desktop
+sudo nixos-rebuild switch --flake .#<hostname>
 
 # 重启
 reboot
@@ -152,7 +168,7 @@ reboot
 **完成！** 🎉 你的新机器已经配置好了！
 
 > 💡 **提示**：如果遇到显卡相关问题，可以：
-> 1. 检查 `hosts/desktop/default.nix` 中的 GPU 配置是否匹配你的硬件
+> 1. 检查 `hosts/<hostname>/default.nix` 中的 GPU 配置是否匹配你的硬件
 > 2. 使用 `lspci | grep -i vga` 查看你的显卡型号
 > 3. 咨询 AI 助手（Claude/ChatGPT）获取针对你硬件的配置建议
 
@@ -368,11 +384,11 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 | 别名 | 完整命令 | 说明 |
 |------|---------|------|
 | **系统管理** |
-| `rebuild` | `sudo nixos-rebuild switch --flake /home/echoyn/nixos-config` | 快速应用配置 |
+| `rebuild` | `sudo nixos-rebuild switch --flake /home/{username}/nixos-config#{hostname}` | 快速应用配置 |
 | `update` | `cd nixos-config && nix flake update && rebuild` | 更新依赖并重新构建 |
 | `clean` | `sudo nix-collect-garbage -d && sudo nix-store --optimise` | 清理垃圾并优化存储 |
-| `nixcfg` | `cd /home/echoyn/nixos-config` | 快速进入配置目录 |
-| `rebuild-check` | `nixos-rebuild build --flake /home/echoyn/nixos-config` | 预览配置变更（无需 sudo） |
+| `nixcfg` | `cd /home/{username}/nixos-config` | 快速进入配置目录 |
+| `rebuild-check` | `nixos-rebuild build --flake /home/{username}/nixos-config#{hostname}` | 预览配置变更（无需 sudo） |
 | **Git 简写** |
 | `g` | `git` | Git 命令简写 |
 | `gs` | `git status` | 查看状态 |
@@ -390,6 +406,8 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 | `l` | `eza -l --icons` | 长格式列表 |
 | `tree` | `eza --tree --icons` | 树形显示 |
 | `cat` | `bat` | 语法高亮查看文件 |
+
+> 💡 **说明**：`{username}` 和 `{hostname}` 会自动替换为 `flake.nix` 中配置的值
 
 ---
 
@@ -421,49 +439,57 @@ mv hardware-new.nix hosts/laptop/hardware.nix
 }
 ```
 
-### 步骤 3：在 flake.nix 中注册
+### 步骤 3：在 flake.nix 中添加新主机
+
+> ⚠️ **重要**：不要修改现有的 `hostname` 变量，而是在 `nixosConfigurations` 中**手动添加**新的配置块
+
+编辑 `flake.nix`，在 `nixosConfigurations` 中添加：
 
 ```nix
-# flake.nix
 nixosConfigurations = {
-  desktop = { ... };  # 现有配置
+  # 第一台机器（现有配置，保持不变）
+  ${hostname} = nixpkgs.lib.nixosSystem { ... };
 
-  # 新增 laptop 配置
+  # 第二台机器（新增这个配置块）
   laptop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs username gitUserName gitUserEmail;  # 使用相同用户
+      inherit inputs;
+      username = "echoyn";      # 👈 可与第一台相同或不同
+      hostname = "laptop";      # 👈 必须与配置名一致
+      gitUserName = "lying200";
+      gitUserEmail = "lying200@outlook.com";
     };
     modules = [
       ./hosts/laptop/default.nix
-      # Home Manager 配置...
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.echoyn = import ./home/shared;  # 👈 替换为实际用户名
+        home-manager.extraSpecialArgs = {
+          inherit inputs;
+          username = "echoyn";
+          hostname = "laptop";
+          gitUserName = "lying200";
+          gitUserEmail = "lying200@outlook.com";
+        };
+      }
     ];
   };
 };
 ```
+
+> 💡 **说明**：
+> - 复制第一台机器的完整配置块结构
+> - 修改配置名（`laptop`）和 `hostname` 变量
+> - 确保 `modules` 中的路径指向正确的主机目录
 
 ### 步骤 4：部署到新机器
 
 ```bash
 # 在 laptop 机器上
 sudo nixos-rebuild switch --flake .#laptop
-```
-
-### 多用户场景
-
-如果不同机器使用不同用户：
-
-```nix
-# flake.nix
-server = nixpkgs.lib.nixosSystem {
-  specialArgs = {
-    inherit inputs;
-    username = "admin";              # 不同用户
-    gitUserName = "Admin User";
-    gitUserEmail = "admin@example.com";
-  };
-  modules = [ ./hosts/server/default.nix ];
-};
 ```
 
 ---
@@ -480,6 +506,7 @@ server = nixpkgs.lib.nixosSystem {
 所有个人信息在 `flake.nix` 中定义：
 ```nix
 username = "echoyn";                      # 系统用户名
+hostname = "desktop";                     # 主机配置名（用于 flake 和 Fish 别名）
 gitUserName = "lying200";                 # Git 作者名
 gitUserEmail = "lying200@outlook.com";    # Git 作者邮箱
 ```
@@ -537,6 +564,12 @@ A: 编辑 `home/shared/programs/applications.nix`，添加到 `home.packages` �
 
 ### Q: 如何禁用某个功能？
 A: 在 `hosts/your-host/default.nix` 中设置对应的 `enable = false`。
+
+### Q: 如何修改主机名？
+A: 查看快速开始的 [步骤 4：修改主机名](#步骤-4修改主机名可选)。需要修改三处并保持一致。
+
+### Q: rebuild 命令报错找不到目录怎么办？
+A: 确保 `hosts/` 目录下有与 `hostname` 变量同名的子目录。例如 `hostname = "laptop"` 需要有 `hosts/laptop/` 目录。
 
 ### Q: 硬件配置文件在哪里？
 A: 每个主机目录下的 `hardware.nix`，由 `nixos-generate-config` 自动生成。
