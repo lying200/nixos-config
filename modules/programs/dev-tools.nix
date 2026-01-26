@@ -7,6 +7,14 @@
     jdk25                  # OpenJDK 25 LTS
     python314              # Python 3.14
     go_1_25                # Go 1.25
+
+    # Rust 工具链
     rustup                 # Rust 工具链管理器
+
+    # Rust 构建依赖
+    pkg-config
+    openssl
+    gcc
+    cmake
   ];
 }
