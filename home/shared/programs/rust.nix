@@ -10,11 +10,21 @@
   ];
 
   # Rust 环境变量
-  home.sessionVariables = {
-    RUST_BACKTRACE = "1";
-    RUSTUP_HOME = "$HOME/.rustup";
-    CARGO_HOME = "$HOME/.cargo";
-  };
+  home.sessionVariables =
+    let
+      libPath = lib.makeLibraryPath [
+        pkgs.stdenv.cc.cc.lib
+        pkgs.zlib
+      ];
+    in {
+      RUST_BACKTRACE = "1";
+      RUSTUP_HOME = "$HOME/.rustup";
+      CARGO_HOME = "$HOME/.cargo";
+
+      # NixOS 修复：使用正确的动态链接器和库路径
+      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.gcc}/bin/gcc";
+      LD_LIBRARY_PATH = libPath;
+    };
 
   # 添加 cargo 到 PATH
   home.sessionPath = [
