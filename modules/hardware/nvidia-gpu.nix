@@ -9,6 +9,20 @@ with lib;
     prime = {
       enable = mkEnableOption "NVIDIA Prime support (for laptops with hybrid graphics)";
 
+      offload = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable NVIDIA Prime offload mode";
+        };
+
+        enableOffloadCmd = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Expose the nvidia-offload command";
+        };
+      };
+
       # 如果启用 Prime，需要指定 Bus ID
       nvidiaBusId = mkOption {
         type = types.str;
@@ -58,23 +72,26 @@ with lib;
     };
 
     # NVIDIA Prime 配置（混合显卡笔记本）
-    hardware.nvidia.prime = mkIf config.mySystem.hardware.nvidia.prime.enable {
+    hardware.nvidia.prime = mkIf config.mySystem.hardware.nvidia.prime.enable (
+      let
+        primeCfg = config.mySystem.hardware.nvidia.prime;
+      in {
       # Offload 模式（省电，按需使用独显）
       offload = {
-        enable = true;
-        enableOffloadCmd = true;  # 提供 nvidia-offload 命令
+        enable = primeCfg.offload.enable;
+        enableOffloadCmd = primeCfg.offload.enableOffloadCmd;  # 提供 nvidia-offload 命令
       };
 
       # 指定 Bus ID
-      nvidiaBusId = mkIf (config.mySystem.hardware.nvidia.prime.nvidiaBusId != "")
-        config.mySystem.hardware.nvidia.prime.nvidiaBusId;
+      nvidiaBusId = mkIf (primeCfg.nvidiaBusId != "")
+        primeCfg.nvidiaBusId;
 
-      intelBusId = mkIf (config.mySystem.hardware.nvidia.prime.intelBusId != "")
-        config.mySystem.hardware.nvidia.prime.intelBusId;
+      intelBusId = mkIf (primeCfg.intelBusId != "")
+        primeCfg.intelBusId;
 
-      amdgpuBusId = mkIf (config.mySystem.hardware.nvidia.prime.amdBusId != "")
-        config.mySystem.hardware.nvidia.prime.amdBusId;
-    };
+      amdgpuBusId = mkIf (primeCfg.amdBusId != "")
+        primeCfg.amdBusId;
+    });
 
     # OpenGL 和 Vulkan 支持
     hardware.graphics = {
