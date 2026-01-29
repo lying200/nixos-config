@@ -44,5 +44,8 @@
     # 实用工具
     motrix               # 下载工具（支持 HTTP/BT/磁力）
     flclash              # 代理工具
+
+    # rdp 远程
+    remmina
   ];
 }
