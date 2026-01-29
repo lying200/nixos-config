@@ -84,8 +84,8 @@ nixos-config/
 #### 步骤 1：启用 Flakes 和 Git
 
 ```bash
-# 临时启用 Flakes（安装 Git）
-nix-shell -p git nixFlakes
+# 临时启用 Flakes 和 Git
+nix-shell -p git --extra-experimental-features "nix-command flakes"
 ```
 
 #### 步骤 2：克隆配置仓库
@@ -105,24 +105,35 @@ gitUserName = "Your Full Name";         # 👈 Git 提交作者名
 gitUserEmail = "your@email.com";        # 👈 Git 提交作者邮箱
 ```
 
-#### 步骤 4：修改主机名（可选）
+#### 步骤 4：选择或创建主机配置
 
-默认主机名为 `desktop`。如需自定义（如 `my-laptop`）：
+该配置支持多主机，当前已有 `desktop` 和 `legion` 两个配置。
+
+**方案 A：使用现有配置**
+- 直接使用 `desktop` 或 `legion`，跳到步骤 5
+
+**方案 B：创建新主机配置**
+
+如需自定义主机名（如 `my-laptop`）：
 
 ```bash
-# 1. 重命名目录
-mv hosts/desktop hosts/my-laptop
+# 1. 复制现有配置
+cp -r hosts/desktop hosts/my-laptop
+
+# 2. 编辑 hosts/my-laptop/configuration.nix
+# 修改: networking.hostName = "my-laptop";
 ```
 
 ```nix
-# 2. 编辑 flake.nix
-hostname = "my-laptop";
-
-# 3. 编辑 hosts/my-laptop/configuration.nix
-networking.hostName = "my-laptop";
+# 3. 编辑 flake.nix，在 nixosConfigurations 中添加：
+nixosConfigurations = {
+  desktop = mkHost "desktop";
+  legion = mkHost "legion";
+  my-laptop = mkHost "my-laptop";  # 👈 添加新主机
+};
 ```
 
-> 💡 三处名称必须一致。不修改则保持默认 `desktop`
+> 💡 配置名和 `networking.hostName` 必须一致
 
 #### 步骤 5：配置显卡
 
@@ -150,20 +161,17 @@ sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.ni
 #### 步骤 7：构建并应用
 
 ```bash
-# 测试构建（<hostname> 替换为实际主机名，默认 desktop）
-sudo nixos-rebuild test --flake .#<hostname>
-
-# 应用配置
-sudo nixos-rebuild switch --flake .#<hostname>
+# 初次安装时指定主机名（desktop/legion/my-laptop）
+sudo nixos-rebuild switch --flake .#desktop
 
 # 重启
 reboot
 ```
 
-> 💡 **提示**：系统配置了 Fish shell 别名，以后可以直接使用：
-> - `rebuild` - 快速应用配置（等同于上面的第二条命令）
-> - `update` - 更新依赖并应用配置
-> - `nixcfg` - 快速进入配置目录
+> 💡 **提示**：
+> - 首次需要指定 `--flake .#主机名`
+> - 后续 NixOS 会记住主机名，直接运行 `sudo nixos-rebuild switch --flake .` 即可
+> - 系统配置了 Fish shell 别名：`rebuild`（快速应用）、`update`（更新依赖）、`nixcfg`（进入配置目录）
 
 **完成！** 🎉 你的新机器已经配置好了！
 
@@ -340,7 +348,7 @@ sudo nixos-rebuild switch --flake .#desktop
 vim modules/programs/applications.nix
 
 # 2. 应用配置
-rebuild    # 等同于 sudo nixos-rebuild switch --flake /home/echoyn/nixos-config
+rebuild    # 自动应用当前主机配置
 
 # 3. 提交（使用 Fish 别名）
 ga .
@@ -354,10 +362,10 @@ gp
 vim modules/programs/applications.nix
 
 # 2. 测试
-sudo nixos-rebuild test --flake .#desktop
+sudo nixos-rebuild test --flake .
 
-# 3. 应用
-sudo nixos-rebuild switch --flake .#desktop
+# 3. 应用（会自动识别当前主机名）
+sudo nixos-rebuild switch --flake .
 
 # 4. 提交
 git add .
@@ -365,7 +373,10 @@ git commit -m "feat: 添加新应用"
 git push
 ```
 
-> 💡 Fish shell 别名：`rebuild`, `ga` (git add), `gc` (git commit), `gp` (git push)
+> 💡 **多主机说明**：
+> - NixOS 会自动根据 `networking.hostName` 选择对应配置
+> - 无需在 desktop 和 legion 间切换时修改 flake.nix
+> - Fish shell 别名：`rebuild`, `ga`, `gc`, `gp`
 
 ### 回滚系统
 
@@ -413,9 +424,9 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 ## 🏗️ 添加新主机
 
-如果你有多台机器，并且希望为每台机器维护独立的配置，可以创建新的主机配置。
+该配置已内置多主机支持，当前已配置 `desktop` 和 `legion`。添加新主机非常简单：
 
-### 步骤 1：创建新主机目录
+### 步骤 1：创建主机目录
 
 ```bash
 # 生成硬件配置
@@ -433,63 +444,32 @@ mv hardware-new.nix hosts/laptop/hardware.nix
 
 ```nix
 # hosts/laptop/configuration.nix
-{
-  networking.hostName = "laptop";  # 修改主机名
-  # 其他主机特定配置...
-}
+networking.hostName = "laptop";  # 👈 修改为新主机名
+# 根据需要调整其他配置...
 ```
 
-### 步骤 3：在 flake.nix 中添加新主机
+### 步骤 3：在 flake.nix 中注册新主机
 
-> ⚠️ **重要**：不要修改现有的 `hostname` 变量，而是在 `nixosConfigurations` 中**手动添加**新的配置块
-
-编辑 `flake.nix`，在 `nixosConfigurations` 中添加：
+编辑 `flake.nix`，在 `nixosConfigurations` 中添加一行：
 
 ```nix
 nixosConfigurations = {
-  # 第一台机器（现有配置，保持不变）
-  ${hostname} = nixpkgs.lib.nixosSystem { ... };
-
-  # 第二台机器（新增这个配置块）
-  laptop = nixpkgs.lib.nixosSystem {
-    inherit system;
-    specialArgs = {
-      inherit inputs;
-      username = "echoyn";      # 👈 可与第一台相同或不同
-      hostname = "laptop";      # 👈 必须与配置名一致
-      gitUserName = "lying200";
-      gitUserEmail = "lying200@outlook.com";
-    };
-    modules = [
-      ./hosts/laptop/default.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.echoyn = import ./home/shared;  # 👈 替换为实际用户名
-        home-manager.extraSpecialArgs = {
-          inherit inputs;
-          username = "echoyn";
-          hostname = "laptop";
-          gitUserName = "lying200";
-          gitUserEmail = "lying200@outlook.com";
-        };
-      }
-    ];
-  };
+  desktop = mkHost "desktop";
+  legion = mkHost "legion";
+  laptop = mkHost "laptop";     # 👈 添加新主机
 };
 ```
 
-> 💡 **说明**：
-> - 复制第一台机器的完整配置块结构
-> - 修改配置名（`laptop`）和 `hostname` 变量
-> - 确保 `modules` 中的路径指向正确的主机目录
+> 💡 使用 `mkHost` 函数，无需重复配置代码
 
 ### 步骤 4：部署到新机器
 
 ```bash
-# 在 laptop 机器上
+# 初次部署指定主机名
 sudo nixos-rebuild switch --flake .#laptop
+
+# 后续更新无需指定，自动识别
+sudo nixos-rebuild switch --flake .
 ```
 
 ---
@@ -506,9 +486,13 @@ sudo nixos-rebuild switch --flake .#laptop
 所有个人信息在 `flake.nix` 中定义：
 ```nix
 username = "echoyn";                      # 系统用户名
-hostname = "desktop";                     # 主机配置名（用于 flake 和 Fish 别名）
 gitUserName = "lying200";                 # Git 作者名
 gitUserEmail = "lying200@outlook.com";    # Git 作者邮箱
+```
+
+主机名在各主机的 `configuration.nix` 中设置：
+```nix
+networking.hostName = "desktop";  # 或 "legion"、"laptop" 等
 ```
 
 ### 3. 功能可选
@@ -566,10 +550,13 @@ A: 编辑 `home/shared/programs/applications.nix`，添加到 `home.packages` �
 A: 在 `hosts/your-host/default.nix` 中设置对应的 `enable = false`。
 
 ### Q: 如何修改主机名？
-A: 查看快速开始的 [步骤 4：修改主机名](#步骤-4修改主机名可选)。需要修改三处并保持一致。
+A:
+1. 编辑 `hosts/{旧主机名}/configuration.nix`，修改 `networking.hostName`
+2. 编辑 `flake.nix`，在 `nixosConfigurations` 中添加新主机名：`新主机名 = mkHost "新主机名";`
+3. 可选：重命名主机目录 `mv hosts/{旧主机名} hosts/{新主机名}`
 
-### Q: rebuild 命令报错找不到目录怎么办？
-A: 确保 `hosts/` 目录下有与 `hostname` 变量同名的子目录。例如 `hostname = "laptop"` 需要有 `hosts/laptop/` 目录。
+### Q: 多台电脑如何共享配置？
+A: 直接在两台电脑上 git clone 同一个仓库，各自运行 `sudo nixos-rebuild switch --flake .` 即可。NixOS 会自动根据当前 `networking.hostName` 选择对应配置，无需修改 flake.nix。
 
 ### Q: 硬件配置文件在哪里？
 A: 每个主机目录下的 `hardware.nix`，由 `nixos-generate-config` 自动生成。

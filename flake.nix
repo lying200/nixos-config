@@ -19,34 +19,38 @@
 
       # 用户配置（单一数据源）
       username = "echoyn";                      # 系统用户名和家目录名
-      hostname = "desktop";                     # 主机名（自动用于配置名和目录名）
       gitUserName = "lying200";                 # Git 提交作者名
       gitUserEmail = "lying200@outlook.com";    # Git 提交作者邮箱
-    in {
-      nixosConfigurations = {
-        ${hostname} = nixpkgs.lib.nixosSystem {
-          inherit system;
 
-          # 传递 inputs 和用户配置给所有模块
-          specialArgs = {
-            inherit inputs username hostname gitUserName gitUserEmail;
-          };
+      # 为每个主机生成配置的函数
+      mkHost = hostname: nixpkgs.lib.nixosSystem {
+        inherit system;
 
-          modules = [
-            ./hosts/${hostname}/default.nix
-
-            # Home Manager 集成
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./home/shared;
-              home-manager.extraSpecialArgs = {
-                inherit inputs username hostname gitUserName gitUserEmail;
-              };
-            }
-          ];
+        # 传递 inputs 和用户配置给所有模块
+        specialArgs = {
+          inherit inputs username hostname gitUserName gitUserEmail;
         };
+
+        modules = [
+          ./hosts/${hostname}/default.nix
+
+          # Home Manager 集成
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = import ./home/shared;
+            home-manager.extraSpecialArgs = {
+              inherit inputs username hostname gitUserName gitUserEmail;
+            };
+          }
+        ];
+      };
+    in {
+      # 为所有主机生成配置
+      nixosConfigurations = {
+        desktop = mkHost "desktop";
+        legion = mkHost "legion";
       };
     };
 }
