@@ -3,6 +3,11 @@
 {
   # 时区与语言
   time.timeZone = "Asia/Shanghai";
+
+  # 双系统时间同步：使硬件时钟使用本地时间而非 UTC
+  # 避免 Windows 和 Linux 切换时时间错乱
+  time.hardwareClockInLocalTime = true;
+
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
