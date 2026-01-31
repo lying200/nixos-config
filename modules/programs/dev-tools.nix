@@ -2,6 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
+    # 开发环境管理
+    devenv                 # 项目级开发环境管理
+
     # 开发 SDK
     nodejs_24              # Node.js 24 LTS
     jdk25                  # OpenJDK 25 LTS
