@@ -47,5 +47,7 @@
 
     # rdp 远程
     remmina
+
+    folo
   ];
 }
