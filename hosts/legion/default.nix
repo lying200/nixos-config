@@ -31,6 +31,7 @@
     ../../modules/programs/qqmusic.nix
     ../../modules/programs/dev-tools.nix
     ../../modules/programs/default-shell.nix
+    ../../modules/programs/steam.nix
   ];
 
   # 启用功能模块
@@ -53,6 +54,11 @@
     services = {
       tailscale.enable = true;
       sunshine.enable = true;
+    };
+
+    # 程序
+    programs = {
+      steam.enable = true;
     };
   };
 }
