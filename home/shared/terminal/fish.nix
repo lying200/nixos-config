@@ -16,6 +16,16 @@
       # 更好的 ls 颜色
       set -gx LS_COLORS 'di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
+      # 启用 vi 模式
+      fish_vi_key_bindings
+
+      # jk 映射为 Esc 退出插入模式
+      bind -M insert jk "if commandline -P; commandline -f cancel; else; set fish_bind_mode default; commandline -f repaint; end"
+
+      # 在 vi 插入模式下的自动建议快捷键
+      bind -M insert \ce accept-autosuggestion  # Ctrl+E 接受整个建议
+      bind -M insert \cf forward-word          # Ctrl+F 接受一个词
+
       # zoxide 初始化
       zoxide init fish | source
 
