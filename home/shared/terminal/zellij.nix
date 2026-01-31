@@ -41,8 +41,32 @@
 
       # 禁用启动提示
       show_startup_tips = false;
+
+      # 滚动回看编辑器
+      scrollback_editor = "nvim";
     };
   };
+
+  # 自定义按键绑定配置（使用 KDL 格式）
+  xdg.configFile."zellij/config.kdl".text = ''
+    keybinds {
+      scroll {
+        // 显式绑定 'e' 到编辑回滚
+        bind "e" {
+          EditScrollback;
+          SwitchToMode "Normal";
+        }
+
+        // 快速滚动
+        bind "J" { ScrollDown; }
+        bind "K" { ScrollUp; }
+
+        // 跳转到顶部/底部
+        bind "g" { ScrollToTop; }
+        bind "G" { ScrollToBottom; }
+      }
+    }
+  '';
 
   # Zellij 布局文件
   xdg.configFile."zellij/layouts/default.kdl".text = ''

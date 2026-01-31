@@ -10,6 +10,7 @@
   imports = [
     ./terminal
     ./programs/git.nix
+    ./programs/neovim.nix
     ./programs/applications.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
@@ -24,6 +25,12 @@
     zoxide      # 智能 cd
     delta       # Git diff 工具
   ];
+
+  # 会话级环境变量（对所有程序可见，包括 Zellij）
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
 
   # 让 Home Manager 管理自己
   programs.home-manager.enable = true;

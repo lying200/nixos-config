@@ -9,10 +9,6 @@
       # 禁用欢迎消息
       set -g fish_greeting
 
-      # 设置编辑器
-      set -gx EDITOR nvim
-      set -gx VISUAL nvim
-
       # 更好的 ls 颜色
       set -gx LS_COLORS 'di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
