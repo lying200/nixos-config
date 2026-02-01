@@ -69,6 +69,65 @@
       cd = "z";
     };
 
+    # JetBrains IDE 启动函数（通过 Toolbox 安装）
+    # 使用 functions 而不是 aliases 以正确处理参数和后台运行
+    functions = {
+      idea = {
+        description = "启动 IntelliJ IDEA Ultimate";
+        body = ''
+          set -l target $argv
+          if test (count $argv) -eq 0
+            set target "."
+          end
+          nohup /home/${username}/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea.sh $target > /dev/null 2>&1 &
+        '';
+      };
+
+      rustrover = {
+        description = "启动 RustRover";
+        body = ''
+          set -l target $argv
+          if test (count $argv) -eq 0
+            set target "."
+          end
+          nohup /home/${username}/.local/share/JetBrains/Toolbox/apps/rustrover/bin/rustrover.sh $target > /dev/null 2>&1 &
+        '';
+      };
+
+      datagrip = {
+        description = "启动 DataGrip";
+        body = ''
+          set -l target $argv
+          if test (count $argv) -eq 0
+            set target "."
+          end
+          nohup /home/${username}/.local/share/JetBrains/Toolbox/apps/datagrip/bin/datagrip.sh $target > /dev/null 2>&1 &
+        '';
+      };
+
+      webstorm = {
+        description = "启动 WebStorm";
+        body = ''
+          set -l target $argv
+          if test (count $argv) -eq 0
+            set target "."
+          end
+          nohup /home/${username}/.local/share/JetBrains/Toolbox/apps/webstorm/bin/webstorm.sh $target > /dev/null 2>&1 &
+        '';
+      };
+
+      goland = {
+        description = "启动 GoLand";
+        body = ''
+          set -l target $argv
+          if test (count $argv) -eq 0
+            set target "."
+          end
+          nohup /home/${username}/.local/share/JetBrains/Toolbox/apps/goland/bin/goland.sh $target > /dev/null 2>&1 &
+        '';
+      };
+    };
+
     # 插件
     plugins = [
       # z - 智能目录跳转

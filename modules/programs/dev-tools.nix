@@ -20,4 +20,41 @@
     gcc
     cmake
   ];
+
+  # 允许运行未打补丁的动态二进制文件
+  # 例如：JetBrains Toolbox 下载的 IDE、AppImage 等
+  programs.nix-ld = {
+    enable = true;
+    # 可选：添加额外的库
+    libraries = with pkgs; [
+        stdenv.cc.cc.lib
+        zlib
+        fuse3
+        icu
+        nss
+        openssl
+        curl
+        expat
+
+        xorg.libX11
+        xorg.libXext
+        xorg.libXrender
+        xorg.libXtst
+        xorg.libXi
+        xorg.libXcomposite
+        xorg.libXdamage
+        xorg.libXfixes
+        xorg.libXrandr
+        xorg.libXcursor
+        freetype
+        fontconfig
+        alsa-lib
+
+        libxkbcommon
+        wayland
+        gtk3
+        glib
+        dbus
+    ];
+  };
 }
