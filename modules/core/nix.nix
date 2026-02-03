@@ -1,4 +1,4 @@
-{ ... }:
+{ username, ... }:
 
 {
   # 允许闭源软件
@@ -22,6 +22,9 @@
 
     # 自动优化 store（硬链接相同文件）
     auto-optimise-store = true;
+
+    # 信任用户（允许 devenv 自动管理 binary caches）
+    trusted-users = [ "root" username ];
   };
 
   # 自动垃圾回收
