@@ -3,7 +3,13 @@
 {
   home.packages = with pkgs; [
     # 开发工具
-    jetbrains-toolbox    # IDE 管理器
+    jetbrains.idea
+    jetbrains.goland
+    jetbrains.datagrip
+    jetbrains.webstorm
+    jetbrains.rust-rover
+    jetbrains.pycharm
+
     vscode               # 代码编辑器
     antigravity          # 代码编辑器
 
@@ -48,6 +54,5 @@
     # rdp 远程
     remmina
 
-    folo
   ];
 }

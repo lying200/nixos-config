@@ -15,7 +15,6 @@
     ./programs/applications.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
-    ./programs/rust.nix
   ];
 
   # CLI 工具（用户级）

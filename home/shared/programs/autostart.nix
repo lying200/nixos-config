@@ -5,19 +5,6 @@
   # 使用 XDG autostart 规范
 
   xdg.configFile = {
-    # JetBrains Toolbox（最小化启动）
-    "autostart/jetbrains-toolbox.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=JetBrains Toolbox
-      Comment=JetBrains IDE Manager
-      Exec=${pkgs.jetbrains-toolbox}/bin/jetbrains-toolbox --minimize
-      Icon=jetbrains-toolbox
-      Terminal=false
-      Categories=Development;
-      StartupNotify=false
-      X-GNOME-Autostart-enabled=true
-    '';
 
     # ulauncher 应用启动器（隐藏窗口启动）
     "autostart/ulauncher.desktop".text = ''
