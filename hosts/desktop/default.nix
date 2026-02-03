@@ -31,6 +31,7 @@
     ../../modules/programs/qqmusic.nix
     ../../modules/programs/dev-tools.nix
     ../../modules/programs/default-shell.nix
+    ../../modules/programs/nix-ld.nix
   ];
 
   # 启用功能模块

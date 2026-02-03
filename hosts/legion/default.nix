@@ -32,6 +32,7 @@
     ../../modules/programs/dev-tools.nix
     ../../modules/programs/default-shell.nix
     ../../modules/programs/steam.nix
+    ../../modules/programs/nix-ld.nix
   ];
 
   # 启用功能模块
