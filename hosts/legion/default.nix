@@ -39,9 +39,7 @@
   mySystem = {
     # 硬件配置
     hardware = {
-      # amdgpu.enable = true;      # AMD 显卡
-      nvidia.enable = true;   # NVIDIA 显卡（按需启用）
-      intelgpu.enable = true; # Intel 核显（按需启用）
+      nvidia.enable = true;
     };
 
     # 桌面环境
