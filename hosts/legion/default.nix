@@ -52,7 +52,6 @@
     # 系统服务
     services = {
       tailscale.enable = true;
-      sunshine.enable = true;
     };
 
     # 程序
