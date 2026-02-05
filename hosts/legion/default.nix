@@ -25,6 +25,7 @@
     # 服务
     ../../modules/services/tailscale.nix
     ../../modules/services/sunshine.nix
+    ../../modules/services/podman.nix
 
     # 程序
     ../../modules/programs/fcitx5.nix
@@ -52,6 +53,7 @@
     # 系统服务
     services = {
       tailscale.enable = true;
+      podman.enable = true;
     };
 
     # 程序
