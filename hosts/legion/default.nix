@@ -26,6 +26,7 @@
     ../../modules/services/tailscale.nix
     ../../modules/services/sunshine.nix
     ../../modules/services/podman.nix
+    ../../modules/services/gnome-suspend.nix
 
     # 程序
     ../../modules/programs/fcitx5.nix
@@ -54,6 +55,7 @@
     services = {
       tailscale.enable = true;
       podman.enable = true;
+      gnome-suspend.enable = true;
     };
 
     # 程序
