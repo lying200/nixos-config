@@ -12,7 +12,6 @@
 
     vscode               # 代码编辑器
     antigravity          # 代码编辑器
-    zed-editor
 
     # 浏览器
     google-chrome        # 主流浏览器

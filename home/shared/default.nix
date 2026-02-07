@@ -12,6 +12,7 @@
     ./programs/git.nix
     ./programs/neovim.nix
     ./programs/direnv.nix
+    ./programs/zed.nix
     ./programs/applications.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
