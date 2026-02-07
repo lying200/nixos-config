@@ -12,14 +12,16 @@
             mkdir -p $out/share/rime-data
             cp -r ${inputs.rime-ice}/* $out/share/rime-data/
 
-            # 2. 写入默认配置：启用小鹤双拼
-            cat > $out/share/rime-data/default.custom.yaml <<EOF
-            patch:
-              schema_list:
-                - schema: double_pinyin_flypy   # 雾凇拼音自带的小鹤方案
-                - schema: rime_ice              # 备用
-              "menu/page_size": 9
-            EOF
+            # 2. 写入默认配置：启用小鹤双拼和自定义快捷键
+            cat > $out/share/rime-data/default.custom.yaml <<'EOF'
+patch:
+  schema_list:
+    - schema: double_pinyin_flypy   # 雾凇拼音自带的小鹤方案
+    - schema: rime_ice              # 备用
+  "menu/page_size": 9
+  "switcher/hotkeys":
+    - "Control+Shift+F4"
+EOF
           '')
         ];
       })
