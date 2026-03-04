@@ -25,17 +25,20 @@
     # AI 工具
     gemini-cli           # Google Gemini CLI
 
-    # 启动器与截图
-    ulauncher            # 应用启动器
-    wmctrl               # 窗口控制工具
-    snipaste             # 截图工具
+    # 文件管理
+    nautilus             # GNOME 文件管理器
+    loupe                # GNOME 图片查看器
+    file-roller          # 归档管理器
+
+    # 截图工具
+    snipaste             # 截图贴图工具
 
     # 多媒体
     vlc                  # 视频播放器
     mpv                  # 轻量级播放器
     obs-studio           # 录屏/直播工具
 
-    # 壁纸管理
+    # 壁纸管理（GNOME 下使用）
     variety              # 自动切换壁纸
 
     # 办公/文档

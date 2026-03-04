@@ -1,0 +1,20 @@
+// 颜色和视觉主题配置
+// 使用渐变色焦点环，提供现代化视觉体验
+
+layout {
+    focus-ring {
+        // 活动焦点环 - 蓝紫色渐变（优雅现代）
+        active-gradient from="#89b4fa" to="#cba6f7" angle=135
+
+        // 紧急窗口颜色 - 柔和红色
+        urgent-color "#f38ba8"
+    }
+}
+
+// 最近窗口高亮
+recent-windows {
+    highlight {
+        active-color "#45475a"
+        urgent-color "#f38ba8"
+    }
+}

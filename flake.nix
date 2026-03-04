@@ -11,6 +11,17 @@
     # 雾凇拼音源
     rime-ice.url = "github:iDvel/rime-ice";
     rime-ice.flake = false;
+
+    # Noctalia 桌面 Shell（基于 Quickshell）
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -39,6 +50,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
             home-manager.users.${username} = import ./home/shared;
             home-manager.extraSpecialArgs = {
               inherit inputs username hostname gitUserName gitUserEmail;

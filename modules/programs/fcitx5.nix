@@ -30,6 +30,7 @@ EOF
       fcitx5-nord
       fcitx5-material-color
       fcitx5-fluent
+      fcitx5-mellow-themes
       gnomeExtensions.kimpanel
       qt6Packages.fcitx5-configtool
     ];
@@ -40,6 +41,8 @@ EOF
     overrides={'Gtk/IMModule': <'fcitx'>}
   '';
 
+  # Wayland 下 GTK_IM_MODULE 应为空字符串
+  # 通过 text-input-v3 协议与输入法通信
   environment.variables = {
     GTK_IM_MODULE = lib.mkForce "";
   };
@@ -48,6 +51,8 @@ EOF
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
     SDL_IM_MODULE = "fcitx";
+    GLFW_IM_MODULE = "ibus";    # GLFW 应用（部分 Electron）输入法支持
+    INPUT_METHOD = "fcitx";     # 通用输入法标识
   };
 
 }

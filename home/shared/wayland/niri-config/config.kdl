@@ -1,0 +1,99 @@
+// Niri Configuration
+// https://yalter.github.io/niri/Configuration:-Introduction
+
+environment {
+    LC_MESSAGES "zh_CN.UTF-8"
+    XMODIFIERS "@im=fcitx"
+    INPUT_METHOD "fcitx"
+    GLFW_IM_MODULE "ibus"
+}
+
+include "binds.kdl"
+include "colors.kdl"
+include "theme.kdl"
+include "output.kdl"
+include "startup.kdl"
+include "windowrule.kdl"
+include "animations.kdl"
+
+// 输入设备配置
+input {
+    keyboard {
+        xkb {
+            // 键盘布局由 NixOS 管理，这里留空
+        }
+
+        // 启动时启用 NumLock
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+    }
+
+    // 鼠标自动跟随焦点窗口
+    warp-mouse-to-focus
+
+    // 鼠标悬停自动对焦（不触发滚动）
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// 布局设置
+layout {
+    gaps 10
+    center-focused-column "on-overflow"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 2
+    }
+
+    border {
+        off
+    }
+
+    shadow {
+        on
+        softness 30
+        spread 4
+        offset x=0 y=6
+        color "#00000050"
+    }
+
+    struts {
+    }
+}
+
+// 热键提示
+hotkey-overlay {
+    skip-at-startup
+}
+
+// 要求应用去除客户端装饰（CSD）
+prefer-no-csd
+
+// 截图保存路径
+screenshot-path "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+// 调试选项
+debug {
+    wait-for-frame-completion-before-queueing
+}

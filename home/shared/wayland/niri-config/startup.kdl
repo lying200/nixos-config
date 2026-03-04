@@ -1,0 +1,16 @@
+// 启动程序配置
+
+// Noctalia 桌面 Shell（面板 + 通知 + 壁纸 + 锁屏 + Dock + OSD + Idle）
+spawn-at-startup "noctalia-shell"
+
+// 输入法 - fcitx5
+spawn-at-startup "fcitx5"
+
+// 网络管理图标
+spawn-at-startup "nm-applet"
+
+// 蓝牙管理图标
+spawn-at-startup "blueman-applet"
+
+// XWayland 兼容层
+spawn-at-startup "xwayland-satellite"

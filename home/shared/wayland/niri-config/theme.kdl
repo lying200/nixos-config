@@ -1,0 +1,5 @@
+// 光标主题配置 - Catppuccin Mocha Dark
+cursor {
+    xcursor-theme "catppuccin-mocha-dark-cursors"
+    xcursor-size 24
+}

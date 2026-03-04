@@ -103,21 +103,4 @@
     }
   '';
 
-  xdg.configFile."zellij/themes/tokyo-night.kdl".text = ''
-    themes {
-      tokyo-night {
-        fg "#a9b1d6"
-        bg "#1a1b26"
-        black "#32344a"
-        red "#f7768e"
-        green "#9ece6a"
-        yellow "#e0af68"
-        blue "#7aa2f7"
-        magenta "#bb9af7"
-        cyan "#7dcfff"
-        white "#c0caf5"
-        orange "#ff9e64"
-      }
-    }
-  '';
 }

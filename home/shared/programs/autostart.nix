@@ -2,23 +2,9 @@
 
 {
   # 用户应用开机自启动配置
-  # 使用 XDG autostart 规范
+  # 使用 XDG autostart 规范，通过 OnlyShowIn/NotShowIn 区分桌面环境
 
   xdg.configFile = {
-
-    # ulauncher 应用启动器（隐藏窗口启动）
-    "autostart/ulauncher.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Ulauncher
-      Comment=Application Launcher
-      Exec=${pkgs.ulauncher}/bin/ulauncher --hide-window
-      Icon=ulauncher
-      Terminal=false
-      Categories=Utility;
-      StartupNotify=false
-      X-GNOME-Autostart-enabled=true
-    '';
 
     # Snipaste 截图工具（延迟启动避免缩放问题）
     "autostart/snipaste.desktop".text = ''
@@ -33,9 +19,10 @@
       StartupNotify=false
       X-GNOME-Autostart-enabled=true
       X-GNOME-Autostart-Delay=3
+      OnlyShowIn=GNOME;
     '';
 
-    # Variety 壁纸管理器
+    # Variety 壁纸管理器（仅 GNOME 下自启动，niri 下使用 swww）
     "autostart/variety.desktop".text = ''
       [Desktop Entry]
       Type=Application
@@ -46,7 +33,7 @@
       Terminal=false
       Categories=Utility;
       StartupNotify=false
-      X-GNOME-Autostart-enabled=true
+      OnlyShowIn=GNOME;
     '';
   };
 }
