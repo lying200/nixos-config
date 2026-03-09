@@ -27,6 +27,7 @@
     ../../modules/services/sunshine.nix
     ../../modules/services/podman.nix
     ../../modules/services/gnome-suspend.nix
+    ../../modules/services/flatpak.nix
 
     # 程序
     ../../modules/programs/fcitx5.nix
@@ -56,6 +57,7 @@
       tailscale.enable = true;
       podman.enable = true;
       gnome-suspend.enable = true;
+      flatpak.enable = true;
     };
 
     # 程序
