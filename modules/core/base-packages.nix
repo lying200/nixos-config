@@ -36,7 +36,7 @@
     iotop            # IO 监控
 
     # 其他工具
-    neofetch         # 系统信息展示
+    fastfetch        # 系统信息展示
     tmux             # 终端复用器
   ];
 }
