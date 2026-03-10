@@ -11,6 +11,7 @@
     ../../modules/core/fonts.nix
     ../../modules/core/base-packages.nix
     ../../modules/core/nix.nix
+    ../../modules/core/compatibility.nix
 
     # 硬件模块
     ../../modules/hardware/amd-gpu.nix
