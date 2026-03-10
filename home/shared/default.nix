@@ -33,6 +33,11 @@
     VISUAL = "nvim";
   };
 
+  # 添加 ~/.local/bin 到 PATH
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   # 让 Home Manager 管理自己
   programs.home-manager.enable = true;
 }
