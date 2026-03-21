@@ -22,6 +22,38 @@
       Theme=kwinblur-mellow-wechat
       ForceWaylandDPI=0
     '';
+
+    "satty/config.toml".text = ''
+      [general]
+      fullscreen = true
+      early-exit = true
+      initial-tool = "arrow"
+      copy-command = "wl-copy"
+      annotation-size-factor = 2
+      save-after-copy = false
+      default-hide-toolbars = false
+      primary-highlighter = "block"
+      # 右键自动复制并退出
+      actions-on-right-click = ["save-to-clipboard", "exit"]
+      # Enter 键复制到剪贴板
+      actions-on-enter = ["save-to-clipboard"]
+      # Esc 退出
+      actions-on-escape = ["exit"]
+
+      [color-palette]
+      palette = [
+        "#ff0000",  # 红色 - 醒目标注
+        "#ffff00",  # 黄色 - 高亮重点
+        "#00ff00",  # 绿色 - 正确/通过
+        "#ff9900",  # 橙色 - 警告
+        "#0099ff",  # 蓝色 - 信息提示
+        "#ffffff"   # 白色 - 通用
+      ]
+
+      [font]
+      family = "Maple Mono SC NF"
+      style = "Bold"
+    '';
   };
 
   home.sessionVariables = {

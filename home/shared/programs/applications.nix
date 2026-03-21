@@ -26,6 +26,7 @@
     file-roller
 
     snipaste
+    satty
 
     vlc
     mpv

@@ -31,6 +31,9 @@ binds {
     // 截图到剪贴板（区域选择）
     Mod+Shift+S hotkey-overlay-title="Screenshot Region to Clipboard" { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
 
+    // Satty 截图标注（F1 快捷键）
+    F1 hotkey-overlay-title="Screenshot with Annotation" { spawn-sh "grim -g \"$(slurp -d -c '#ff0000ff')\" -t ppm - | satty --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date +%Y%m%d-%H%M%S).png"; }
+
     // ──── 媒体控制（通过 Noctalia OSD）────
 
     // 音量控制
