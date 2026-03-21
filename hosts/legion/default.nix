@@ -21,6 +21,7 @@
     # 桌面环境
     ../../modules/desktop/wayland.nix
     ../../modules/desktop/gnome.nix
+    ../../modules/desktop/niri.nix
     ../../modules/desktop/monitoring.nix
 
     # 服务
@@ -49,6 +50,7 @@
     # 桌面环境
     desktop = {
       gnome.enable = true;
+      niri.enable = true;  # 启用 Niri 窗口管理器
       wayland.enable = true;
       monitoring.enable = true;
     };

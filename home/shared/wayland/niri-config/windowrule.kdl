@@ -1,0 +1,110 @@
+// 窗口规则配置
+
+// 全局窗口规则 - 圆角和视觉效果
+window-rule {
+    // 圆角半径
+    geometry-corner-radius 12
+
+    // 裁剪到几何形状（避免圆角外的内容溢出）
+    clip-to-geometry true
+
+    // 禁止边框画到背景中
+    draw-border-with-background false
+}
+
+// Ghostty 终端特殊处理
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"#
+    default-column-width {}
+}
+
+// ──── 浏览器画中画 ────
+
+// Firefox 画中画模式浮动
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"firefox$"# title="^画中画$"
+    open-floating true
+}
+
+// Chrome 画中画模式浮动
+window-rule {
+    match app-id=r#"chrome"# title="^Picture in picture$"
+    match app-id=r#"chrome"# title="^画中画$"
+    open-floating true
+}
+
+// ──── 国产 IM 软件 ────
+
+// 微信 - 主窗口正常排列，小窗口浮动
+window-rule {
+    match app-id="wechat" title="^微信$"
+    default-column-width { proportion 0.35; }
+}
+
+window-rule {
+    match app-id="wechat" title=""
+    exclude title="^微信$"
+    open-floating true
+}
+
+// QQ - 主窗口正常排列，辅助窗口浮动
+window-rule {
+    match app-id=r#"^QQ$"# title="^QQ$"
+    default-column-width { proportion 0.35; }
+}
+
+window-rule {
+    match app-id=r#"^QQ$"# title=""
+    exclude title="^QQ$"
+    open-floating true
+}
+
+// ──── QQ 音乐 ────
+
+window-rule {
+    match app-id="qqmusic"
+    default-column-width { proportion 0.5; }
+}
+
+// ──── 系统工具浮动 ────
+
+window-rule {
+    match app-id="nm-connection-editor"
+    match app-id="blueman-manager"
+    match app-id="org.pulseaudio.pavucontrol"
+    match app-id="fcitx" title="Fcitx5 Input Window"
+    match app-id="org.gnome.FileRoller"
+    match app-id="org.gnome.Calculator"
+    match app-id="org.gnome.Loupe"
+    match title="^重命名$"
+    match title="^图片查看器$"
+    match title="^图片和视频$"
+    match title="^视频播放器$"
+    match title="^日历$"
+    match title="^计算器$"
+    open-floating true
+}
+
+// ──── Steam ────
+
+window-rule {
+    match app-id="steam" title="Friends List"
+    match title="^Steam 设置$"
+    open-floating true
+}
+
+// ──── 密码管理器安全规则 ────
+
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    block-out-from "screen-capture"
+}
+
+// ──── Telegram ────
+
+window-rule {
+    match app-id="org.telegram.desktop" title="^Media viewer$"
+    open-floating true
+}

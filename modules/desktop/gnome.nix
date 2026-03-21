@@ -15,19 +15,9 @@ with lib;
     services.displayManager.gdm.enable = true;
 
     # GNOME Mutter 缩放设置（全局）
-    services.desktopManager.gnome.extraGSettingsOverrides = ''
+    services.desktopManager.gnome.extraGSettingsOverrides = lib.mkAfter ''
       [org.gnome.mutter]
       experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
     '';
-
-    # 音频
-    services.pulseaudio.enable = false;
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
   };
 }

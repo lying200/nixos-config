@@ -35,8 +35,13 @@
     btop             # 现代化系统监控
     iotop            # IO 监控
 
+    # JSON/YAML 处理
+    jq               # JSON 处理工具
+
+    # Wayland 工具
+    xdg-utils        # xdg-open 等桌面集成工具
+
     # 其他工具
-    fastfetch        # 系统信息展示
-    tmux             # 终端复用器
+    fastfetch         # 系统信息展示（替代已停维的 neofetch）
   ];
 }

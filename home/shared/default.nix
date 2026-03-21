@@ -9,6 +9,7 @@
   # 导入各模块
   imports = [
     ./terminal
+    ./wayland
     ./programs/git.nix
     ./programs/neovim.nix
     ./programs/direnv.nix
@@ -31,6 +32,24 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+
+    # JetBrains 系软件使用 Wayland
+    _JAVA_OPTIONS = "-Dawt.toolkit.name=WLToolkit";
+  };
+
+  # XDG 标准用户目录
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    pictures = "${config.home.homeDirectory}/Pictures";
+    documents = "${config.home.homeDirectory}/Documents";
+    download = "${config.home.homeDirectory}/Downloads";
+    music = "${config.home.homeDirectory}/Music";
+    videos = "${config.home.homeDirectory}/Videos";
+    desktop = "${config.home.homeDirectory}/Desktop";
+    extraConfig = {
+      WALLPAPERS = "${config.home.homeDirectory}/Pictures/Wallpapers";
+    };
   };
 
   # 添加 ~/.local/bin 到 PATH

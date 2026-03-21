@@ -15,7 +15,9 @@
       sarasa-gothic
 
       noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       noto-fonts-color-emoji
+      noto-fonts-emoji-blob-bin
     ];
 
     fontconfig.defaultFonts = {
@@ -37,6 +39,11 @@
       serif = [
         "LXGW WenKai"
         "Noto Serif CJK SC"
+      ];
+
+      # Emoji 字体
+      emoji = [
+        "Noto Color Emoji"
       ];
     };
   };

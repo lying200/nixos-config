@@ -17,7 +17,6 @@
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
       ];
     };
 
@@ -28,15 +27,8 @@
       binding = "F1";
     };
 
-    # Custom 1: ulauncher 启动器快捷键
+    # Custom 1: Ghostty + Zellij 终端快捷键
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      name = "ulauncher Toggle";
-      command = "ulauncher-toggle";
-      binding = "<Alt>space";
-    };
-
-    # Custom 2: Ghostty + Zellij 终端快捷键
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       name = "Open Terminal (Zellij)";
       command = "ghostty -e zellij";
       binding = "<Control><Alt>t";

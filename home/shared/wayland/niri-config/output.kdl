@@ -1,0 +1,14 @@
+// 显示器输出配置
+
+output "HDMI-A-1" {
+    mode "2560x1440@144"
+    scale 1.25
+    position x=0 y=0
+    focus-at-startup
+}
+
+output "eDP-1" {
+    mode "2560x1600@165"
+    scale 1.33
+    position x=2048 y=0
+}
