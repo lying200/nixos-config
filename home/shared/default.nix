@@ -13,6 +13,7 @@
     ./programs/direnv.nix
     ./programs/zed.nix
     ./programs/applications.nix
+    ./programs/windterm.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
   ];
