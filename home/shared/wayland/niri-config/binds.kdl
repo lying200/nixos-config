@@ -10,6 +10,9 @@ binds {
     // 应用启动器 - Noctalia Launcher
     Mod+D hotkey-overlay-title="App Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
 
+    // 剪切板历史 - Noctalia Clipboard
+    Mod+Y hotkey-overlay-title="Clipboard History" { spawn-sh "noctalia-shell ipc call launcher toggle && sleep 0.1 && wtype '>clip'"; }
+
     // 文件管理器 - nautilus
     Mod+E hotkey-overlay-title="File Manager: nautilus" { spawn "nautilus"; }
 
