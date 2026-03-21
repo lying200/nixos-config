@@ -1,7 +1,6 @@
 { ... }:
 
 {
-  # 时区与语言
   time.timeZone = "Asia/Shanghai";
 
   # 双系统时间同步：使硬件时钟使用本地时间而非 UTC

@@ -6,69 +6,49 @@
     enableFishIntegration = true;
 
     settings = {
-      # 主题
       theme = "catppuccin-mocha";
-
-      # 默认布局
       default_layout = "compact";
 
-      # UI 设置
       simplified_ui = true;
-      pane_frames = false;  # 禁用边框，更简洁
+      pane_frames = false;
 
-      # 鼠标支持
       mouse_mode = true;
       scroll_buffer_size = 10000;
 
-      # 复制模式
-      copy_command = "wl-copy";  # Wayland 剪贴板
+      copy_command = "wl-copy";
       copy_on_select = false;
 
-      # 会话
       session_serialization = true;
       pane_viewport_serialization = true;
       scrollback_lines_to_serialize = 10000;
 
-      # 自动布局
       auto_layout = true;
-
-      # 镜像会话
       mirror_session = false;
 
-      # 其他
       on_force_close = "quit";
       default_shell = "fish";
-
-      # 禁用启动提示
       show_startup_tips = false;
-
-      # 滚动回看编辑器
       scrollback_editor = "nvim";
     };
   };
 
-  # 自定义按键绑定配置（使用 KDL 格式）
   xdg.configFile."zellij/config.kdl".text = ''
     keybinds {
       scroll {
-        // 显式绑定 'e' 到编辑回滚
         bind "e" {
           EditScrollback;
           SwitchToMode "Normal";
         }
 
-        // 快速滚动
         bind "J" { ScrollDown; }
         bind "K" { ScrollUp; }
 
-        // 跳转到顶部/底部
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
       }
     }
   '';
 
-  # Zellij 布局文件
   xdg.configFile."zellij/layouts/default.kdl".text = ''
     layout {
       default_tab_template {
@@ -84,7 +64,6 @@
     }
   '';
 
-  # Zellij 主题配置
   xdg.configFile."zellij/themes/catppuccin-mocha.kdl".text = ''
     themes {
       catppuccin-mocha {

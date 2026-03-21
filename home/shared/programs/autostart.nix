@@ -1,12 +1,10 @@
 { pkgs, ... }:
 
 {
-  # 用户应用开机自启动配置
   # 使用 XDG autostart 规范，通过 OnlyShowIn/NotShowIn 区分桌面环境
-
   xdg.configFile = {
 
-    # Snipaste 截图工具（延迟启动避免缩放问题）
+    # 延迟启动避免缩放问题
     "autostart/snipaste.desktop".text = ''
       [Desktop Entry]
       Type=Application
@@ -22,7 +20,6 @@
       OnlyShowIn=GNOME;
     '';
 
-    # Variety 壁纸管理器（仅 GNOME 下自启动，niri 下使用 swww）
     "autostart/variety.desktop".text = ''
       [Desktop Entry]
       Type=Application

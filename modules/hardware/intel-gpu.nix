@@ -8,13 +8,10 @@ with lib;
   };
 
   config = mkIf config.mySystem.hardware.intelgpu.enable {
-    # 启用专有固件
     hardware.enableRedistributableFirmware = true;
 
-    # Intel GPU 驱动（通常已默认启用）
     boot.initrd.kernelModules = [ "i915" ];
 
-    # VA-API 硬件加速
     hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -25,7 +22,6 @@ with lib;
       ];
     };
 
-    # 环境变量
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = mkForce "iHD";  # 使用 intel-media-driver
     };

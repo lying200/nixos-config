@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # Niri 配置文件
   xdg.configFile = {
-    # Niri 核心配置
     "niri/config.kdl".source = ./niri-config/config.kdl;
     "niri/binds.kdl".source = ./niri-config/binds.kdl;
     "niri/colors.kdl".source = ./niri-config/colors.kdl;
@@ -13,16 +11,13 @@
     "niri/animations.kdl".source = ./niri-config/animations.kdl;
     "niri/startup.kdl".source = ./niri-config/startup.kdl;
 
-    # Fastfetch 系统信息配置
     "fastfetch/config.jsonc".source = ./fastfetch/config.jsonc;
 
-    # Kvantum 主题配置（Catppuccin Mocha）
     "Kvantum/kvantum.kvconfig".text = ''
       [General]
       theme=catppuccin-mocha-mauve
     '';
 
-    # Fcitx5 主题配置（Mellow Graphite Dark）
     "fcitx5/conf/classicui.conf".text = ''
       Theme=mellow-graphite-dark
       ForceWaylandDPI=0
@@ -30,12 +25,10 @@
     '';
   };
 
-  # 环境变量（仅 home-manager 级别覆盖）
   home.sessionVariables = {
-    GTK_IM_MODULE = "";  # Wayland 下通过 text-input 协议
+    GTK_IM_MODULE = "";
   };
 
-  # Fish shell 集成
   programs.fish = {
     loginShellInit = ''
       if test "$XDG_SESSION_TYPE" = "wayland"
@@ -45,7 +38,6 @@
     '';
   };
 
-  # GTK 主题配置（Catppuccin Mocha）
   gtk = {
     enable = true;
     cursorTheme = {
@@ -66,14 +58,12 @@
     };
   };
 
-  # Qt 主题配置
   qt = {
     enable = true;
     platformTheme.name = "kvantum";
     style.name = "kvantum";
   };
 
-  # dconf 设置
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";

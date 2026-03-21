@@ -8,23 +8,17 @@ with lib;
   };
 
   config = mkIf config.mySystem.desktop.monitoring.enable {
-    # 硬件传感器支持
     hardware.sensor.iio.enable = true;
 
-    # 安装监控工具和 GNOME 扩展
     environment.systemPackages = with pkgs; [
-      # 系统监控工具
-      lm_sensors       # 传感器检测工具 (sensors 命令)
-      htop             # 系统资源监控
-      gnome-tweaks     # GNOME 调整工具
-
-      # GNOME 扩展
-      gnomeExtensions.vitals              # 系统监控扩展 (CPU/内存/温度)
-      gnomeExtensions.appindicator        # 系统托盘支持 (显示 Toolbox 等应用图标)
-      gnomeExtensions.clipboard-indicator # 剪贴板历史管理器
+      lm_sensors
+      htop
+      gnome-tweaks
+      gnomeExtensions.vitals
+      gnomeExtensions.appindicator
+      gnomeExtensions.clipboard-indicator
     ];
 
-    # GNOME 扩展配置（通过 dconf/gsettings）
     # 注意：这里的配置仅作为默认值，用户手动启用/禁用扩展后会被覆盖
     # 如需强制启用扩展，需要使用 home-manager 或通过脚本定期重置
     services.desktopManager.gnome.extraGSettingsOverrides = ''

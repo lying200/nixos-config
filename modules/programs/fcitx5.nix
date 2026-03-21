@@ -8,11 +8,9 @@
       (fcitx5-rime.override {
         rimeDataPkgs = [
           (pkgs.runCommand "rime-ice" {} ''
-            # 1. 拷贝雾凇拼音所有文件
             mkdir -p $out/share/rime-data
             cp -r ${inputs.rime-ice}/* $out/share/rime-data/
 
-            # 2. 写入默认配置：启用小鹤双拼和自定义快捷键
             cat > $out/share/rime-data/default.custom.yaml <<'EOF'
 patch:
   schema_list:
@@ -51,8 +49,8 @@ EOF
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
     SDL_IM_MODULE = "fcitx";
-    GLFW_IM_MODULE = "ibus";    # GLFW 应用（部分 Electron）输入法支持
-    INPUT_METHOD = "fcitx";     # 通用输入法标识
+    GLFW_IM_MODULE = "ibus";
+    INPUT_METHOD = "fcitx";
   };
 
 }

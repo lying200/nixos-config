@@ -4,56 +4,43 @@
   programs.fish = {
     enable = true;
 
-    # 交互式 Shell 初始化
     interactiveShellInit = ''
-      # 禁用欢迎消息
       set -g fish_greeting
 
-      # 更好的 ls 颜色
       set -gx LS_COLORS 'di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
-      # 启用 vi 模式
       fish_vi_key_bindings
 
       # jk 映射为 Esc 退出插入模式
       bind -M insert jk "if commandline -P; commandline -f cancel; else; set fish_bind_mode default; commandline -f repaint; end"
 
-      # 在 vi 插入模式下的自动建议快捷键
-      bind -M insert \ce accept-autosuggestion  # Ctrl+E 接受整个建议
-      bind -M insert \cf forward-word          # Ctrl+F 接受一个词
+      bind -M insert \ce accept-autosuggestion
+      bind -M insert \cf forward-word
 
-      # zoxide 初始化
       zoxide init fish | source
 
-      # NixOS 配置路径
       set -gx NIXOS_CONFIG_DIR /home/${username}/nixos-config
     '';
 
-    # Shell 别名
     shellAliases = {
-      # 系统管理
       rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config#${hostname}";
       update = "cd /home/${username}/nixos-config && sudo nix flake update && rebuild";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
 
-      # 快速进入配置目录
       nixcfg = "cd /home/${username}/nixos-config";
 
-      # 无 sudo 版本（在 IDEA 中使用）
       # 提示用户需要在外部终端执行
       rebuild-help = "echo '⚠️  Please run this in a real terminal (Ghostty/Gnome Terminal), not in IDEA'";
 
-      # 预览配置变更（不需要 sudo）
+      # 不需要 sudo
       rebuild-check = "nixos-rebuild build --flake /home/${username}/nixos-config#${hostname}";
 
-      # 常用命令增强
       ll = "eza -la --icons --git";
       ls = "eza --icons";
       l = "eza -l --icons";
       tree = "eza --tree --icons";
       cat = "bat";
 
-      # Git 简写
       g = "git";
       gs = "git status";
       ga = "git add";
@@ -61,15 +48,12 @@
       gp = "git push";
       gl = "git log --oneline --graph";
 
-      # 目录导航
       ".." = "cd ..";
       "..." = "cd ../..";
 
-      # Zoxide 别名
       cd = "z";
     };
 
-    # JetBrains IDE 启动函数（后台运行）
     functions = {
       idea = {
         description = "启动 IntelliJ IDEA Ultimate";
@@ -138,9 +122,7 @@
       };
     };
 
-    # 插件
     plugins = [
-      # fzf.fish - 模糊搜索
       {
         name = "fzf.fish";
         src = pkgs.fetchFromGitHub {

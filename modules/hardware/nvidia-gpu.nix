@@ -48,30 +48,24 @@ with lib;
   };
 
   config = mkIf config.mySystem.hardware.nvidia.enable {
-    # 启用专有固件
     hardware.enableRedistributableFirmware = true;
 
-    # NVIDIA 驱动配置
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
       # 使用开源内核模块（推荐，从 515 版本开始）
       open = mkDefault true;
 
-      # 启用 Nvidia 设置面板
       nvidiaSettings = true;
 
-      # 使用最新稳定驱动
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-      # 电源管理（推荐）
       powerManagement.enable = mkDefault true;
 
-      # Modesetting（Wayland 必需）
+      # Wayland 必需
       modesetting.enable = true;
     };
 
-    # NVIDIA Prime 配置（混合显卡笔记本）
     hardware.nvidia.prime = mkIf config.mySystem.hardware.nvidia.prime.enable (
       let
         primeCfg = config.mySystem.hardware.nvidia.prime;
@@ -79,10 +73,9 @@ with lib;
       # Offload 模式（省电，按需使用独显）
       offload = {
         enable = primeCfg.offload.enable;
-        enableOffloadCmd = primeCfg.offload.enableOffloadCmd;  # 提供 nvidia-offload 命令
+        enableOffloadCmd = primeCfg.offload.enableOffloadCmd;
       };
 
-      # 指定 Bus ID
       nvidiaBusId = mkIf (primeCfg.nvidiaBusId != "")
         primeCfg.nvidiaBusId;
 
@@ -93,19 +86,15 @@ with lib;
         primeCfg.amdBusId;
     });
 
-    # OpenGL 和 Vulkan 支持
     hardware.graphics = {
       enable = true;
-      enable32Bit = true;  # 32 位应用支持
+      enable32Bit = true;
     };
 
-    # 环境变量（改善兼容性）
+    # 改善兼容性
     environment.sessionVariables = mkIf config.mySystem.hardware.nvidia.enable {
-      # Wayland 支持
       LIBVA_DRIVER_NAME = "nvidia";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-
-      # GBM 后端
       GBM_BACKEND = "nvidia-drm";
     };
   };

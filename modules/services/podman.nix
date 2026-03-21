@@ -13,7 +13,8 @@ with lib;
       podman = {
         enable = true;
         dockerCompat = true;
-        defaultNetwork.settings.dns_enabled = true;  # 允许 podman-compose 下的容器互相通信
+        # 允许 podman-compose 下的容器互相通信
+        defaultNetwork.settings.dns_enabled = true;
       };
     };
 
@@ -21,10 +22,9 @@ with lib;
       extraGroups = [ "podman" ];
     };
 
-    # 安装常用容器工具
     environment.systemPackages = with pkgs; [
-      podman-compose  # docker-compose 的替代品
-      podman-tui      # Podman 终端界面
+      podman-compose
+      podman-tui
     ];
   };
 }
