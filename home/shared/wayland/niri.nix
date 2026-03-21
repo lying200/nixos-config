@@ -19,9 +19,8 @@
     '';
 
     "fcitx5/conf/classicui.conf".text = ''
-      Theme=mellow-graphite-dark
+      Theme=kwinblur-mellow-wechat
       ForceWaylandDPI=0
-      Font="Noto Sans CJK SC 11"
     '';
   };
 
