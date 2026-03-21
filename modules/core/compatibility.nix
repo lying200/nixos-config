@@ -8,4 +8,7 @@
       ln -sf ${pkgs.bash}/bin/bash /bin/bash
     '';
   };
+
+  # 将 ~/.local/bin 添加到 PATH
+  environment.localBinInPath = true;
 }
