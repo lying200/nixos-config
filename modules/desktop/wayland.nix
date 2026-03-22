@@ -20,11 +20,9 @@ with lib;
 
     security.polkit.enable = true;
 
-    # 使用 mkDefault 以便 niri.nix 等更具体的模块可以覆盖
     environment.sessionVariables = {
       NIXOS_OZONE_WL = lib.mkDefault "1";
       QT_QPA_PLATFORM = lib.mkDefault "wayland";
-      GDK_BACKEND = lib.mkDefault "wayland,x11";
       SDL_VIDEODRIVER = lib.mkDefault "wayland";
       XDG_SESSION_TYPE = "wayland";
     };
