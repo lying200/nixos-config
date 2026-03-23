@@ -11,6 +11,8 @@
 
     vscode
     antigravity
+    codex
+    claude-code
 
     google-chrome
 
