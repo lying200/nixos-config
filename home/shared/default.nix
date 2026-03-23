@@ -14,6 +14,7 @@
     ./programs/zed.nix
     ./programs/applications.nix
     ./programs/windterm.nix
+    ./programs/cc-switch.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
   ];
