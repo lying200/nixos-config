@@ -35,9 +35,12 @@
     _JAVA_OPTIONS = "-Dawt.toolkit.name=WLToolkit";
   };
 
+  gtk.gtk4.theme = null;
+
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+    setSessionVariables = false;
     pictures = "${config.home.homeDirectory}/Pictures";
     documents = "${config.home.homeDirectory}/Documents";
     download = "${config.home.homeDirectory}/Downloads";
