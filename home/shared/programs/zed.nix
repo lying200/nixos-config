@@ -9,6 +9,7 @@
       "toml"
       "rust"
       "make"
+      "wakatime"
     ];
 
     userSettings = {
