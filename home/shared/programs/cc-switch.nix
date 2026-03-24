@@ -1,11 +1,11 @@
 { pkgs, ... }:
 
 let
-  version = "3.12.2";
+  version = "3.12.3";
 
   src = pkgs.fetchurl {
     url = "https://github.com/farion1231/cc-switch/releases/download/v${version}/CC-Switch-v${version}-Linux-x86_64.AppImage";
-    sha256 = "1zn9vb9gy0id34m95j68xj8kz9wfgmkpann6ahyvb04q6mhb25m8";
+    sha256 = "0k1p56cnv8zrfxqi1mw68dp6429r56i1yffvyvdnps86ifz3frsw";
   };
 
   appimageContents = pkgs.appimageTools.extract {
