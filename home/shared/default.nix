@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, inputs, ... }:
 
 {
   home.username = username;
@@ -25,6 +25,7 @@
     fzf
     zoxide
     delta
+    inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   home.sessionVariables = {
