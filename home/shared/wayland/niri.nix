@@ -83,9 +83,11 @@
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
+      gtk-decoration-layout = "";
     };
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = true;
+      gtk-decoration-layout = "";
     };
   };
 
@@ -102,6 +104,9 @@
       icon-theme = "Papirus-Dark";
       cursor-theme = "catppuccin-mocha-dark-cursors";
       cursor-size = 24;
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = "";
     };
   };
 }
