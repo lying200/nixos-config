@@ -13,4 +13,14 @@
       '';
     })
   ];
+
+  xdg.desktopEntries.windterm = {
+    name = "WindTerm";
+    genericName = "Terminal Emulator";
+    comment = "A professional cross-platform SSH/Sftp/Shell/Telnet/Serial terminal";
+    exec = "windterm";
+    terminal = false;
+    categories = [ "System" "TerminalEmulator" ];
+    icon = "utilities-terminal";
+  };
 }
