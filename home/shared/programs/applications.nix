@@ -48,5 +48,7 @@
 
     remmina
     moonlight-qt
+
+    bubblewrap
   ];
 }
