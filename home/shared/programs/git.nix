@@ -15,7 +15,7 @@
       };
 
       core = {
-        editor = "vim";
+        editor = "nvim";
         autocrlf = "input";
       };
     };
