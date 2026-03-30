@@ -33,6 +33,7 @@
       save-after-copy = false
       default-hide-toolbars = false
       primary-highlighter = "block"
+      disable-notifications = true
       # 右键自动复制并退出
       actions-on-right-click = ["save-to-clipboard", "exit"]
       # Enter 键复制到剪贴板
