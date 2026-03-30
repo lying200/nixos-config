@@ -67,7 +67,6 @@ with lib;
       MOZ_ENABLE_WAYLAND = "1";
       QT_QPA_PLATFORMTHEME = "kvantum";
       QT_STYLE_OVERRIDE = "kvantum";
-      XDG_CURRENT_DESKTOP = "niri";
     };
 
     services.gnome.gnome-keyring.enable = true;

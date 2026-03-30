@@ -2,6 +2,7 @@
 // https://yalter.github.io/niri/Configuration:-Introduction
 
 environment {
+    XDG_CURRENT_DESKTOP "niri"
     LC_MESSAGES "zh_CN.UTF-8"
     XMODIFIERS "@im=fcitx"
     INPUT_METHOD "fcitx"
