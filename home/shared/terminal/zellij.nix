@@ -4,45 +4,42 @@
   programs.zellij = {
     enable = true;
     enableFishIntegration = true;
-
-    settings = {
-      theme = "catppuccin-mocha";
-      default_layout = "compact";
-
-      simplified_ui = true;
-      pane_frames = false;
-
-      mouse_mode = true;
-      scroll_buffer_size = 10000;
-
-      copy_command = "wl-copy";
-      copy_on_select = false;
-
-      session_serialization = true;
-      pane_viewport_serialization = true;
-      scrollback_lines_to_serialize = 10000;
-
-      auto_layout = true;
-      mirror_session = false;
-
-      on_force_close = "quit";
-      default_shell = "fish";
-      show_startup_tips = false;
-      scrollback_editor = "nvim";
-    };
   };
 
   xdg.configFile."zellij/config.kdl".text = ''
+    // ──── 主题 ────
+    theme "catppuccin-mocha"
+
+    // ──── UI ────
+    simplified_ui false
+    pane_frames false
+    show_startup_tips false
+
+    // ──── 行为 ────
+    mouse_mode true
+    scroll_buffer_size 10000
+    copy_command "wl-copy"
+    copy_on_select true
+    on_force_close "quit"
+    default_shell "fish"
+    scrollback_editor "nvim"
+
+    // ──── 会话 ────
+    session_serialization true
+    pane_viewport_serialization true
+    scrollback_lines_to_serialize 10000
+    auto_layout true
+    mirror_session false
+
+    // ──── 快捷键 ────
     keybinds {
       scroll {
         bind "e" {
           EditScrollback;
           SwitchToMode "Normal";
         }
-
         bind "J" { ScrollDown; }
         bind "K" { ScrollUp; }
-
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
       }
@@ -52,9 +49,12 @@
   xdg.configFile."zellij/layouts/default.kdl".text = ''
     layout {
       default_tab_template {
-        children
         pane size=1 borderless=true {
           plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+          plugin location="zellij:status-bar"
         }
       }
 
@@ -81,5 +81,4 @@
       }
     }
   '';
-
 }
