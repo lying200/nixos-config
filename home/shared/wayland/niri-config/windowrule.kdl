@@ -94,6 +94,13 @@ window-rule {
     open-floating true
 }
 
+// ──── Satty 截图标注 ────
+
+window-rule {
+    match app-id="com.gabm.satty"
+    open-floating true
+}
+
 // ──── 密码管理器安全规则 ────
 
 window-rule {
