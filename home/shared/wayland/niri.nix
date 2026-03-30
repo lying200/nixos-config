@@ -25,11 +25,11 @@
 
     "satty/config.toml".text = ''
       [general]
-      fullscreen = true
+      fullscreen = false
       early-exit = true
       initial-tool = "arrow"
       copy-command = "wl-copy"
-      annotation-size-factor = 2
+      annotation-size-factor = 0.6
       save-after-copy = false
       default-hide-toolbars = false
       primary-highlighter = "block"
