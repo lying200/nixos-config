@@ -340,7 +340,7 @@
     "enableWindowsSearch": true,
     "enableSessionSearch": true,
     "ignoreMouseInput": false,
-    "screenshotAnnotationTool": "",
+    "screenshotAnnotationTool": "satty",
     "overviewLayer": false,
     "density": "default"
   },

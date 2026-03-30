@@ -12,5 +12,9 @@ spawn-at-startup "nm-applet"
 // 蓝牙管理图标
 spawn-at-startup "blueman-applet"
 
+// 剪贴板监听（独立于 noctalia，确保重启后可用）
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+
 // XWayland 兼容层
 spawn-at-startup "xwayland-satellite"
