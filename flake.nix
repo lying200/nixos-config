@@ -21,7 +21,7 @@
     };
 
     devinit = {
-      url = "github:lying200/devinit/vibe-coding";
+      url = "github:lying200/devinit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
