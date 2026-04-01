@@ -35,6 +35,9 @@
       copy-on-select = "clipboard";
       confirm-close-surface = false;
 
+      # 滚动
+      mouse-scroll-multiplier = 0.5;
+
       # 渲染
       bold-is-bright = false;
 
