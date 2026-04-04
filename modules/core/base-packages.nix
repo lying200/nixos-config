@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    git vim wget curl
+    git wget curl
 
     mesa-demos
     vulkan-tools

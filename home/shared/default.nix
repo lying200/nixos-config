@@ -9,7 +9,7 @@
     ./terminal
     ./wayland
     ./programs/git.nix
-    ./programs/neovim.nix
+    ./programs/neovim
     ./programs/direnv.nix
     ./programs/zed.nix
     ./programs/applications.nix
