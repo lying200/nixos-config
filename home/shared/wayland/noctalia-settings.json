@@ -103,7 +103,10 @@
           "drawerEnabled": true,
           "hidePassive": false,
           "id": "Tray",
-          "pinned": []
+          "pinned": [
+            "微信",
+            "Telegram Desktop"
+          ]
         },
         {
           "hideWhenZero": false,
