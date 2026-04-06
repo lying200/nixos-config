@@ -43,6 +43,11 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
+layer-rule {
+    match namespace=r#"^noctalia-overview-"#
+    place-within-backdrop true
+}
+
 // 布局设置
 layout {
     gaps 10
@@ -80,6 +85,16 @@ layout {
     }
 
     struts {
+    }
+}
+
+overview {
+    backdrop-color "#222222"
+    workspace-shadow {
+        softness 40
+        spread 10
+        offset x=0 y=10
+        color "#00000050"
     }
 }
 

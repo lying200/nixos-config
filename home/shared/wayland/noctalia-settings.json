@@ -270,7 +270,7 @@
   },
   "wallpaper": {
     "enabled": true,
-    "overviewEnabled": false,
+    "overviewEnabled": true,
     "directory": "/home/echoyn/Pictures/Wallpapers",
     "monitorDirectories": [
       {
