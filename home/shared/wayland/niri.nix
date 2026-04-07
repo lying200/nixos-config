@@ -30,14 +30,6 @@
     GTK_IM_MODULE = "";
   };
 
-  programs.fish = {
-    loginShellInit = ''
-      if test "$XDG_SESSION_TYPE" = "wayland"
-        and test "$XDG_CURRENT_DESKTOP" = "niri"
-        set -gx _JAVA_AWT_WM_NONREPARENTING 1
-      end
-    '';
-  };
 
   gtk = {
     enable = true;

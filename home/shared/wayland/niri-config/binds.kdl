@@ -5,7 +5,7 @@ binds {
     // ──── 应用启动 ────
 
     // 终端 - 使用 ghostty
-    Mod+T hotkey-overlay-title="Open Terminal: ghostty" { spawn "ghostty"; }
+    Mod+T hotkey-overlay-title="Open Terminal: ghostty + zellij" { spawn "ghostty" "-e" "zellij"; }
 
     // 应用启动器 - Noctalia Launcher
     Mod+D hotkey-overlay-title="App Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }

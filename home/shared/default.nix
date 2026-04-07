@@ -32,8 +32,6 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
 
-    # JetBrains 系软件使用 Wayland
-    _JAVA_OPTIONS = "-Dawt.toolkit.name=WLToolkit";
   };
 
   gtk.gtk4.theme = null;

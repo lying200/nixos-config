@@ -25,8 +25,8 @@
       # LSP 常用语言服务器
       lua-language-server
       nil # Nix LSP
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
+      typescript-language-server
+      vscode-langservers-extracted # HTML/CSS/JSON/ESLint
       yaml-language-server
       bash-language-server
       pyright

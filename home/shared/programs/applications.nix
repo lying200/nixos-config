@@ -2,12 +2,12 @@
 
 {
   home.packages = with pkgs; [
-    jetbrains.idea
-    jetbrains.goland
-    jetbrains.datagrip
-    jetbrains.webstorm
-    jetbrains.rust-rover
-    jetbrains.pycharm
+    (jetbrains.idea.override { forceWayland = true; })
+    (jetbrains.goland.override { forceWayland = true; })
+    (jetbrains.datagrip.override { forceWayland = true; })
+    (jetbrains.webstorm.override { forceWayland = true; })
+    (jetbrains.rust-rover.override { forceWayland = true; })
+    (jetbrains.pycharm.override { forceWayland = true; })
 
     vscode
     antigravity
