@@ -16,7 +16,8 @@
   networking.networkmanager.enable = true;
 
   networking.hosts = {
-    "192.168.3.160" = [ "dev.com" ];
+    "192.168.3.150" = [ "infra.dev.internal" ];
+    "192.168.3.160" = [ "ops.dev.internal" ];
   };
 
   users.users.${username} = {
