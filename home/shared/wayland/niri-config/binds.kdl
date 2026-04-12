@@ -32,7 +32,7 @@ binds {
     Mod+X hotkey-overlay-title="Session Menu" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
 
     // 截图到剪贴板（区域选择）
-    Mod+Shift+S hotkey-overlay-title="Screenshot Region to Clipboard" { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
+    Mod+Shift+S { screenshot; }
 
     // Satty 截图标注（F1 快捷键）
     F1 hotkey-overlay-title="Screenshot with Annotation" { spawn-sh "grim -g \"$(slurp -d -c '#ff0000ff')\" -t ppm - | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y%m%d-%H%M%S).png"; }
