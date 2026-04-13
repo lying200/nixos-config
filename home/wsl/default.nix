@@ -9,4 +9,6 @@
     claude-code
     codex
   ];
+
+  programs.zellij.enableFishIntegration = true;
 }
