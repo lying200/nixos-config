@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -10,5 +10,5 @@
     codex
   ];
 
-  programs.zellij.enableFishIntegration = true;
+  programs.zellij.enableFishIntegration = lib.mkForce true;
 }
