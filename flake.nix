@@ -7,6 +7,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+
     rime-ice.url = "github:iDvel/rime-ice";
     rime-ice.flake = false;
 
@@ -35,7 +38,7 @@
       gitUserName = "lying200";
       gitUserEmail = "lying200@outlook.com";
 
-      mkHost = hostname: nixpkgs.lib.nixosSystem {
+      mkHost = hostname: { homeModule ? ./home/desktop }: nixpkgs.lib.nixosSystem {
         inherit system;
 
         specialArgs = {
@@ -50,7 +53,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.users.${username} = import ./home/shared;
+            home-manager.users.${username} = import homeModule;
             home-manager.extraSpecialArgs = {
               inherit inputs username hostname gitUserName gitUserEmail;
             };
@@ -59,8 +62,8 @@
       };
     in {
       nixosConfigurations = {
-        desktop = mkHost "desktop";
-        legion = mkHost "legion";
+        legion = mkHost "legion" {};
+        wsl = mkHost "wsl" { homeModule = ./home/wsl; };
       };
     };
 }

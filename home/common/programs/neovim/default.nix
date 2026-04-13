@@ -11,7 +11,6 @@
 
     extraPackages = with pkgs; [
       # 剪贴板
-      wl-clipboard
       xclip
 
       # Treesitter 编译依赖
