@@ -7,16 +7,9 @@
 
   imports = [
     ./terminal
-    ./wayland
     ./programs/git.nix
     ./programs/neovim
     ./programs/direnv.nix
-    ./programs/zed.nix
-    ./programs/applications.nix
-    ./programs/windterm.nix
-    ./programs/cc-switch.nix
-    ./programs/autostart.nix
-    ./programs/keybindings.nix
   ];
 
   home.packages = with pkgs; [
@@ -31,10 +24,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-
   };
-
-  gtk.gtk4.theme = null;
 
   xdg.userDirs = {
     enable = true;
@@ -46,9 +36,6 @@
     music = "${config.home.homeDirectory}/Music";
     videos = "${config.home.homeDirectory}/Videos";
     desktop = "${config.home.homeDirectory}/Desktop";
-    extraConfig = {
-      WALLPAPERS = "${config.home.homeDirectory}/Pictures/Wallpapers";
-    };
   };
 
   home.sessionPath = [
