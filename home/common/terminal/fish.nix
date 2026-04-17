@@ -24,7 +24,7 @@
 
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config#${hostname}";
-      update = "cd /home/${username}/nixos-config && sudo nix flake update && rebuild";
+      update = "cd /home/${username}/nixos-config && ./update-pkgs.sh && sudo nix flake update && rebuild";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
 
       nixcfg = "cd /home/${username}/nixos-config";

@@ -48,6 +48,8 @@
         modules = [
           ./hosts/${hostname}/default.nix
 
+          { nixpkgs.overlays = [ (import ./overlays) ]; }
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
