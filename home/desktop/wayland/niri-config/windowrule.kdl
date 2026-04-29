@@ -18,6 +18,12 @@ window-rule {
     default-column-width {}
 }
 
+// Ghostty 浮窗终端（quake 风格，即用即走）
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty\.quake$"#
+    open-floating true
+}
+
 // ──── 浏览器画中画 ────
 
 // Firefox 画中画模式浮动

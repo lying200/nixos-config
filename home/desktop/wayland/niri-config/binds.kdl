@@ -7,6 +7,9 @@ binds {
     // 终端 - 使用 ghostty
     Mod+T hotkey-overlay-title="Open Terminal: ghostty + zellij" { spawn "ghostty" "-e" "zellij"; }
 
+    // 浮窗终端（即用即走，Mod+Q 关闭）
+    Mod+Grave hotkey-overlay-title="Floating Terminal: ghostty" { spawn "ghostty" "--class=com.mitchellh.ghostty.quake"; }
+
     // 应用启动器 - Noctalia Launcher
     Mod+D hotkey-overlay-title="App Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
 
