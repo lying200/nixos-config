@@ -24,10 +24,13 @@ fi
 echo "Updating codex: $CURRENT -> $LATEST"
 
 declare -A HASHES
-for target in x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu; do
+for target in x86_64-unknown-linux-musl aarch64-unknown-linux-musl; do
   url="https://github.com/openai/codex/releases/download/rust-v${LATEST}/codex-${target}.tar.gz"
   echo "  fetching $target..."
-  raw=$(nix-prefetch-url "$url" 2>/dev/null)
+  if ! raw=$(nix-prefetch-url "$url"); then
+    echo "Failed to fetch codex asset: $url" >&2
+    exit 1
+  fi
   HASHES[$target]=$(nix hash convert --hash-algo sha256 --to sri "$raw")
 done
 
@@ -40,8 +43,8 @@ with open(path) as f:
     content = f.read()
 
 replacements = {
-    "x86_64-unknown-linux-gnu": "${HASHES[x86_64-unknown-linux-gnu]}",
-    "aarch64-unknown-linux-gnu": "${HASHES[aarch64-unknown-linux-gnu]}",
+    "x86_64-unknown-linux-musl": "${HASHES[x86_64-unknown-linux-musl]}",
+    "aarch64-unknown-linux-musl": "${HASHES[aarch64-unknown-linux-musl]}",
 }
 
 for target, new_hash in replacements.items():
