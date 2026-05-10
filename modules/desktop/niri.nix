@@ -39,7 +39,7 @@ with lib;
       };
     };
 
-    # Noctalia 替代了 waybar/mako/swaylock/wlogout/swww/rofi/clipse/swayidle
+    # Wayland 桌面工具
     environment.systemPackages = with pkgs; [
       grim
       slurp
@@ -60,8 +60,11 @@ with lib;
       catppuccin-kvantum
       wtype
       xdg-utils
+      swaylock
       xwayland-satellite
     ];
+
+    security.pam.services.swaylock = {};
 
     environment.sessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
