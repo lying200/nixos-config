@@ -9,9 +9,25 @@
     enable = true;
 
     settings = builtins.fromJSON (builtins.readFile ./noctalia-settings.json);
+
+    plugins = {
+      sources = [
+        {
+          enabled = true;
+          name = "Noctalia Plugins";
+          url = "https://github.com/noctalia-dev/noctalia-plugins";
+        }
+      ];
+      states = {
+        clipper = {
+          enabled = true;
+          sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+        };
+      };
+      version = 2;
+    };
   };
 
-  # Noctalia 运行时依赖
   home.packages = with pkgs; [
     brightnessctl
     imagemagick
