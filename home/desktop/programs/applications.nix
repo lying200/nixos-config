@@ -44,7 +44,6 @@
     rclone
 
     motrix
-    flclash
 
     remmina
     moonlight-qt

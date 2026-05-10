@@ -26,6 +26,7 @@
     ../../modules/services/k3s.nix
     ../../modules/services/gnome-suspend.nix
     ../../modules/services/flatpak.nix
+    ../../modules/services/mihomo.nix
 
     ../../modules/programs/fcitx5.nix
     ../../modules/programs/qqmusic.nix
@@ -53,6 +54,7 @@
       k3s.enable = true;
       gnome-suspend.enable = true;
       flatpak.enable = true;
+      mihomo.enable = true;
     };
 
     programs = {
