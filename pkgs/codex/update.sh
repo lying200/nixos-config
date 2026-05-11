@@ -4,15 +4,19 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_FILE="$SCRIPT_DIR/package.nix"
 
-LATEST=$(curl -fsSL "https://api.github.com/repos/openai/codex/releases" \
-  | python3 -c "
-import json, sys
-for r in json.load(sys.stdin):
-    tag = r['tag_name']
-    if 'alpha' not in tag and 'beta' not in tag and 'rc' not in tag:
-        print(tag.removeprefix('rust-v'))
-        break
-")
+latest_release_url="https://github.com/openai/codex/releases/latest"
+if ! latest_url=$(curl -fsSIL -o /dev/null -w '%{url_effective}' "$latest_release_url"); then
+  echo "Failed to fetch latest codex release: $latest_release_url" >&2
+  exit 1
+fi
+
+LATEST="${latest_url##*/}"
+LATEST="${LATEST#rust-v}"
+
+if [ -z "$LATEST" ] || [ "$LATEST" = "latest" ]; then
+  echo "Failed to determine latest codex version from: $latest_url" >&2
+  exit 1
+fi
 
 CURRENT=$(grep -oP 'version = "\K[^"]+' "$PACKAGE_FILE")
 

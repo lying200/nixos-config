@@ -5,15 +5,19 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_FILE="$SCRIPT_DIR/package.nix"
 REPO="farion1231/cc-switch"
 
-LATEST=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases" \
-  | python3 -c '
-import json, sys
-for release in json.load(sys.stdin):
-    if release.get("prerelease") or release.get("draft"):
-        continue
-    print(release["tag_name"].removeprefix("v"))
-    break
-')
+latest_release_url="https://github.com/${REPO}/releases/latest"
+if ! latest_url=$(curl -fsSIL -o /dev/null -w '%{url_effective}' "$latest_release_url"); then
+  echo "Failed to fetch latest cc-switch release: $latest_release_url" >&2
+  exit 1
+fi
+
+LATEST="${latest_url##*/}"
+LATEST="${LATEST#v}"
+
+if [ -z "$LATEST" ] || [ "$LATEST" = "latest" ]; then
+  echo "Failed to determine latest cc-switch version from: $latest_url" >&2
+  exit 1
+fi
 
 CURRENT=$(grep -oP 'version = "\K[^"]+' "$PACKAGE_FILE")
 
