@@ -338,7 +338,7 @@ nix flake update
 sudo nixos-rebuild switch --flake .#desktop
 ```
 
-> 💡 `update` 是 Fish shell 别名，定义在 `home/shared/terminal/fish.nix:30`
+> 💡 `update` 是 Fish shell 别名，定义在 `home/common/terminal/fish.nix:27`
 
 ### 修改配置
 
@@ -390,13 +390,13 @@ sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
 ### 🐚 Fish Shell 别名速查
 
-配置文件：`home/shared/terminal/fish.nix`
+配置文件：`home/common/terminal/fish.nix`
 
 | 别名 | 完整命令 | 说明 |
 |------|---------|------|
 | **系统管理** |
 | `rebuild` | `sudo nixos-rebuild switch --flake /home/{username}/nixos-config#{hostname}` | 快速应用配置 |
-| `update` | `cd nixos-config && nix flake update && rebuild` | 更新依赖并重新构建 |
+| `update` | `cd /home/{username}/nixos-config && ./update.sh` | 更新自维护包和 flake 依赖，并重新构建 |
 | `clean` | `sudo nix-collect-garbage -d && sudo nix-store --optimise` | 清理垃圾并优化存储 |
 | `nixcfg` | `cd /home/{username}/nixos-config` | 快速进入配置目录 |
 | `rebuild-check` | `nixos-rebuild build --flake /home/{username}/nixos-config#{hostname}` | 预览配置变更（无需 sudo） |
