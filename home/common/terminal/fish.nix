@@ -4,6 +4,10 @@
   programs.fish = {
     enable = true;
 
+    shellInit = ''
+      fish_add_path --path /home/${username}/.local/share/npm/bin
+    '';
+
     interactiveShellInit = ''
       set -g fish_greeting
 
