@@ -14,6 +14,7 @@
     ../../modules/hardware/amd-gpu.nix
     ../../modules/hardware/nvidia-gpu.nix
     ../../modules/hardware/intel-gpu.nix
+    ../../modules/hardware/power-management.nix
 
     ../../modules/desktop/wayland.nix
     ../../modules/desktop/gnome.nix
@@ -38,6 +39,7 @@
   mySystem = {
     hardware = {
       nvidia.enable = true;
+      powerManagement.enable = true;
     };
 
     desktop = {
