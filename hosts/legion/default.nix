@@ -24,7 +24,6 @@
     ../../modules/services/sunshine.nix
     ../../modules/services/podman.nix
     ../../modules/services/k3s.nix
-    ../../modules/services/gnome-suspend.nix
     ../../modules/services/flatpak.nix
     ../../modules/services/mihomo.nix
 
@@ -52,7 +51,6 @@
       tailscale.enable = true;
       podman.enable = true;
       k3s.enable = true;
-      gnome-suspend.enable = true;
       flatpak.enable = true;
       mihomo.enable = true;
     };
