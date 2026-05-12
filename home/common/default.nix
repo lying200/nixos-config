@@ -1,5 +1,8 @@
 { config, pkgs, username, inputs, ... }:
 
+let
+  npmGlobalPrefix = "${config.home.homeDirectory}/.local/share/npm";
+in
 {
   home.username = username;
   home.homeDirectory = "/home/${username}";
@@ -24,6 +27,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    NPM_CONFIG_PREFIX = npmGlobalPrefix;
   };
 
   xdg.userDirs = {
@@ -40,7 +44,14 @@
 
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.local/share/npm/bin"
   ];
+
+  home.file.".npmrc".text = ''
+    prefix=${npmGlobalPrefix}
+  '';
+
+  xdg.dataFile."npm/.keep".text = "";
 
   programs.home-manager.enable = true;
 }
