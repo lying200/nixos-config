@@ -46,7 +46,6 @@ with lib;
       libnotify
       wl-clipboard
       networkmanagerapplet
-      blueman
       playerctl
       pavucontrol
       polkit_gnome

@@ -14,6 +14,7 @@
     ../../modules/hardware/amd-gpu.nix
     ../../modules/hardware/nvidia-gpu.nix
     ../../modules/hardware/intel-gpu.nix
+    ../../modules/hardware/bluetooth.nix
     ../../modules/hardware/power-management.nix
 
     ../../modules/desktop/wayland.nix
@@ -40,6 +41,7 @@
   mySystem = {
     hardware = {
       nvidia.enable = true;
+      bluetooth.enable = true;
       powerManagement.enable = true;
     };
 
