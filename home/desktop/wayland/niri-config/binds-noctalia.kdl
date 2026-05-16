@@ -6,7 +6,7 @@ binds {
     Mod+Y hotkey-overlay-title="Clipboard History" { spawn-sh "noctalia-shell ipc call launcher toggle && sleep 0.1 && wtype '>clip'"; }
 
     // 锁屏
-    Super+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Lock Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    Super+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Lock Screen" { spawn "lock-screen"; }
 
     // 会话管理菜单 - Noctalia Session Menu
     Mod+X hotkey-overlay-title="Session Menu" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }

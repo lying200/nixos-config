@@ -2,6 +2,25 @@
 
 let
   useNoctalia = config.myHome.desktop.wayland.shell == "noctalia";
+  lockCfg = config.myHome.desktop.wayland.lock;
+  useExternalLock = lockCfg.backend != "shell";
+  lockCommand = lockCfg.command;
+
+  lockOverrides = lib.optionalAttrs useExternalLock {
+    idle = {
+      enabled = false;
+      screenOffTimeout = 0;
+      lockTimeout = 0;
+      suspendTimeout = 0;
+      screenOffCommand = "";
+      lockCommand = lockCommand;
+      suspendCommand = "";
+      resumeScreenOffCommand = "";
+      resumeLockCommand = "";
+      resumeSuspendCommand = "";
+    };
+    general.lockOnSuspend = false;
+  };
 in
 {
   imports = [
@@ -12,7 +31,9 @@ in
     programs.noctalia-shell = {
       enable = true;
 
-      settings = builtins.fromJSON (builtins.readFile ./noctalia-settings.json);
+      settings = lib.recursiveUpdate
+        (builtins.fromJSON (builtins.readFile ./noctalia-settings.json))
+        lockOverrides;
 
       plugins = {
         sources = [

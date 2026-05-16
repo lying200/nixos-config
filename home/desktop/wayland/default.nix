@@ -8,6 +8,7 @@
   };
 
   imports = [
+    ./lock.nix
     ./niri.nix
     ./noctalia.nix
     ./dms.nix
