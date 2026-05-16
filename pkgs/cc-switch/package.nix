@@ -9,11 +9,11 @@
 }:
 
 let
-  version = "3.14.1";
+  version = "3.15.0";
 
   src = fetchurl {
     url = "https://github.com/farion1231/cc-switch/releases/download/v${version}/CC-Switch-v${version}-Linux-x86_64.AppImage";
-    hash = "sha256-ouXEGDFWQ3yWof5y3yp7S4f/bIV83wkS5wV8NO/NUwk=";
+    hash = "sha256-9scNiMW0RhCfWujD+LOtWtmhYTIms1PZEI4kZ9cYCAk=";
   };
 
   appimageContents = appimageTools.extract {
