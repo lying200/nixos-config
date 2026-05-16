@@ -10,12 +10,6 @@ binds {
     // 浮窗终端（即用即走，Mod+Q 关闭）
     Mod+Grave hotkey-overlay-title="Floating Terminal: ghostty" { spawn "ghostty" "--class=com.mitchellh.ghostty.quake"; }
 
-    // 应用启动器 - Noctalia Launcher
-    Mod+D hotkey-overlay-title="App Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
-
-    // 剪切板历史 - Noctalia Clipboard
-    Mod+Y hotkey-overlay-title="Clipboard History" { spawn-sh "noctalia-shell ipc call launcher toggle && sleep 0.1 && wtype '>clip'"; }
-
     // 文件管理器 - nautilus
     Mod+E hotkey-overlay-title="File Manager: nautilus" { spawn "nautilus"; }
 
@@ -25,39 +19,17 @@ binds {
     // 快速聚焦微信
     Mod+Shift+W hotkey-overlay-title="Focus WeChat" { spawn-sh "niri msg windows | awk '/^Window ID/{id=$3} /App ID: \"wechat\"/{gsub(/:/, \"\", id); print id}' | head -1 | xargs -I{} niri msg action focus-window --id {}"; }
 
-    // 锁屏
-    Super+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Lock Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    // 备用锁屏
     Super+Ctrl+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Fallback Lock Screen" { spawn "swaylock" "-f" "-c" "000000"; }
 
     // 输入法切换
     Mod+F1 { spawn "fcitx5" "-r"; }
-
-    // 会话管理菜单 - Noctalia Session Menu
-    Mod+X hotkey-overlay-title="Session Menu" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
 
     // 截图到剪贴板（区域选择）
     Mod+Shift+S { screenshot; }
 
     // Satty 截图标注（F1 快捷键）
     F1 hotkey-overlay-title="Screenshot with Annotation" { spawn-sh "grim -g \"$(slurp -d -c '#ff0000ff')\" -t ppm - | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date +%Y%m%d-%H%M%S).png"; }
-
-    // ──── 媒体控制（通过 Noctalia OSD）────
-
-    // 音量控制
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "increase"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "decrease"; }
-    XF86AudioMute        allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-
-    // 媒体控制
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
-
-    // 亮度控制
-    XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "brightness" "increase"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
 
     // ──── 窗口管理 ────
 

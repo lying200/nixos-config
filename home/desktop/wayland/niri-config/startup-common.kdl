@@ -1,0 +1,13 @@
+// 启动程序配置
+
+// 输入法 - fcitx5
+spawn-at-startup "fcitx5"
+
+// 网络管理图标
+spawn-at-startup "nm-applet"
+
+// 蓝牙管理图标
+spawn-at-startup "blueman-applet"
+
+// XWayland 兼容层
+spawn-at-startup "xwayland-satellite"

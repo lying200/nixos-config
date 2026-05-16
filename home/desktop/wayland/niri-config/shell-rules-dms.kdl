@@ -1,0 +1,4 @@
+layer-rule {
+    match namespace=r#"^dms:workspace-overview$"#
+    place-within-backdrop true
+}

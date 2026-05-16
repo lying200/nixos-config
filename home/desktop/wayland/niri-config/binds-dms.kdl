@@ -1,0 +1,31 @@
+binds {
+    // 应用启动器 - DMS Spotlight
+    Mod+D hotkey-overlay-title="App Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+
+    // 剪切板历史 - DMS Clipboard
+    Mod+Y hotkey-overlay-title="Clipboard History" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+
+    // 锁屏
+    Super+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+
+    // 会话管理菜单 - DMS Power Menu
+    Mod+X hotkey-overlay-title="Session Menu" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+
+    // ──── 媒体控制（通过 DMS OSD / MPRIS）────
+
+    // 音量控制
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "3"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "3"; }
+    XF86AudioMute        allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
+
+    // 媒体控制
+    XF86AudioPlay        allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+    XF86AudioStop        allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "next"; }
+
+    // 亮度控制
+    XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
+}

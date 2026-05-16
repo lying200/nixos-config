@@ -1,15 +1,38 @@
 { config, pkgs, ... }:
 
+let
+  shell = config.myHome.desktop.wayland.shell;
+  shellConfig = {
+    dms = {
+      binds = ./niri-config/binds-dms.kdl;
+      startup = ./niri-config/startup-dms.kdl;
+      rules = ./niri-config/shell-rules-dms.kdl;
+    };
+    noctalia = {
+      binds = ./niri-config/binds-noctalia.kdl;
+      startup = ./niri-config/startup-noctalia.kdl;
+      rules = ./niri-config/shell-rules-noctalia.kdl;
+    };
+    none = {
+      binds = ./niri-config/empty.kdl;
+      startup = ./niri-config/empty.kdl;
+      rules = ./niri-config/empty.kdl;
+    };
+  }.${shell};
+in
 {
   xdg.configFile = {
     "niri/config.kdl".source = ./niri-config/config.kdl;
-    "niri/binds.kdl".source = ./niri-config/binds.kdl;
+    "niri/binds-common.kdl".source = ./niri-config/binds-common.kdl;
+    "niri/binds-shell.kdl".source = shellConfig.binds;
     "niri/colors.kdl".source = ./niri-config/colors.kdl;
     "niri/theme.kdl".source = ./niri-config/theme.kdl;
     "niri/output.kdl".source = ./niri-config/output.kdl;
     "niri/windowrule.kdl".source = ./niri-config/windowrule.kdl;
     "niri/animations.kdl".source = ./niri-config/animations.kdl;
-    "niri/startup.kdl".source = ./niri-config/startup.kdl;
+    "niri/startup-common.kdl".source = ./niri-config/startup-common.kdl;
+    "niri/startup-shell.kdl".source = shellConfig.startup;
+    "niri/shell-rules.kdl".source = shellConfig.rules;
 
     "fastfetch/config.jsonc".source = ./fastfetch/config.jsonc;
 

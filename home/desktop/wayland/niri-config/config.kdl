@@ -9,12 +9,15 @@ environment {
     GLFW_IM_MODULE "ibus"
 }
 
-include "binds.kdl"
+include "binds-common.kdl"
+include "binds-shell.kdl"
 include "colors.kdl"
 include "theme.kdl"
 include "output.kdl"
-include "startup.kdl"
+include "startup-common.kdl"
+include "startup-shell.kdl"
 include "windowrule.kdl"
+include "shell-rules.kdl"
 include "animations.kdl"
 
 // 输入设备配置
@@ -41,11 +44,6 @@ input {
 
     // 鼠标悬停自动对焦（不触发滚动）
     focus-follows-mouse max-scroll-amount="0%"
-}
-
-layer-rule {
-    match namespace=r#"^noctalia-overview-"#
-    place-within-backdrop true
 }
 
 // 布局设置
