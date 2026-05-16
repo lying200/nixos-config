@@ -26,6 +26,7 @@
     ../../modules/services/podman.nix
     ../../modules/services/k3s.nix
     ../../modules/services/flatpak.nix
+    ../../modules/services/printing.nix
     ../../modules/services/mihomo.nix
 
     ../../modules/programs/fcitx5.nix
@@ -54,6 +55,7 @@
       podman.enable = true;
       k3s.enable = true;
       flatpak.enable = true;
+      printing.enable = true;
       mihomo.enable = true;
     };
 
