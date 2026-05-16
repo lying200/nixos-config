@@ -12,6 +12,8 @@ in
     programs.dank-material-shell = {
       enable = true;
       systemd.enable = true;
+
+      settings = builtins.fromJSON (builtins.readFile ./dms-settings.json);
     };
   };
 }
