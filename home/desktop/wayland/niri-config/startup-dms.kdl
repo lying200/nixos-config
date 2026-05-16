@@ -1,2 +1,0 @@
-// DankMaterialShell 桌面 Shell（面板 + 通知 + 壁纸 + 锁屏 + Dock + OSD）
-spawn-at-startup "dms" "run"

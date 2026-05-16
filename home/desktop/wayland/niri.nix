@@ -5,7 +5,7 @@ let
   shellConfig = {
     dms = {
       binds = ./niri-config/binds-dms.kdl;
-      startup = ./niri-config/startup-dms.kdl;
+      startup = ./niri-config/empty.kdl;
       rules = ./niri-config/shell-rules-dms.kdl;
     };
     noctalia = {
