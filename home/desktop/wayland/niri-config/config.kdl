@@ -48,6 +48,7 @@ input {
 
 // 布局设置
 layout {
+    background-color "transparent"
     gaps 10
     center-focused-column "on-overflow"
 
@@ -87,7 +88,7 @@ layout {
 }
 
 overview {
-    backdrop-color "#222222"
+    backdrop-color "transparent"
     workspace-shadow {
         softness 40
         spread 10
