@@ -19,9 +19,6 @@ binds {
     // 快速聚焦微信
     Mod+Shift+W hotkey-overlay-title="Focus WeChat" { spawn-sh "niri msg windows | awk '/^Window ID/{id=$3} /App ID: \"wechat\"/{gsub(/:/, \"\", id); print id}' | head -1 | xargs -I{} niri msg action focus-window --id {}"; }
 
-    // 备用锁屏
-    Super+Ctrl+Alt+L allow-when-locked=true allow-inhibiting=false hotkey-overlay-title="Fallback Lock Screen" { spawn "swaylock" "-f" "-c" "000000"; }
-
     // 输入法切换
     Mod+F1 { spawn "fcitx5" "-r"; }
 
