@@ -6,17 +6,45 @@ let
   useExternalLock = cfg.backend != "shell";
 
   monitorOffTimer = command: ''
+    lock_pid=
     monitor_off_pid=
+
+    cleanup() {
+      if [ -n "$monitor_off_pid" ]; then
+        kill "$monitor_off_pid" 2>/dev/null || true
+      fi
+      ${pkgs.niri}/bin/niri msg action power-on-monitors >/dev/null 2>&1 || true
+    }
+
+    trap cleanup EXIT INT TERM
+
+    (
+      ${command}
+    ) &
+    lock_pid=$!
+
     if [ ${lib.boolToString cfg.monitorOff.enable} = true ]; then
       (
-        sleep ${toString cfg.monitorOff.afterLockSeconds}
-        ${pkgs.niri}/bin/niri msg action power-off-monitors >/dev/null 2>&1 || true
+        while kill -0 "$lock_pid" 2>/dev/null; do
+          sleep ${toString cfg.monitorOff.afterLockSeconds} || exit 0
+          kill -0 "$lock_pid" 2>/dev/null || exit 0
+          ${pkgs.niri}/bin/niri msg action power-off-monitors >/dev/null 2>&1 || true
+        done
       ) &
       monitor_off_pid=$!
-      trap 'if [ -n "$monitor_off_pid" ]; then kill "$monitor_off_pid" 2>/dev/null || true; fi; ${pkgs.niri}/bin/niri msg action power-on-monitors >/dev/null 2>&1 || true' EXIT INT TERM
     fi
 
-    ${command}
+    wait "$lock_pid"
+  '';
+
+  withLockGuard = command: ''
+    lock_file="''${XDG_RUNTIME_DIR:-/tmp}/lock-screen.lock"
+    ${pkgs.util-linux}/bin/flock -n -E 75 "$lock_file" ${pkgs.bash}/bin/bash -c ${lib.escapeShellArg command}
+    status=$?
+    if [ "$status" -eq 75 ]; then
+      exit 0
+    fi
+    exit "$status"
   '';
 
   shellLockCommand = {
@@ -54,7 +82,7 @@ let
     shell = shellLockCommand;
   }.${cfg.backend};
 
-  lockScreenPackage = pkgs.writeShellScriptBin "lock-screen" lockCommand;
+  lockScreenPackage = pkgs.writeShellScriptBin "lock-screen" (withLockGuard lockCommand);
 in
 {
   options.myHome.desktop.wayland.lock = {
