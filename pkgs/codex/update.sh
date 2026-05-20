@@ -38,25 +38,16 @@ for target in x86_64-unknown-linux-musl aarch64-unknown-linux-musl; do
   HASHES[$target]=$(nix hash convert --hash-algo sha256 --to sri "$raw")
 done
 
-sed -i "s|version = \"$CURRENT\"|version = \"$LATEST\"|" "$PACKAGE_FILE"
+TMP_PACKAGE_FILE=$(mktemp)
+cp "$PACKAGE_FILE" "$TMP_PACKAGE_FILE"
+trap 'rm -f "$TMP_PACKAGE_FILE"' EXIT
 
-python3 <<EOF
-import re
-path = "$PACKAGE_FILE"
-with open(path) as f:
-    content = f.read()
+sed -i "s|version = \"$CURRENT\"|version = \"$LATEST\"|" "$TMP_PACKAGE_FILE"
 
-replacements = {
-    "x86_64-unknown-linux-musl": "${HASHES[x86_64-unknown-linux-musl]}",
-    "aarch64-unknown-linux-musl": "${HASHES[aarch64-unknown-linux-musl]}",
-}
+for target in "${!HASHES[@]}"; do
+  sed -i "/target = \"$target\";/,/hash = / s|hash = \"[^\"]*\";|hash = \"${HASHES[$target]}\";|" "$TMP_PACKAGE_FILE"
+done
 
-for target, new_hash in replacements.items():
-    pattern = rf'(target = "{re.escape(target)}";\s*\n\s*hash = ")[^"]+(";)'
-    content = re.sub(pattern, rf'\g<1>{new_hash}\g<2>', content)
-
-with open(path, "w") as f:
-    f.write(content)
-EOF
+mv "$TMP_PACKAGE_FILE" "$PACKAGE_FILE"
 
 echo "Updated pkgs/codex/package.nix to $LATEST"
