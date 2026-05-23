@@ -1,5 +1,5 @@
 // Noctalia 桌面 Shell（面板 + 通知 + 壁纸 + 锁屏 + Dock + OSD + Idle）
-spawn-at-startup "noctalia-shell"
+spawn-at-startup "env" "-u" "QT_IM_MODULE" "noctalia-shell"
 
 // 剪贴板监听（独立于 noctalia，确保重启后可用）
 spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"

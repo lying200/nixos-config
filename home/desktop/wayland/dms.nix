@@ -2,10 +2,6 @@
 
 let
   useDms = config.myHome.desktop.wayland.shell == "dms";
-  lockCfg = config.myHome.desktop.wayland.lock;
-  useExternalLock = lockCfg.backend != "shell";
-  lockCommand = lockCfg.command;
-
   hiddenTrayIds = [
     "Fcitx::Keyboard - English (US)"
     "Fcitx::键盘 - 英语（美国）"
@@ -29,26 +25,27 @@ in
 
       settings = lib.recursiveUpdate
         (builtins.fromJSON (builtins.readFile ./dms-settings.json))
-        ({
+        {
           blurredWallpaperLayer = true;
           blurWallpaperOnOverview = false;
-        }
-        // lib.optionalAttrs useExternalLock ({
-          customPowerActionLock = lockCommand;
-          fadeToLockEnabled = false;
-          loginctlLockIntegration = false;
-          lockBeforeSuspend = false;
-          acLockTimeout = 0;
-          batteryLockTimeout = 0;
-          acMonitorTimeout = 0;
-          batteryMonitorTimeout = 0;
-        }));
+          launchPrefix = "env QT_IM_MODULE=fcitx";
+          acLockTimeout = 600;
+          batteryLockTimeout = 600;
+          acMonitorTimeout = 660;
+          batteryMonitorTimeout = 660;
+          lockBeforeSuspend = true;
+        };
     };
 
-    systemd.user.services.dms.Service.Environment = [
-      "LANG=zh_CN.UTF-8"
-      "LC_MESSAGES=zh_CN.UTF-8"
-    ];
+    systemd.user.services.dms.Service = {
+      Environment = [
+        "LANG=zh_CN.UTF-8"
+        "LC_MESSAGES=zh_CN.UTF-8"
+      ];
+      UnsetEnvironment = [
+        "QT_IM_MODULE"
+      ];
+    };
 
     home.activation.dmsMutableSessionDefaults = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       session_file="$HOME/.local/state/DankMaterialShell/session.json"
