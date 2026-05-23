@@ -24,6 +24,7 @@ in
           acMonitorTimeout = 660;
           batteryMonitorTimeout = 660;
           lockBeforeSuspend = true;
+          matugenTemplateGhostty = false;
         };
     };
 
