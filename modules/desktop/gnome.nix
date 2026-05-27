@@ -9,7 +9,6 @@ with lib;
 
   config = mkIf config.mySystem.desktop.gnome.enable {
     services.xserver.enable = true;
-    services.displayManager.gdm.wayland = true;
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
 
