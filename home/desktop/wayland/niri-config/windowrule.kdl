@@ -1,6 +1,7 @@
 // 窗口规则配置
 
-// 全局窗口规则 - 圆角和视觉效果
+// 全局窗口规则：圆角、半透明、背景模糊
+// xray 用默认 true → 只模糊壁纸缓存，几乎零开销；不会随下层窗口动态重算
 window-rule {
     // 圆角半径
     geometry-corner-radius 12
@@ -10,30 +11,82 @@ window-rule {
 
     // 禁止边框画到背景中
     draw-border-with-background false
+
+    // 强制半透明，让 blur 实际可见
+    opacity 0.8
+
+    // 静态背景模糊（默认 xray=true，无需显式声明）
+    background-effect {
+        blur true
+    }
+
+    // 弹出菜单也加模糊
+    popups {
+        geometry-corner-radius 10
+        background-effect {
+            blur true
+        }
+    }
 }
 
-// Ghostty 终端特殊处理
+// ──── 原生透明终端：用动态模糊看真实下层 ────
+
+// Ghostty 终端
 window-rule {
     match app-id=r#"^com\.mitchellh\.ghostty$"#
     default-column-width {}
+
+    background-effect {
+        blur true
+        xray false
+    }
 }
 
 // Ghostty 浮窗终端（quake 风格，即用即走）
 window-rule {
     match app-id=r#"^com\.mitchellh\.ghostty\.quake$"#
     open-floating true
+
+    background-effect {
+        blur true
+    }
 }
 
-// ──── 浏览器画中画 ────
+// ──── 不透明豁免：内容本身是图像/视频/标注，必须保持原色 ────
 
-// Firefox 画中画模式浮动
+window-rule {
+    // Firefox / Chrome 画中画
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"firefox$"# title="^画中画$"
+    match app-id=r#"chrome"# title="^Picture in picture$"
+    match app-id=r#"chrome"# title="^画中画$"
+    // GNOME 图像查看器
+    match app-id="org.gnome.Loupe"
+    // Satty 截图标注
+    match app-id="com.gabm.satty"
+    // mpv / vlc 视频
+    match app-id=r#"^mpv$"#
+    match app-id=r#"^org\.mpv\.Mpv$"#
+    match app-id=r#"^vlc$"#
+    // 中文标题的图片/视频窗口
+    match title="^图片查看器$"
+    match title="^图片和视频$"
+    match title="^视频播放器$"
+
+    opacity 1.0
+    background-effect {
+        blur false
+    }
+}
+
+// ──── 浏览器画中画浮动 ────
+
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id=r#"firefox$"# title="^画中画$"
     open-floating true
 }
 
-// Chrome 画中画模式浮动
 window-rule {
     match app-id=r#"chrome"# title="^Picture in picture$"
     match app-id=r#"chrome"# title="^画中画$"

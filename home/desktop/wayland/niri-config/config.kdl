@@ -102,6 +102,15 @@ hotkey-overlay {
     skip-at-startup
 }
 
+// 全局背景模糊参数（dual kawase）
+// passes/offset 越大模糊越柔；saturation>1 提升模糊后色彩饱和度
+blur {
+    passes 5
+    offset 6
+    noise 0.02
+    saturation 1.6
+}
+
 // 要求应用去除客户端装饰（CSD）
 prefer-no-csd
 

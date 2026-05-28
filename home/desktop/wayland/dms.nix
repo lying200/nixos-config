@@ -2,6 +2,7 @@
 
 let
   useDms = config.myHome.desktop.wayland.shell == "dms";
+  dmsSettings = builtins.fromJSON (builtins.readFile ./dms-settings.json);
 in
 {
   imports = [
