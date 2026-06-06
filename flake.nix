@@ -70,6 +70,7 @@
     in {
       nixosConfigurations = {
         legion = mkHost "legion" {};
+        legion-wsl = mkHost "legion-wsl" { homeModule = ./home/wsl; };
         wsl = mkHost "wsl" { homeModule = ./home/wsl; };
       };
     };
