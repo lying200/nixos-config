@@ -12,6 +12,7 @@ in
   imports = [
     ./terminal
     ./programs/git.nix
+    ./programs/ssh.nix
     ./programs/neovim
     ./programs/direnv.nix
   ];
