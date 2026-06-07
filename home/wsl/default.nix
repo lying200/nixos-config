@@ -21,5 +21,4 @@ in
   ];
 
   myHome.programs.zellij.clipboardCommand = lib.getExe wslCopy;
-  programs.zellij.enableFishIntegration = lib.mkForce true;
 }
