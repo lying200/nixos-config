@@ -9,27 +9,10 @@ in
   ];
 
   config = lib.mkIf useNoctalia {
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
 
-      settings = builtins.fromJSON (builtins.readFile ./noctalia-settings.json);
-
-      plugins = {
-        sources = [
-          {
-            enabled = true;
-            name = "Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }
-        ];
-        states = {
-          clipper = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-        };
-        version = 2;
-      };
+      settings = ./noctalia-settings.toml;
     };
 
     home.packages = with pkgs; [
