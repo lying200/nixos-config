@@ -1,10 +1,10 @@
 { pkgs, ... }:
 
 {
-  # 使用 XDG autostart 规范，通过 OnlyShowIn/NotShowIn 区分桌面环境
+  # XDG autostart
   xdg.configFile = {
 
-    # 延迟启动避免缩放问题
+    # Snipaste 延迟启动
     "autostart/snipaste.desktop".text = ''
       [Desktop Entry]
       Type=Application
@@ -30,6 +30,19 @@
       Terminal=false
       Categories=Utility;
       StartupNotify=false
+      OnlyShowIn=GNOME;
+    '';
+
+    # GNOME 窗口按钮
+    "autostart/gnome-window-buttons.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Restore GNOME Window Buttons
+      Comment=Show window controls in GNOME
+      Exec=${pkgs.glib}/bin/gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+      Terminal=false
+      StartupNotify=false
+      X-GNOME-Autostart-enabled=true
       OnlyShowIn=GNOME;
     '';
   };
