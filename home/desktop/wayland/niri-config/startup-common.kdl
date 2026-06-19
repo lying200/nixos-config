@@ -4,7 +4,7 @@
 spawn-at-startup "fcitx5"
 
 // 隐藏 GTK 窗口按钮
-spawn-at-startup "dconf" "write" "/org/gnome/desktop/wm/preferences/button-layout" "''"
+spawn-at-startup "desktop-window-buttons" "hide"
 
 // 网络管理图标
 spawn-at-startup "nm-applet"

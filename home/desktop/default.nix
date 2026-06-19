@@ -4,6 +4,9 @@
   imports = [
     ../common
 
+    ./gnome.nix
+    ./window-buttons.nix
+
     ./programs/applications.nix
     ./programs/zed.nix
     ./programs/windterm.nix

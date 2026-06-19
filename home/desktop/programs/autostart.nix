@@ -39,7 +39,7 @@
       Type=Application
       Name=Restore GNOME Window Buttons
       Comment=Show window controls in GNOME
-      Exec=${pkgs.glib}/bin/gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+      Exec=desktop-window-buttons show
       Terminal=false
       StartupNotify=false
       X-GNOME-Autostart-enabled=true
