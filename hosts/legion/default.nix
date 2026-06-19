@@ -25,6 +25,7 @@
     ../../modules/services/tailscale.nix
     ../../modules/services/sunshine.nix
     ../../modules/services/podman.nix
+    ../../modules/services/winboat.nix
     ../../modules/services/k3s.nix
     ../../modules/services/flatpak.nix
     ../../modules/services/printing.nix
@@ -55,6 +56,7 @@
     services = {
       tailscale.enable = true;
       podman.enable = true;
+      winboat.enable = true;
       k3s.enable = true;
       flatpak.enable = true;
       printing.enable = true;
