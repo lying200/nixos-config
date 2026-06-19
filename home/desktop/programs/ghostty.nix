@@ -16,8 +16,6 @@
       # 窗口
       window-padding-x = 10;
       window-padding-y = 8;
-      window-decoration = false;
-      window-theme = "ghostty";
       window-vsync = true;
 
       # 光标

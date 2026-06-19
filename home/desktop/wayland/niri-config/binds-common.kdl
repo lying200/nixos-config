@@ -5,10 +5,10 @@ binds {
     // ──── 应用启动 ────
 
     // 终端 - 使用 ghostty
-    Mod+T hotkey-overlay-title="Open Terminal: ghostty + zellij" { spawn "ghostty" "-e" "zellij"; }
+    Mod+T hotkey-overlay-title="Open Terminal: ghostty + zellij" { spawn "ghostty" "--window-decoration=false" "-e" "zellij"; }
 
     // 浮窗终端（即用即走，Mod+Q 关闭）
-    Mod+Grave hotkey-overlay-title="Floating Terminal: ghostty" { spawn "ghostty" "--class=com.mitchellh.ghostty.quake"; }
+    Mod+Grave hotkey-overlay-title="Floating Terminal: ghostty" { spawn "ghostty" "--window-decoration=false" "--class=com.mitchellh.ghostty.quake"; }
 
     // 文件管理器 - nautilus
     Mod+E hotkey-overlay-title="File Manager: nautilus" { spawn "nautilus"; }
