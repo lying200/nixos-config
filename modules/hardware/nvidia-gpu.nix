@@ -94,6 +94,7 @@ with lib;
     # 改善兼容性
     environment.sessionVariables = mkIf config.mySystem.hardware.nvidia.enable {
       LIBVA_DRIVER_NAME = "nvidia";
+      NVD_BACKEND = "direct";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
     };

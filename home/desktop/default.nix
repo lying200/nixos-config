@@ -8,6 +8,7 @@
     ./window-buttons.nix
 
     ./programs/applications.nix
+    ./programs/chrome.nix
     ./programs/zed.nix
     ./programs/windterm.nix
     ./programs/cc-switch.nix

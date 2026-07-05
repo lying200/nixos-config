@@ -14,8 +14,6 @@
     codex
     claude-code
 
-    google-chrome
-
     wechat
     qq
     thunderbird
