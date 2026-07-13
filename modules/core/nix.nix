@@ -23,6 +23,7 @@
     trusted-users = [ "root" username ];
 
     substituters = [
+      "https://mirrors.ustc.edu.cn/nix-channels/store?priority=30"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
     ];
