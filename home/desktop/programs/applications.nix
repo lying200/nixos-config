@@ -36,6 +36,7 @@
 
     libreoffice-fresh
     obsidian
+    readest
     typora
 
     syncthing
