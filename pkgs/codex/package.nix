@@ -16,16 +16,16 @@
 }:
 let
   stdenv = stdenvNoCC;
-  version = "0.144.3";
+  version = "0.144.4";
 
   platforms = {
     "x86_64-linux" = {
       target = "x86_64-unknown-linux-musl";
-      hash = "sha256-ubSujptWHGTfvF71LGMZy6dQrIfePH9ViFAmIx466ok=";
+      hash = "sha256-N8mFvp2J6MT0OzqgWUwSE+rCEtMK4rlSIfCP7IB1FdE=";
     };
     "aarch64-linux" = {
       target = "aarch64-unknown-linux-musl";
-      hash = "sha256-3XbP1aLPm88OMiSv4o4jBlz9JyYuBuD/vI+kA0PwkFo=";
+      hash = "sha256-TQckPvSuZ4a4syHXrqP5vk4dLFl65UB+fBuYczNAgrI=";
     };
   };
 
