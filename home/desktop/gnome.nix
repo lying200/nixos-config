@@ -1,6 +1,18 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  # 扩展包与下方 enabled-extensions 列表一一对应（kimpanel 随 fcitx5 addons 安装）
+  home.packages = with pkgs; [
+    gnome-tweaks
+    gnomeExtensions.vitals
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.caffeine
+    gnomeExtensions.dash-to-dock
+    gnomeExtensions.tiling-assistant
+    gnomeExtensions.appindicator
+    gnomeExtensions.clipboard-indicator
+  ];
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";

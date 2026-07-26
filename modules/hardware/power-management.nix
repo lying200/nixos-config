@@ -1,13 +1,11 @@
 { config, lib, ... }:
 
-with lib;
-
 {
   options.mySystem.hardware.powerManagement = {
-    enable = mkEnableOption "laptop power management with TLP";
+    enable = lib.mkEnableOption "laptop power management with TLP";
   };
 
-  config = mkIf config.mySystem.hardware.powerManagement.enable {
+  config = lib.mkIf config.mySystem.hardware.powerManagement.enable {
     powerManagement.enable = true;
 
     # GNOME enables power-profiles-daemon by default; TLP and PPD both tune the

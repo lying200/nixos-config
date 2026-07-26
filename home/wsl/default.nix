@@ -14,9 +14,7 @@ in
     ../common
   ];
 
-  home.packages = with pkgs; [
-    claude-code
-    codex
+  home.packages = [
     wslCopy
   ];
 

@@ -15,6 +15,8 @@
   networking.hostName = "legion";
   networking.networkmanager.enable = true;
 
+  services.openssh.enable = true;
+
   networking.hosts = {
     "192.168.3.150" = [ "infra.dev.internal" ];
     "192.168.3.160" = [ "ops.dev.internal" ];
@@ -23,7 +25,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "input" ];
     packages = [ ];
   };
 

@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.hardware.intelgpu = {
-    enable = mkEnableOption "Intel integrated GPU support";
+    enable = lib.mkEnableOption "Intel integrated GPU support";
   };
 
-  config = mkIf config.mySystem.hardware.intelgpu.enable {
+  config = lib.mkIf config.mySystem.hardware.intelgpu.enable {
     hardware.enableRedistributableFirmware = true;
 
     boot.initrd.kernelModules = [ "i915" ];
@@ -23,7 +21,7 @@ with lib;
     };
 
     environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = mkForce "iHD";  # 使用 intel-media-driver
+      LIBVA_DRIVER_NAME = "iHD";  # 使用 intel-media-driver；与 nvidia 模块互斥，同时启用会显式报冲突
     };
   };
 }

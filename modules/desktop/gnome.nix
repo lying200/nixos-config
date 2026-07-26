@@ -1,13 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
+{ config, lib, ... }:
 
 {
   options.mySystem.desktop.gnome = {
-    enable = mkEnableOption "GNOME desktop environment";
+    enable = lib.mkEnableOption "GNOME desktop environment";
   };
 
-  config = mkIf config.mySystem.desktop.gnome.enable {
+  config = lib.mkIf config.mySystem.desktop.gnome.enable {
     services.xserver.enable = true;
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;

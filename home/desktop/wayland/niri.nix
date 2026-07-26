@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 let
   shell = config.myHome.desktop.wayland.shell;
@@ -48,11 +48,6 @@ in
 
     "satty/config.toml".source = ./satty/config.toml;
   };
-
-  home.sessionVariables = {
-    GTK_IM_MODULE = "";
-  };
-
 
   gtk = {
     enable = true;

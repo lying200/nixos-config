@@ -11,7 +11,6 @@
     ./programs/chrome.nix
     ./programs/zed.nix
     ./programs/windterm.nix
-    ./programs/cc-switch.nix
     ./programs/autostart.nix
     ./programs/keybindings.nix
     ./programs/ghostty.nix

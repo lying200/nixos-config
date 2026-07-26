@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.programs.steam = {
-    enable = mkEnableOption "Steam gaming platform";
+    enable = lib.mkEnableOption "Steam gaming platform";
   };
 
-  config = mkIf config.mySystem.programs.steam.enable {
+  config = lib.mkIf config.mySystem.programs.steam.enable {
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
@@ -21,7 +19,6 @@ with lib;
 
     environment.systemPackages = with pkgs; [
       mangohud
-      gamemode
       gamescope
     ];
 

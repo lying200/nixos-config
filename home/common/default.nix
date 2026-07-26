@@ -7,7 +7,6 @@ in
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
-  home.enableNixpkgsReleaseCheck = false;
 
   imports = [
     ./terminal
@@ -23,13 +22,14 @@ in
     fzf
     zoxide
     delta
+    claude-code
+    codex
     inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-    NPM_CONFIG_PREFIX = npmGlobalPrefix;
   };
 
   xdg.userDirs = {
@@ -46,7 +46,7 @@ in
 
   home.sessionPath = [
     "$HOME/.local/bin"
-    "$HOME/.local/share/npm/bin"
+    "${npmGlobalPrefix}/bin"
   ];
 
   home.file.".npmrc".text = ''

@@ -17,7 +17,7 @@ in
     };
 
     xdg.configFile."zellij/config.kdl".source = pkgs.replaceVars ./zellij/config.kdl {
-      clipboardCommand = cfg.clipboardCommand;
+      inherit (cfg) clipboardCommand;
     };
     xdg.configFile."zellij/layouts/default.kdl".source = ./zellij/layouts/default.kdl;
     xdg.configFile."zellij/themes/catppuccin-mocha.kdl".source = ./zellij/themes/catppuccin-mocha.kdl;

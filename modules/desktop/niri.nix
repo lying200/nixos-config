@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.desktop.niri = {
-    enable = mkEnableOption "Niri compositor";
+    enable = lib.mkEnableOption "Niri compositor";
   };
 
-  config = mkIf config.mySystem.desktop.niri.enable {
+  config = lib.mkIf config.mySystem.desktop.niri.enable {
     programs.niri.enable = true;
 
     xdg.portal = {
@@ -58,17 +56,15 @@ with lib;
       qt6Packages.qtstyleplugin-kvantum
       catppuccin-kvantum
       wtype
-      xdg-utils
       swaylock
       xwayland-satellite
     ];
 
     security.pam.services.swaylock = {};
 
+    # Kvantum 主题由 home-manager 的 qt.platformTheme/style 设置（home/desktop/wayland/niri.nix）
     environment.sessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
-      QT_QPA_PLATFORMTHEME = "kvantum";
-      QT_STYLE_OVERRIDE = "kvantum";
     };
 
     services.gnome.gnome-keyring.enable = true;

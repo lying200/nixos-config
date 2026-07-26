@@ -38,7 +38,7 @@ let
 
     src = fetchurl {
       url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-${platform.target}.tar.gz";
-      hash = platform.hash;
+      inherit (platform) hash;
     };
 
     dontUnpack = true;

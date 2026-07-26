@@ -15,7 +15,7 @@ in
       systemd.enable = true;
 
       settings = lib.recursiveUpdate
-        (builtins.fromJSON (builtins.readFile ./dms-settings.json))
+        dmsSettings
         {
           blurredWallpaperLayer = true;
           blurWallpaperOnOverview = false;

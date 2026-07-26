@@ -1,6 +1,14 @@
-{ pkgs, inputs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
+  # kimpanel 扩展与 gsettings 覆盖依赖 GNOME
+  assertions = [
+    {
+      assertion = config.mySystem.desktop.gnome.enable or false;
+      message = "modules/programs/fcitx5.nix 依赖 GNOME（kimpanel 扩展 + gsettings 覆盖），仅供图形主机导入";
+    }
+  ];
+
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";

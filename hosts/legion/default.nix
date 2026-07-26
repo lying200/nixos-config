@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
@@ -11,9 +11,7 @@
     ../../modules/core/nix.nix
     ../../modules/core/compatibility.nix
 
-    ../../modules/hardware/amd-gpu.nix
     ../../modules/hardware/nvidia-gpu.nix
-    ../../modules/hardware/intel-gpu.nix
     ../../modules/hardware/bluetooth.nix
     ../../modules/hardware/power-management.nix
 
@@ -23,9 +21,7 @@
     ../../modules/desktop/monitoring.nix
 
     ../../modules/services/tailscale.nix
-    ../../modules/services/sunshine.nix
     ../../modules/services/podman.nix
-    ../../modules/services/winboat.nix
     ../../modules/services/k3s.nix
     ../../modules/services/flatpak.nix
     ../../modules/services/printing.nix
@@ -56,7 +52,6 @@
     services = {
       tailscale.enable = true;
       podman.enable = true;
-      winboat.enable = false;
       k3s.enable = true;
       flatpak.enable = true;
       printing.enable = true;

@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.services.sunshine = {
-    enable = mkEnableOption "Sunshine game streaming server";
+    enable = lib.mkEnableOption "Sunshine game streaming server";
   };
 
-  config = mkIf config.mySystem.services.sunshine.enable {
+  config = lib.mkIf config.mySystem.services.sunshine.enable {
     services.sunshine = {
       enable = true;
       autoStart = true;

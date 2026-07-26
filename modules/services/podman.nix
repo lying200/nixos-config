@@ -1,13 +1,11 @@
 { config, lib, pkgs, username, ... }:
 
-with lib;
-
 {
   options.mySystem.services.podman = {
-    enable = mkEnableOption "Podman container runtime";
+    enable = lib.mkEnableOption "Podman container runtime";
   };
 
-  config = mkIf config.mySystem.services.podman.enable {
+  config = lib.mkIf config.mySystem.services.podman.enable {
     virtualisation = {
       containers.enable = true;
       podman = {

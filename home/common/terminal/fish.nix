@@ -1,12 +1,11 @@
-{ pkgs, username, hostname, ... }:
+{ config, pkgs, hostname, ... }:
 
+let
+  configDir = "${config.home.homeDirectory}/nixos-config";
+in
 {
   programs.fish = {
     enable = true;
-
-    shellInit = ''
-      fish_add_path --path /home/${username}/.local/share/npm/bin
-    '';
 
     interactiveShellInit = ''
       set -g fish_greeting
@@ -23,17 +22,17 @@
 
       zoxide init fish | source
 
-      set -gx NIXOS_CONFIG_DIR /home/${username}/nixos-config
+      set -gx NIXOS_CONFIG_DIR ${configDir}
     '';
 
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake /home/${username}/nixos-config#${hostname}";
-      update = "cd /home/${username}/nixos-config && ./update.sh";
+      rebuild = "sudo nixos-rebuild switch --flake ${configDir}#${hostname}";
+      update = "cd ${configDir} && ./update.sh";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
 
-      nixcfg = "cd /home/${username}/nixos-config";
+      nixcfg = "cd ${configDir}";
 
-      rebuild-check = "nixos-rebuild build --flake /home/${username}/nixos-config#${hostname}";
+      rebuild-check = "nixos-rebuild build --flake ${configDir}#${hostname}";
 
       ll = "eza -la --icons --git";
       ls = "eza --icons";
@@ -57,12 +56,7 @@
     plugins = [
       {
         name = "fzf.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "PatrickF1";
-          repo = "fzf.fish";
-          rev = "8920367cf85eee5218cc25a11e209d46e2591e7a";
-          sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
-        };
+        inherit (pkgs.fishPlugins.fzf-fish) src;
       }
     ];
   };

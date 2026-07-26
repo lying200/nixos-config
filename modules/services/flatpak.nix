@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.services.flatpak = {
-    enable = mkEnableOption "Flatpak application manager";
+    enable = lib.mkEnableOption "Flatpak application manager";
   };
 
-  config = mkIf config.mySystem.services.flatpak.enable {
+  config = lib.mkIf config.mySystem.services.flatpak.enable {
     services.flatpak.enable = true;
 
     # 需要在系统初次启动后手动执行：

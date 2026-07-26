@@ -6,11 +6,7 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
 
-    # GitHub Access Token 配置（避免 API 速率限制）
-    # 使用方法：
-    # 1. 创建 GitHub token: https://github.com/settings/tokens (classic, 只需 public_repo 权限)
-    # 2. 添加到 ~/.config/nix/nix.conf:
-    #    access-tokens = github.com=ghp_xxxxxxxxxxxx
+    # 接受 flake 声明的 nixConfig（如第三方 substituters）
     accept-flake-config = true;
 
     # 防止 GC 清理 direnv/devenv 缓存
@@ -38,6 +34,4 @@
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
-
-  services.openssh.enable = true;
 }

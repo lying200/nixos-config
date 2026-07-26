@@ -1,13 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
+{ config, lib, ... }:
 
 {
   options.mySystem.desktop.wayland = {
-    enable = mkEnableOption "Wayland environment support";
+    enable = lib.mkEnableOption "Wayland environment support";
   };
 
-  config = mkIf config.mySystem.desktop.wayland.enable {
+  config = lib.mkIf config.mySystem.desktop.wayland.enable {
     services.pipewire = {
       enable = true;
       alsa.enable = true;

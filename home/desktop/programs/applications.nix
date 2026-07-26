@@ -10,8 +10,7 @@
     (jetbrains.pycharm.override { forceWayland = true; })
 
     vscode
-    codex
-    claude-code
+    cc-switch
 
     wechat
     qq

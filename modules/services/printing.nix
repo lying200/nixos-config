@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 {
   options.mySystem.services.printing = {
-    enable = mkEnableOption "CUPS printing support";
+    enable = lib.mkEnableOption "CUPS printing support";
   };
 
-  config = mkIf config.mySystem.services.printing.enable {
+  config = lib.mkIf config.mySystem.services.printing.enable {
     services.printing.enable = true;
 
     environment.systemPackages = with pkgs; [

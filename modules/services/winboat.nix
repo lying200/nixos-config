@@ -1,13 +1,11 @@
 { config, lib, pkgs, username, ... }:
 
-with lib;
-
 {
   options.mySystem.services.winboat = {
-    enable = mkEnableOption "WinBoat Windows app runtime";
+    enable = lib.mkEnableOption "WinBoat Windows app runtime";
   };
 
-  config = mkIf config.mySystem.services.winboat.enable {
+  config = lib.mkIf config.mySystem.services.winboat.enable {
     assertions = [
       {
         assertion = config.mySystem.services.podman.enable;
