@@ -15,7 +15,6 @@
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
       gtk-theme = "catppuccin-mocha-mauve-standard+default";
       icon-theme = "Papirus-Dark";
       cursor-theme = "catppuccin-mocha-dark-cursors";
