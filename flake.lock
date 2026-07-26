@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775224535,
-        "narHash": "sha256-7dIizi0/gBf/vIBR2X8yri5YVtAOI7hPRWLQPagpeq4=",
+        "lastModified": 1785076692,
+        "narHash": "sha256-GBXzggmZDCtOa8dr6oZ3sSJcv/et2PihVz1khaLAUHM=",
         "owner": "lying200",
         "repo": "devinit",
-        "rev": "b7a04e7ca947be014e2a2a2cfd1da91848e08d18",
+        "rev": "335ef8e6a4147be3abe63b243622661ef1491b4c",
         "type": "github"
       },
       "original": {
@@ -138,11 +138,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785028399,
-        "narHash": "sha256-EeShRVmWiwbwrNf6dmmANQ/yDHAmP9kWLAbhb+f6rfU=",
+        "lastModified": 1785076422,
+        "narHash": "sha256-axGCB2yxgEFvXE02JkspSWQorjlchECnFX1ME+B+f/4=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "d8ffd845cf42fc8e2861634d63b7b6621b6f406f",
+        "rev": "e3d9da341c0e638f78eb92f60ec441059c49df6e",
         "type": "github"
       },
       "original": {
