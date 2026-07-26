@@ -10,7 +10,6 @@
     (jetbrains.pycharm.override { forceWayland = true; })
 
     vscode
-    antigravity
     codex
     claude-code
 
