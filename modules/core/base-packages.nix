@@ -31,7 +31,5 @@
     jq
 
     xdg-utils
-
-    fastfetch
   ];
 }

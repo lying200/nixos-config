@@ -34,8 +34,6 @@ in
     "niri/startup-shell.kdl".source = shellConfig.startup;
     "niri/shell-rules.kdl".source = shellConfig.rules;
 
-    "fastfetch/config.jsonc".source = ./fastfetch/config.jsonc;
-
     "Kvantum/kvantum.kvconfig".text = ''
       [General]
       theme=catppuccin-mocha-mauve
