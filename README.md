@@ -65,7 +65,7 @@ sudo nixos-rebuild switch --rollback         # 回滚上一代
 ## 模块约定
 
 - 可选功能模块声明 `mySystem.<域>.<名>.enable` 开关，由主机的 `default.nix` 导入并启用；`modules/core/` 为必装模块，无开关
-- 模块间依赖用 `assertions` 显式声明（参见 `winboat.nix`、`monitoring.nix`、`fcitx5.nix`）
+- 模块间依赖用 `assertions` 显式声明（参见 `monitoring.nix`、`fcitx5.nix`）
 - 个人信息（username / git 用户名邮箱）只在 `flake.nix` 定义，经 `specialArgs` 注入
 - GPU 模块互斥，一台主机只导入实际使用的那个（legion 用 nvidia；amd/intel 模块保留备用，标注未实测）
 
