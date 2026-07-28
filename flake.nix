@@ -27,6 +27,11 @@
       url = "github:lying200/devinit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    paseo = {
+      url = "github:getpaseo/paseo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -11,6 +11,7 @@
 
     vscode
     cc-switch
+    inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.desktop
 
     wechat
     qq
