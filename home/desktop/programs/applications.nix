@@ -29,6 +29,7 @@
 
     vlc
     mpv
+    tsukimi
     obs-studio
 
     variety
