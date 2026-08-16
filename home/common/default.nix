@@ -24,6 +24,7 @@ in
     delta
     claude-code
     codex
+    kimi-code
     inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
