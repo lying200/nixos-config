@@ -10,16 +10,16 @@
   fd,
 }:
 let
-  version = "0.36.1";
+  version = "0.37.0";
 
   platforms = {
     "x86_64-linux" = {
       asset = "linux-x64";
-      hash = "sha256-xa8InVrTTCfy8m1fk1iLo/ZWv3cZEeXUPIW+ldPhy9Q=";
+      hash = "sha256-8pOiOf/kKGBI9QJUbpaffmKVX71yQo0EX+RSJkHi+x0=";
     };
     "aarch64-linux" = {
       asset = "linux-arm64";
-      hash = "sha256-NFtawzVMPTiQ40z45Q7hzoHl87cZodtQZ5flPlIAmeY=";
+      hash = "sha256-iHtVU4EEnkWJxwbd/R3ESn731B6b+psyxq8LPEiHJaM=";
     };
   };
 
