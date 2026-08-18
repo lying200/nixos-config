@@ -1,7 +1,8 @@
 // 窗口规则配置
 
-// 全局窗口规则：圆角、半透明、背景模糊
+// 全局窗口规则：圆角、背景模糊
 // xray 用默认 true → 只模糊壁纸缓存，几乎零开销；不会随下层窗口动态重算
+// 不强制半透明：blur 只对原生支持透明的应用（如 Ghostty）可见
 window-rule {
     // 圆角半径
     geometry-corner-radius 12
@@ -11,9 +12,6 @@ window-rule {
 
     // 禁止边框画到背景中
     draw-border-with-background false
-
-    // 强制半透明，让 blur 实际可见
-    opacity 0.8
 
     // 静态背景模糊（默认 xray=true，无需显式声明）
     background-effect {
@@ -29,7 +27,8 @@ window-rule {
     }
 }
 
-// ──── 原生透明终端：用动态模糊看真实下层 ────
+// ──── 原生透明终端 ────
+// 注：NVIDIA 上 non-xray 模糊不生效（niri#4083），只能用默认 xray 静态模糊
 
 // Ghostty 终端
 window-rule {
@@ -38,7 +37,6 @@ window-rule {
 
     background-effect {
         blur true
-        xray false
     }
 }
 
