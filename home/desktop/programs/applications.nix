@@ -18,8 +18,6 @@
     thunderbird
     telegram-desktop
 
-    gemini-cli
-
     nautilus
     loupe
     file-roller
