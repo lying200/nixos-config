@@ -10,7 +10,6 @@
     (jetbrains.pycharm.override { forceWayland = true; })
 
     vscode
-    cc-switch
     inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.desktop
 
     wechat
@@ -44,7 +43,5 @@
 
     remmina
     moonlight-qt
-
-    bubblewrap
   ];
 }

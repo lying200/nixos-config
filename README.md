@@ -29,10 +29,7 @@ home/                    # Home Manager 用户级配置
 ├── common/              # 所有主机共享：终端（fish/starship/zellij）、git、ssh、neovim、direnv
 ├── desktop/             # 图形主机：GUI 应用、GNOME 设置、niri/dms/noctalia、主题
 └── wsl/                 # WSL 专属：wsl-copy 剪贴板等
-pkgs/                    # 自维护包（上游更新慢）：claude-code、codex、kimi-code、cc-switch
-overlays/                # 将 pkgs/ 注入 nixpkgs（覆盖同名上游包）
-update.sh                # 更新自维护包 + flake 依赖 + rebuild
-update-pkgs.sh           # 仅更新 pkgs/ 下各包（调用各自的 update.sh）
+update.sh                # 更新 flake 依赖 + rebuild
 ```
 
 ## 日常使用
@@ -43,7 +40,7 @@ Fish 别名（定义在 `home/common/terminal/fish.nix`）：
 |------|------|
 | `rebuild` | `sudo nixos-rebuild switch --flake ~/nixos-config#<hostname>` |
 | `rebuild-check` | 仅构建不切换（无需 sudo） |
-| `update` | 运行 `./update.sh`（更新自维护包 + flake 依赖并 rebuild） |
+| `update` | 运行 `./update.sh`（更新 flake 依赖并 rebuild） |
 | `clean` | GC + store 优化 |
 | `nixcfg` | 进入配置目录 |
 
@@ -69,16 +66,17 @@ sudo nixos-rebuild switch --rollback         # 回滚上一代
 - 个人信息（username / git 用户名邮箱）只在 `flake.nix` 定义，经 `specialArgs` 注入
 - GPU 模块互斥，一台主机只导入实际使用的那个（legion 用 nvidia；amd/intel 模块保留备用，标注未实测）
 
-## 自维护包
+## AI CLI
 
-`pkgs/` 下四个包因上游 nixpkgs 更新滞后或尚未收录而自维护，通过 overlay 注入或覆盖同名上游包：
+Claude Code、Codex 和 Kimi Code 使用官方安装器，避免 nixpkgs 或自维护包的版本延迟：
 
-- `claude-code` — 官方二进制 + `manifest.json` 锁版本，`pkgs/claude-code/update.sh` 自动拉取最新 manifest
-- `codex` — GitHub Release 二进制，update.sh 自动解析最新 tag 并预取 hash
-- `kimi-code` — 新版 Kimi Code 的 GitHub Release 二进制（非旧版 Python `kimi-cli`），update.sh 自动读取官方版本与 release manifest
-- `cc-switch` — AppImage 打包
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+curl -fsSL https://code.kimi.com/kimi-code/install.sh | env KIMI_NO_MODIFY_PATH=1 bash
+```
 
-`./update-pkgs.sh` 会依次执行各包的 update.sh。
+Claude Code 和 Codex 安装到 `~/.local/bin`，Kimi Code 安装到 `~/.kimi-code/bin`；两个目录均由 Home Manager 加入 `PATH`。Claude Code 会自动更新（也可运行 `claude update`），Codex 重新运行上述脚本即可更新，Kimi Code 使用 `kimi upgrade`。
 
 ## 已知注意点
 

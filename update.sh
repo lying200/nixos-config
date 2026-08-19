@@ -31,10 +31,6 @@ echo "🔐 获取 sudo 权限..."
 keep_sudo_alive
 
 echo ""
-echo "📦 更新自维护包..."
-"$SCRIPT_DIR/update-pkgs.sh"
-
-echo ""
 echo "🔄 更新 flake inputs..."
 nix flake update
 

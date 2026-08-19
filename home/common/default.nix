@@ -22,9 +22,8 @@ in
     fzf
     zoxide
     delta
-    claude-code
-    codex
-    kimi-code
+    bubblewrap
+    socat
     inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
@@ -47,6 +46,7 @@ in
 
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.kimi-code/bin"
     "${npmGlobalPrefix}/bin"
   ];
 
