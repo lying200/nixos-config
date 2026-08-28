@@ -1,14 +1,14 @@
-// 显示器输出配置
-
-output "HDMI-A-1" {
-    mode "2560x1440@143.995"
-    scale 1.25
+// 左侧：HKC G27M7Pro 4K 外接屏（逻辑尺寸 2560x1440）
+output "DP-2" {
+    mode "3840x2160@160.000"
+    scale 1.5
     position x=0 y=0
     focus-at-startup
 }
 
+// 右侧：笔记本内置屏（逻辑尺寸约 1707x1067）
 output "eDP-1" {
     mode "2560x1600@165.019"
     scale 1.5
-    position x=2048 y=0
+    position x=2560 y=0
 }
