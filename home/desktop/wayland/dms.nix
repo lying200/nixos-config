@@ -37,10 +37,10 @@ in {
         "LANG=zh_CN.UTF-8"
         "LC_MESSAGES=zh_CN.UTF-8"
         "DMS_HIDE_TRAYIDS=fcitx,blueman,nm-applet"
-        # Unsetting this lets Qt use Wayland's default input method. Force the
-        # local compose context so DMS lock-screen passwords stay English-only.
-        "QT_IM_MODULE=compose"
       ];
+      # DMS/Quickshell inherits QT_IM_MODULE=fcitx from the desktop session.
+      # Let it use Wayland's native input path to avoid Niri's red-screen bug.
+      UnsetEnvironment = ["QT_IM_MODULE"];
     };
   };
 }

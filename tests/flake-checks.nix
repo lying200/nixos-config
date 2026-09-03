@@ -38,7 +38,7 @@
       && homeConfig.myHome.desktop.wayland.shell == profile.shell
     );
 
-  dmsInputMethodIsolated = name: let
+  dmsUsesNativeInputMethod = name: let
     host = hosts.${name};
     profile = host.desktopProfile or null;
     homeConfig =
@@ -47,9 +47,12 @@
     profile
     == null
     || profile.shell != "dms"
-    || builtins.elem
-    "QT_IM_MODULE=compose"
-    homeConfig.systemd.user.services.dms.Service.Environment;
+    || (
+      builtins.elem
+      "QT_IM_MODULE"
+      homeConfig.systemd.user.services.dms.Service.UnsetEnvironment
+      && !builtins.hasAttr "dms-fcitx-lock-guard" homeConfig.systemd.user.services
+    );
 
   operationalToolsEnabled = name: let
     config = nixosConfigurations.${name}.config;
@@ -73,7 +76,7 @@
 in
   assert lib.all hostNameMatches hostNames;
   assert lib.all desktopProfileMatches hostNames;
-  assert lib.all dmsInputMethodIsolated hostNames;
+  assert lib.all dmsUsesNativeInputMethod hostNames;
   assert lib.all operationalToolsEnabled hostNames;
   assert invalidDesktopProfileRejected;
   assert lib.all flatpakIsManaged hostNames; {
