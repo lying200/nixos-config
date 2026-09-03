@@ -37,9 +37,9 @@ in {
         "LANG=zh_CN.UTF-8"
         "LC_MESSAGES=zh_CN.UTF-8"
         "DMS_HIDE_TRAYIDS=fcitx,blueman,nm-applet"
-      ];
-      UnsetEnvironment = [
-        "QT_IM_MODULE"
+        # Unsetting this lets Qt use Wayland's default input method. Force the
+        # local compose context so DMS lock-screen passwords stay English-only.
+        "QT_IM_MODULE=compose"
       ];
     };
   };

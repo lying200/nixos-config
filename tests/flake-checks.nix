@@ -38,6 +38,19 @@
       && homeConfig.myHome.desktop.wayland.shell == profile.shell
     );
 
+  dmsInputMethodIsolated = name: let
+    host = hosts.${name};
+    profile = host.desktopProfile or null;
+    homeConfig =
+      nixosConfigurations.${name}.config.home-manager.users.${userSettings.username};
+  in
+    profile
+    == null
+    || profile.shell != "dms"
+    || builtins.elem
+    "QT_IM_MODULE=compose"
+    homeConfig.systemd.user.services.dms.Service.Environment;
+
   operationalToolsEnabled = name: let
     config = nixosConfigurations.${name}.config;
   in
@@ -60,6 +73,7 @@
 in
   assert lib.all hostNameMatches hostNames;
   assert lib.all desktopProfileMatches hostNames;
+  assert lib.all dmsInputMethodIsolated hostNames;
   assert lib.all operationalToolsEnabled hostNames;
   assert invalidDesktopProfileRejected;
   assert lib.all flatpakIsManaged hostNames; {
