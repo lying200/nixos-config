@@ -1,14 +1,16 @@
 {username, ...}: {
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    efiSupport = true;
-    useOSProber = true;
-    configurationLimit = 10;
+  boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true;
+      configurationLimit = 10;
+    };
+    efi.canTouchEfiVariables = true;
+    timeout = null;
   };
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = null;
 
   networking.networkmanager.enable = true;
 

@@ -70,9 +70,11 @@
       MOZ_ENABLE_WAYLAND = "1";
     };
 
-    services.gnome.gnome-keyring.enable = true;
-    services.udisks2.enable = true;
-    services.gvfs.enable = true;
-    services.dbus.enable = true;
+    services = {
+      gnome.gnome-keyring.enable = true;
+      udisks2.enable = true;
+      gvfs.enable = true;
+      dbus.enable = true;
+    };
   };
 }

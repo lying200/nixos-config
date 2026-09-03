@@ -7,9 +7,37 @@
 }: let
   npmGlobalPrefix = "${config.home.homeDirectory}/.local/share/npm";
 in {
-  home.username = username;
-  home.homeDirectory = "/home/${username}";
-  home.stateVersion = "25.11";
+  home = {
+    inherit username;
+    homeDirectory = "/home/${username}";
+    stateVersion = "25.11";
+
+    packages = with pkgs; [
+      eza
+      bat
+      fzf
+      zoxide
+      delta
+      bubblewrap
+      socat
+      inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ];
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+
+    sessionPath = [
+      "$HOME/.local/bin"
+      "$HOME/.kimi-code/bin"
+      "${npmGlobalPrefix}/bin"
+    ];
+
+    file.".npmrc".text = ''
+      prefix=${npmGlobalPrefix}
+    '';
+  };
 
   imports = [
     ./terminal
@@ -19,22 +47,6 @@ in {
     ./programs/direnv.nix
     ./programs/nix-index.nix
   ];
-
-  home.packages = with pkgs; [
-    eza
-    bat
-    fzf
-    zoxide
-    delta
-    bubblewrap
-    socat
-    inputs.devinit.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-  };
 
   xdg.userDirs = {
     enable = true;
@@ -47,16 +59,6 @@ in {
     videos = "${config.home.homeDirectory}/Videos";
     desktop = "${config.home.homeDirectory}/Desktop";
   };
-
-  home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/.kimi-code/bin"
-    "${npmGlobalPrefix}/bin"
-  ];
-
-  home.file.".npmrc".text = ''
-    prefix=${npmGlobalPrefix}
-  '';
 
   xdg.dataFile."npm/.keep".text = "";
 
