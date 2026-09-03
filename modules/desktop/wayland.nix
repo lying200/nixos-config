@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options.mySystem.desktop.wayland = {
     enable = lib.mkEnableOption "Wayland environment support";
   };

@@ -1,5 +1,0 @@
-{ ... }:
-
-{
-  imports = [ ../wsl-common.nix ];
-}

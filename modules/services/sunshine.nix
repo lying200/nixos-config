@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.mySystem.services.sunshine = {
     enable = lib.mkEnableOption "Sunshine game streaming server";
   };
@@ -20,7 +23,7 @@
     ];
 
     # 键鼠输入必需
-    boot.kernelModules = [ "uinput" ];
+    boot.kernelModules = ["uinput"];
 
     # 允许 Sunshine 访问虚拟输入设备
     services.udev.extraRules = ''

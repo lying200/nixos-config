@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options.mySystem.services.tailscale = {
     enable = lib.mkEnableOption "Tailscale VPN service";
   };
@@ -9,7 +11,7 @@
     services.tailscale.enable = true;
 
     networking.firewall.checkReversePath = "loose";
-    networking.firewall.trustedInterfaces = [ "tailscale0" ];
-    networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+    networking.firewall.trustedInterfaces = ["tailscale0"];
+    networking.firewall.allowedUDPPorts = [config.services.tailscale.port];
   };
 }

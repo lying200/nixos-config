@@ -1,6 +1,10 @@
-{ config, lib, pkgs, username, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}: {
   options.mySystem.services.podman = {
     enable = lib.mkEnableOption "Podman container runtime";
   };
@@ -17,7 +21,7 @@
     };
 
     users.users.${username} = {
-      extraGroups = [ "podman" ];
+      extraGroups = ["podman"];
     };
 
     environment.systemPackages = with pkgs; [

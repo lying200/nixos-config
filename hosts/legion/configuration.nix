@@ -1,6 +1,4 @@
-{ username, ... }:
-
-{
+{username, ...}: {
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
     enable = true;
@@ -12,21 +10,20 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = null;
 
-  networking.hostName = "legion";
   networking.networkmanager.enable = true;
 
   services.openssh.enable = true;
 
   networking.hosts = {
-    "192.168.3.150" = [ "infra.dev.internal" ];
-    "192.168.3.160" = [ "ops.dev.internal" ];
+    "192.168.3.150" = ["infra.dev.internal"];
+    "192.168.3.160" = ["ops.dev.internal"];
   };
 
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "video" "input" ];
-    packages = [ ];
+    extraGroups = ["networkmanager" "wheel" "video" "input"];
+    packages = [];
   };
 
   system.stateVersion = "25.11";

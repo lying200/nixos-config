@@ -1,10 +1,12 @@
-{ config, inputs, lib, ... }:
-
-let
+{
+  config,
+  inputs,
+  lib,
+  ...
+}: let
   useDms = config.myHome.desktop.wayland.shell == "dms";
   dmsSettings = builtins.fromJSON (builtins.readFile ./dms-settings.json);
-in
-{
+in {
   imports = [
     inputs.dms.homeModules.dank-material-shell
   ];
@@ -14,7 +16,8 @@ in
       enable = true;
       systemd.enable = true;
 
-      settings = lib.recursiveUpdate
+      settings =
+        lib.recursiveUpdate
         dmsSettings
         {
           blurredWallpaperLayer = true;

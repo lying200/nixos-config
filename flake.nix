@@ -34,42 +34,65 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
-    let
-      system = "x86_64-linux";
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    ...
+  }: let
+    system = "x86_64-linux";
 
-      # 用户配置（单一数据源）
+    userSettings = {
       username = "echoyn";
       gitUserName = "lying200";
       gitUserEmail = "lying200@outlook.com";
+    };
 
-      mkHost = hostname: { homeModule ? ./home/desktop }: nixpkgs.lib.nixosSystem {
+    desktopProfiles.hybrid = {
+      gnome = true;
+      niri = true;
+      wayland = true;
+      monitoring = true;
+      shell = "dms";
+      inputMethod = "fcitx5";
+    };
+
+    hosts = {
+      legion = {
         inherit system;
-
-        specialArgs = {
-          inherit inputs username hostname gitUserName gitUserEmail;
-        };
-
-        modules = [
-          ./hosts/${hostname}/default.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users.${username} = import homeModule;
-            home-manager.extraSpecialArgs = {
-              inherit inputs username hostname gitUserName gitUserEmail;
-            };
-          }
-        ];
+        hostModule = ./hosts/legion;
+        homeModule = ./home/desktop;
+        desktopProfile = desktopProfiles.hybrid;
       };
-    in {
-      nixosConfigurations = {
-        legion = mkHost "legion" {};
-        legion-wsl = mkHost "legion-wsl" { homeModule = ./home/wsl; };
-        wsl = mkHost "wsl" { homeModule = ./home/wsl; };
+      legion-wsl = {
+        inherit system;
+        hostModule = ./hosts/wsl-common.nix;
+        homeModule = ./home/wsl;
+      };
+      wsl = {
+        inherit system;
+        hostModule = ./hosts/wsl-common.nix;
+        homeModule = ./home/wsl;
       };
     };
+
+    nixosConfigurations = import ./lib/mk-hosts.nix {
+      inherit inputs userSettings hosts;
+    };
+
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    inherit nixosConfigurations;
+
+    formatter.${system} = pkgs.writeShellScriptBin "format-nix" ''
+      if [[ $# -eq 0 ]]; then
+        set -- .
+      fi
+      exec ${pkgs.alejandra}/bin/alejandra "$@"
+    '';
+
+    checks.${system} = import ./tests/flake-checks.nix {
+      inherit hosts nixosConfigurations pkgs userSettings;
+      source = self;
+    };
+  };
 }

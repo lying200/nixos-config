@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.myHome.programs.zellij;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.myHome.programs.zellij;
+in {
   options.myHome.programs.zellij.clipboardCommand = lib.mkOption {
     type = lib.types.str;
     default = "wl-copy";

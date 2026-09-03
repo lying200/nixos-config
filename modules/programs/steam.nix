@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.mySystem.programs.steam = {
     enable = lib.mkEnableOption "Steam gaming platform";
   };

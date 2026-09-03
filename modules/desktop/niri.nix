@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.mySystem.desktop.niri = {
     enable = lib.mkEnableOption "Niri compositor";
   };
@@ -15,8 +18,8 @@
         xdg-desktop-portal-gtk
       ];
       config.niri = {
-        default = [ "gnome" "gtk" ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+        default = ["gnome" "gtk"];
+        "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
       };
       xdgOpenUsePortal = true;
     };
@@ -25,9 +28,9 @@
 
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       description = "Polkit GNOME authentication agent";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

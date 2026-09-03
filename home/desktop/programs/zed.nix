@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.zed-editor = {
     enable = true;
 
@@ -41,7 +39,7 @@
         dock = "bottom";
         detect_venv = {
           on = {
-            directories = [ ".env" "env" ".venv" "venv" ];
+            directories = [".env" "env" ".venv" "venv"];
             activate_script = "default";
           };
         };

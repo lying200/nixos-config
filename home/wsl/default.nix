@@ -1,15 +1,16 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   wslCopy = pkgs.writeShellApplication {
     name = "wsl-copy";
-    runtimeInputs = [ pkgs.libiconv ];
+    runtimeInputs = [pkgs.libiconv];
     text = ''
       iconv -f UTF-8 -t UTF-16LE | clip.exe
     '';
   };
-in
-{
+in {
   imports = [
     ../common
   ];

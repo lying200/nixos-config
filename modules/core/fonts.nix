@@ -1,7 +1,12 @@
-{ pkgs, ... }:
-
 {
-  fonts = {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  options.mySystem.core.fonts.enable = lib.mkEnableOption "desktop fonts";
+
+  config.fonts = lib.mkIf config.mySystem.core.fonts.enable {
     fontDir.enable = true;
 
     packages = with pkgs; [

@@ -1,8 +1,8 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    git wget curl
+    git
+    wget
+    curl
 
     mesa-demos
     vulkan-tools
@@ -22,7 +22,8 @@
     tree
     ripgrep
     fd
-    unzip zip
+    unzip
+    zip
     p7zip
 
     btop

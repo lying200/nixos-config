@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.mySystem.services.printing = {
     enable = lib.mkEnableOption "CUPS printing support";
   };

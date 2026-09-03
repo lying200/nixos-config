@@ -1,9 +1,11 @@
-{ config, pkgs, hostname, ... }:
-
-let
-  configDir = "${config.home.homeDirectory}/nixos-config";
-in
 {
+  config,
+  pkgs,
+  hostname,
+  ...
+}: let
+  configDir = "${config.home.homeDirectory}/nixos-config";
+in {
   programs.fish = {
     enable = true;
 
@@ -26,13 +28,13 @@ in
     '';
 
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake ${configDir}#${hostname}";
+      rebuild = "nh os switch ${configDir} -H ${hostname}";
       update = "cd ${configDir} && ./update.sh";
-      clean = "sudo nix-collect-garbage -d && sudo nix-store --optimise";
+      clean = "nh clean all --keep 5 && sudo nix-store --optimise";
 
       nixcfg = "cd ${configDir}";
 
-      rebuild-check = "nixos-rebuild build --flake ${configDir}#${hostname}";
+      rebuild-check = "nh os build ${configDir} -H ${hostname}";
 
       ll = "eza -la --icons --git";
       ls = "eza --icons";

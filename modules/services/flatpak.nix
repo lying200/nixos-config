@@ -1,20 +1,34 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.mySystem.services.flatpak = {
     enable = lib.mkEnableOption "Flatpak application manager";
   };
 
   config = lib.mkIf config.mySystem.services.flatpak.enable {
     services.flatpak.enable = true;
-
-    # 需要在系统初次启动后手动执行：
-    # flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    systemd.services.flatpak-flathub = {
+      description = "Ensure the Flathub remote exists";
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+      wantedBy = ["multi-user.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        ${lib.getExe pkgs.flatpak} remote-add --system --if-not-exists \
+          flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      '';
+    };
 
     # Flatpak 应用集成所需
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
     };
   };
 }

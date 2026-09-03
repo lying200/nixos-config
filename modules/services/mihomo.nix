@@ -1,11 +1,14 @@
-{ config, lib, pkgs, username, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}: let
   home = config.users.users.${username}.home;
   configDir = "${home}/.config/mihomo";
   configFile = "${configDir}/config.yaml";
-in
-{
+in {
   options.mySystem.services.mihomo = {
     enable = lib.mkEnableOption "Mihomo proxy service";
   };
@@ -27,7 +30,7 @@ in
     # device even when the device is created successfully.
     networking.firewall = {
       checkReversePath = lib.mkDefault "loose";
-      trustedInterfaces = lib.mkAfter [ "mihomo" ];
+      trustedInterfaces = lib.mkAfter ["mihomo"];
       extraReversePathFilterRules = ''
         iifname { "mihomo" } accept comment "mihomo tun"
       '';
@@ -35,14 +38,14 @@ in
 
     # 首次部署时写入默认配置模板（mihomo-config.yaml），已存在则不覆盖
     system.activationScripts.mihomo-config.text = ''
-      install -d -m 0700 -o ${username} -g users ${configDir}
+            install -d -m 0700 -o ${username} -g users ${configDir}
 
-      if [ ! -f ${configFile} ]; then
-        cat > ${configFile} <<'EOF'
-${builtins.readFile ./mihomo-config.yaml}EOF
-        chown ${username}:users ${configFile}
-        chmod 0600 ${configFile}
-      fi
+            if [ ! -f ${configFile} ]; then
+              cat > ${configFile} <<'EOF'
+      ${builtins.readFile ./mihomo-config.yaml}EOF
+              chown ${username}:users ${configFile}
+              chmod 0600 ${configFile}
+            fi
     '';
   };
 }

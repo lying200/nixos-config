@@ -1,26 +1,26 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   shell = config.myHome.desktop.wayland.shell;
-  shellConfig = {
-    dms = {
-      binds = ./niri-config/binds-dms.kdl;
-      startup = ./niri-config/empty.kdl;
-      rules = ./niri-config/shell-rules-dms.kdl;
+  shellConfig =
+    {
+      dms = {
+        binds = ./niri-config/binds-dms.kdl;
+        startup = ./niri-config/empty.kdl;
+        rules = ./niri-config/shell-rules-dms.kdl;
+      };
+      noctalia = {
+        binds = ./niri-config/binds-noctalia.kdl;
+        startup = ./niri-config/startup-noctalia.kdl;
+        rules = ./niri-config/shell-rules-noctalia.kdl;
+      };
+      none = {
+        binds = ./niri-config/empty.kdl;
+        startup = ./niri-config/empty.kdl;
+        rules = ./niri-config/empty.kdl;
+      };
+    }.${
+      shell
     };
-    noctalia = {
-      binds = ./niri-config/binds-noctalia.kdl;
-      startup = ./niri-config/startup-noctalia.kdl;
-      rules = ./niri-config/shell-rules-noctalia.kdl;
-    };
-    none = {
-      binds = ./niri-config/empty.kdl;
-      startup = ./niri-config/empty.kdl;
-      rules = ./niri-config/empty.kdl;
-    };
-  }.${shell};
-in
-{
+in {
   xdg.configFile = {
     "niri/config.kdl".source = ./niri-config/config.kdl;
     "niri/binds-common.kdl".source = ./niri-config/binds-common.kdl;

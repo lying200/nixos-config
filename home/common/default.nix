@@ -1,9 +1,12 @@
-{ config, pkgs, username, inputs, ... }:
-
-let
-  npmGlobalPrefix = "${config.home.homeDirectory}/.local/share/npm";
-in
 {
+  config,
+  pkgs,
+  username,
+  inputs,
+  ...
+}: let
+  npmGlobalPrefix = "${config.home.homeDirectory}/.local/share/npm";
+in {
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
@@ -14,6 +17,7 @@ in
     ./programs/ssh.nix
     ./programs/neovim
     ./programs/direnv.nix
+    ./programs/nix-index.nix
   ];
 
   home.packages = with pkgs; [

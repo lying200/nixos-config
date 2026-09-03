@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-let
+{lib, ...}: let
   # JetBrains IDE 启动函数：无参数时打开当前目录，后台运行不占用终端
   mkJetbrainsLauncher = name: description: {
     inherit description;
@@ -12,8 +10,7 @@ let
       nohup ${name} $target > /dev/null 2>&1 &
     '';
   };
-in
-{
+in {
   programs.fish.functions = lib.mapAttrs mkJetbrainsLauncher {
     idea = "启动 IntelliJ IDEA Ultimate";
     rust-rover = "启动 RustRover";

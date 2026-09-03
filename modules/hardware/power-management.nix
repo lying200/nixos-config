@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options.mySystem.hardware.powerManagement = {
     enable = lib.mkEnableOption "laptop power management with TLP";
   };

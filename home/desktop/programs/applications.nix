@@ -1,13 +1,15 @@
-{ inputs, pkgs, ... }:
-
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
-    (jetbrains.idea.override { forceWayland = true; })
-    (jetbrains.goland.override { forceWayland = true; })
-    (jetbrains.datagrip.override { forceWayland = true; })
-    (jetbrains.webstorm.override { forceWayland = true; })
-    (jetbrains.rust-rover.override { forceWayland = true; })
-    (jetbrains.pycharm.override { forceWayland = true; })
+    (jetbrains.idea.override {forceWayland = true;})
+    (jetbrains.goland.override {forceWayland = true;})
+    (jetbrains.datagrip.override {forceWayland = true;})
+    (jetbrains.webstorm.override {forceWayland = true;})
+    (jetbrains.rust-rover.override {forceWayland = true;})
+    (jetbrains.pycharm.override {forceWayland = true;})
 
     vscode
     inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.desktop
@@ -31,7 +33,7 @@
 
     variety
 
-    libreoffice-fresh
+    libreoffice-stable
     obsidian
     readest
     typora

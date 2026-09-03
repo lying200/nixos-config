@@ -1,7 +1,10 @@
-{ osConfig ? {}, pkgs, ... }:
-
-let
-  useNvidiaVaapi = osConfig.mySystem.hardware.nvidia.enable or false;
+{
+  osConfig ? {},
+  pkgs,
+  ...
+}: let
+  gpu = osConfig.mySystem.hardware.gpu or "none";
+  useNvidiaVaapi = gpu == "nvidia";
 
   chromeFlags = [
     "--ozone-platform=wayland"
@@ -15,9 +18,12 @@ let
   chromeWithVaapi = pkgs.google-chrome.override {
     commandLineArgs = pkgs.lib.concatStringsSep " " chromeFlags;
   };
-in
-{
+in {
   home.packages = [
-    (if useNvidiaVaapi then chromeWithVaapi else pkgs.google-chrome)
+    (
+      if useNvidiaVaapi
+      then chromeWithVaapi
+      else pkgs.google-chrome
+    )
   ];
 }

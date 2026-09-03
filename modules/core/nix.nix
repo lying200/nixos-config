@@ -1,10 +1,27 @@
-{ username, ... }:
-
 {
+  pkgs,
+  username,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true;
 
+  programs.nh = {
+    enable = true;
+    flake = "/home/${username}/nixos-config";
+  };
+
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    comma
+    nvd
+  ];
+
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
 
     # 接受 flake 声明的 nixConfig（如第三方 substituters）
     accept-flake-config = true;
@@ -16,7 +33,7 @@
     auto-optimise-store = true;
 
     # 信任用户（允许 devenv 自动管理 binary caches）
-    trusted-users = [ "root" username ];
+    trusted-users = ["root" username];
 
     substituters = [
       "https://mirrors.ustc.edu.cn/nix-channels/store?priority=30"

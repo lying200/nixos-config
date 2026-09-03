@@ -1,9 +1,12 @@
-{ config, pkgs, inputs, lib, ... }:
-
-let
-  useNoctalia = config.myHome.desktop.wayland.shell == "noctalia";
-in
 {
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}: let
+  useNoctalia = config.myHome.desktop.wayland.shell == "noctalia";
+in {
   imports = [
     inputs.noctalia.homeModules.default
   ];

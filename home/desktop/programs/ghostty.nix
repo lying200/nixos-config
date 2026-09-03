@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   programs.ghostty = {
     enable = true;
 
@@ -10,7 +8,7 @@
       # 字体
       font-family = "JetBrainsMono Nerd Font";
       font-size = 13;
-      font-feature = [ "cv02" "cv14" "ss01" ];
+      font-feature = ["cv02" "cv14" "ss01"];
       adjust-cell-height = "10%";
 
       # 窗口

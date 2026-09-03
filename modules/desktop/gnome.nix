@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options.mySystem.desktop.gnome = {
     enable = lib.mkEnableOption "GNOME desktop environment";
   };

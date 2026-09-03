@@ -1,6 +1,10 @@
-{ config, lib, pkgs, username, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}: {
   options.mySystem.services.k3s = {
     enable = lib.mkEnableOption "K3s lightweight Kubernetes";
   };
@@ -11,7 +15,7 @@
       role = "server";
     };
 
-    networking.firewall.allowedTCPPorts = [ 6443 ];
+    networking.firewall.allowedTCPPorts = [6443];
 
     environment.systemPackages = with pkgs; [
       kubectl

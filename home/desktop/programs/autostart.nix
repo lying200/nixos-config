@@ -1,9 +1,6 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # XDG autostart
   xdg.configFile = {
-
     # Snipaste 延迟启动
     "autostart/snipaste.desktop".text = ''
       [Desktop Entry]

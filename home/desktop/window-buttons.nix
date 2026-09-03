@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = [
     (pkgs.writeShellScriptBin "desktop-window-buttons" ''
       case "$1" in
