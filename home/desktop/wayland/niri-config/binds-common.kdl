@@ -142,6 +142,14 @@ binds {
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
 
+    // 当前工作区内按列索引切换（列索引从左到右、从 1 开始）
+    Mod+Alt+1 { focus-column 1; }
+    Mod+Alt+2 { focus-column 2; }
+    Mod+Alt+3 { focus-column 3; }
+    Mod+Alt+4 { focus-column 4; }
+    Mod+Alt+5 { focus-column 5; }
+    Mod+Alt+6 { focus-column 6; }
+
     // ──── 列操作 ────
 
     Mod+BracketLeft  { consume-or-expel-window-left; }

@@ -411,7 +411,14 @@
       "leftWidgets": [
         "launcherButton",
         "workspaceSwitcher",
-        "focusedWindow"
+        {
+          "id": "runningApps",
+          "enabled": true,
+          "runningAppsCompactMode": true,
+          "runningAppsCurrentWorkspace": true,
+          "runningAppsCurrentMonitor": true,
+          "runningAppsGroupByApp": false
+        }
       ],
       "centerWidgets": [
         "music",
