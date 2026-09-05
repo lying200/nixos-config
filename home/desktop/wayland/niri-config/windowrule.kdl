@@ -124,6 +124,12 @@ window-rule {
     default-column-width { proportion 0.5; }
 }
 
+// UU 远程在平铺布局中鼠标进出时闪烁；浮动布局已实测正常。
+window-rule {
+    match app-id=r#"^gameviewer\.exe$"#
+    open-floating true
+}
+
 // ──── 系统工具浮动 ────
 
 window-rule {

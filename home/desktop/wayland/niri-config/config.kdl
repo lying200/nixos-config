@@ -39,9 +39,6 @@ input {
     mouse {
     }
 
-    // 鼠标自动跟随焦点窗口
-    warp-mouse-to-focus
-
     // 鼠标悬停自动对焦（不触发滚动）
     focus-follows-mouse max-scroll-amount="0%"
 }
