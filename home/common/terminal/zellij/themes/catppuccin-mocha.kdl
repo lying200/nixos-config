@@ -1,15 +1,117 @@
+// High-contrast Catppuccin colors for dark terminals.
 themes {
   catppuccin-mocha {
-    fg "#CDD6F4"
-    bg "#1E1E2E"
-    black "#45475A"
-    red "#F38BA8"
-    green "#A6E3A1"
-    yellow "#F9E2AF"
-    blue "#89B4FA"
-    magenta "#F5C2E7"
-    cyan "#94E2D5"
-    white "#BAC2DE"
-    orange "#FAB387"
+    text_unselected {
+      base 205 214 244
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    text_selected {
+      base 17 17 27
+      background 137 180 250
+      emphasis_0 61 33 9
+      emphasis_1 17 17 27
+      emphasis_2 15 54 37
+      emphasis_3 65 24 55
+    }
+    ribbon_unselected {
+      base 205 214 244
+      background 49 50 68
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    ribbon_selected {
+      base 17 17 27
+      background 137 180 250
+      emphasis_0 61 33 9
+      emphasis_1 17 17 27
+      emphasis_2 15 54 37
+      emphasis_3 65 24 55
+    }
+    table_title {
+      base 137 180 250
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    table_cell_unselected {
+      base 205 214 244
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    table_cell_selected {
+      base 17 17 27
+      background 137 180 250
+      emphasis_0 61 33 9
+      emphasis_1 17 17 27
+      emphasis_2 15 54 37
+      emphasis_3 65 24 55
+    }
+    list_unselected {
+      base 205 214 244
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    list_selected {
+      base 17 17 27
+      background 137 180 250
+      emphasis_0 61 33 9
+      emphasis_1 17 17 27
+      emphasis_2 15 54 37
+      emphasis_3 65 24 55
+    }
+    frame_unselected {
+      base 205 214 244
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    frame_selected {
+      base 137 180 250
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    frame_highlight {
+      base 249 226 175
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    exit_code_success {
+      base 166 227 161
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
+    exit_code_error {
+      base 243 139 168
+      background 30 30 46
+      emphasis_0 250 179 135
+      emphasis_1 137 180 250
+      emphasis_2 166 227 161
+      emphasis_3 245 194 231
+    }
   }
 }
