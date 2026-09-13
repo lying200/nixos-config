@@ -96,6 +96,21 @@ curl -fsSL https://code.kimi.com/kimi-code/install.sh | env KIMI_NO_MODIFY_PATH=
 
 Claude Code 和 Codex 安装到 `~/.local/bin`，Kimi Code 安装到 `~/.kimi-code/bin`；两个目录均由 Home Manager 加入 `PATH`。Claude Code 会自动更新（也可运行 `claude update`），Codex 重新运行上述脚本即可更新，Kimi Code 使用 `kimi upgrade`。
 
+## WSL Paseo daemon
+
+两台 WSL 主机启用上游 Paseo NixOS 服务，以配置中的普通用户运行，数据保存在 `~/.paseo`。服务包含用户安装的 Agent CLI 路径，CLI 仍需自行安装并登录。
+
+应用配置后，在 Windows Paseo 客户端中手动添加直连地址 `127.0.0.1:6768`（需要 WebSocket URL 时填写 `ws://127.0.0.1:6768`），并选择该 WSL daemon。6768 避开 Windows 桌面 daemon 的默认端口。仅监听本机，不启用 relay，不开放防火墙端口。
+
+服务由 systemd 管理，无需再运行 `paseo` 启动第二份 daemon：
+
+```bash
+systemctl status paseo
+journalctl -u paseo -n 50 --no-pager
+```
+
+客户端修改的 Paseo 设置保存在运行目录中，不由 Nix 覆盖。WSL 关闭或 Windows 重启时，daemon 及其任务也会停止；下次启动 WSL 时服务自动启动。
+
 ## 已知注意点
 
 - `flake.nix` 的 desktop profile 可切换 `dms` / `noctalia` / `none`，niri 键位、启动项和窗口规则会随之配对切换

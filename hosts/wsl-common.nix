@@ -1,10 +1,12 @@
 {
   inputs,
+  lib,
   username,
   ...
 }: {
   imports = [
     inputs.nixos-wsl.nixosModules.wsl
+    inputs.paseo.nixosModules.paseo
     ../modules
   ];
 
@@ -18,6 +20,32 @@
       includePath = true;
     };
   };
+
+  # Windows Paseo connects to the WSL daemon through localhost forwarding.
+  services.paseo = {
+    enable = true;
+    user = username;
+    group = "users";
+    listenAddress = "127.0.0.1";
+    port = 6768; # Avoid the Windows desktop daemon's default port (6767).
+    openFirewall = false;
+    relay.enable = false;
+    inheritUserEnvironment = false;
+    environment.HOME = "/home/${username}";
+  };
+
+  # systemd does not load Fish or Home Manager session initialization.
+  systemd.services.paseo.environment.PATH = lib.mkForce (lib.concatStringsSep ":" [
+    "/home/${username}/.local/bin"
+    "/home/${username}/.kimi-code/bin"
+    "/home/${username}/.local/share/npm/bin"
+    "/home/${username}/.nix-profile/bin"
+    "/home/${username}/.local/state/nix/profile/bin"
+    "/etc/profiles/per-user/${username}/bin"
+    "/run/current-system/sw/bin"
+    "/run/wrappers/bin"
+    "/nix/var/nix/profiles/default/bin"
+  ]);
 
   services.openssh.enable = true;
 
