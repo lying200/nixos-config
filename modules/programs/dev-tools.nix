@@ -2,5 +2,6 @@
   environment.systemPackages = with pkgs; [
     devenv
     nodejs_24
+    python3
   ];
 }
