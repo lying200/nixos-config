@@ -3,6 +3,7 @@
     git
     wget
     curl
+    sshpass
 
     mesa-demos
     vulkan-tools
