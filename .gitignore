@@ -14,3 +14,6 @@ result-*
 *.swo
 # Claude Code 本地设置
 .claude/
+
+# Retained when a system switch fails
+.flake.lock.backup.*

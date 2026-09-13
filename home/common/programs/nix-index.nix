@@ -10,8 +10,7 @@
   systemd.user.timers.nix-index-update = {
     Unit.Description = "Update the nix-index database weekly";
     Timer = {
-      OnBootSec = "10m";
-      OnUnitActiveSec = "7d";
+      OnCalendar = "weekly";
       Persistent = true;
     };
     Install.WantedBy = ["timers.target"];

@@ -54,7 +54,7 @@ nh os switch . -H "$(hostname)"
 ./update.sh --host legion   # 显式选择目标主机
 ```
 
-`update.sh` 会在 build/check 失败或取消切换时恢复原来的 `flake.lock`。
+`update.sh` 会在开始切换前失败或取消时恢复原来的 `flake.lock`。开始切换后若失败，会保留新锁文件和仓库中的 `.flake.lock.backup.*` 旧锁文件备份，并输出备份路径；此时系统可能已经发生变化，需要检查运行状态后再决定重试或回滚。成功切换后会删除本次备份。
 Fish 会设置 `NIXOS_CONFIG_DIR`；脚本也接受 `NIXOS_CONFIG_DIR` 和 `NIXOS_HOST` 作为自动化 adapter，以覆盖仓库路径和默认 hostname。
 
 ## 检查

@@ -7,7 +7,8 @@ CONFIG_DIR="${NIXOS_CONFIG_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 TARGET_HOST="${NIXOS_HOST:-$(hostname)}"
 ASSUME_YES=false
 LOCK_BACKUP=""
-KEEP_LOCK=false
+SWITCH_STARTED=false
+SWITCH_COMPLETED=false
 
 usage() {
     printf 'Usage: %s [--yes] [--host HOST]\n' "${0##*/}"
@@ -53,15 +54,26 @@ if ! nix eval --raw ".#nixosConfigurations.${TARGET_HOST}.config.networking.host
     exit 1
 fi
 
-LOCK_BACKUP="$(mktemp)"
+LOCK_BACKUP="$(mktemp "$CONFIG_DIR/.flake.lock.backup.XXXXXX")"
 cp flake.lock "$LOCK_BACKUP"
 
 cleanup() {
-    if [[ "$KEEP_LOCK" != true && -n "$LOCK_BACKUP" && -f "$LOCK_BACKUP" ]]; then
-        cp "$LOCK_BACKUP" flake.lock
-        printf '\nRestored flake.lock because the update did not complete.\n' >&2
+    local status=$?
+    if [[ "$SWITCH_STARTED" == true && "$SWITCH_COMPLETED" != true ]]; then
+        printf '\nSwitch did not complete successfully; the system may already have changed.\n' >&2
+        printf 'Kept the new flake.lock. Previous lock file: %s\n' "$LOCK_BACKUP" >&2
+        printf 'Inspect the running system and failed services before retrying or rolling back.\n' >&2
+    else
+        if [[ "$SWITCH_COMPLETED" != true && -f "$LOCK_BACKUP" ]]; then
+            if ! cp "$LOCK_BACKUP" flake.lock; then
+                printf 'Could not restore flake.lock; backup retained at %s\n' "$LOCK_BACKUP" >&2
+                return 1
+            fi
+            printf '\nRestored flake.lock because the update stopped before switching.\n' >&2
+        fi
+        rm -f "$LOCK_BACKUP"
     fi
-    [[ -z "$LOCK_BACKUP" ]] || rm -f "$LOCK_BACKUP"
+    return "$status"
 }
 trap cleanup EXIT
 
@@ -89,7 +101,8 @@ if [[ "$ASSUME_YES" != true ]]; then
 fi
 
 printf '\n🚀 Switching host: %s...\n' "$TARGET_HOST"
+SWITCH_STARTED=true
 sudo nixos-rebuild switch --flake ".#${TARGET_HOST}"
 
-KEEP_LOCK=true
+SWITCH_COMPLETED=true
 printf '\n✅ Update complete.\n'
