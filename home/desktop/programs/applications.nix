@@ -4,12 +4,12 @@
   ...
 }: {
   home.packages = with pkgs; [
-    (jetbrains.idea.override {forceWayland = true;})
-    (jetbrains.goland.override {forceWayland = true;})
-    (jetbrains.datagrip.override {forceWayland = true;})
-    (jetbrains.webstorm.override {forceWayland = true;})
-    (jetbrains.rust-rover.override {forceWayland = true;})
-    (jetbrains.pycharm.override {forceWayland = true;})
+    jetbrains.idea
+    jetbrains.goland
+    jetbrains.datagrip
+    jetbrains.webstorm
+    jetbrains.rust-rover
+    jetbrains.pycharm
 
     vscode
     inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.desktop
