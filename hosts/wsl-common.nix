@@ -29,9 +29,16 @@
     listenAddress = "127.0.0.1";
     port = 6768; # Avoid the Windows desktop daemon's default port (6767).
     openFirewall = false;
-    relay.enable = false;
+    relay = {
+      enable = true;
+      mode = "remote";
+      host = "paseo.fly-start.com";
+      port = 443;
+      useTls = true;
+    };
     inheritUserEnvironment = false;
     environment.HOME = "/home/${username}";
+    environment.PASEO_RELAY_ENABLED = "true";
   };
 
   # systemd does not load Fish or Home Manager session initialization.
