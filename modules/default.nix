@@ -15,10 +15,10 @@
     ./desktop/niri.nix
     ./desktop/wayland.nix
 
+    ./services/docker.nix
     ./services/flatpak.nix
     ./services/k3s.nix
     ./services/mihomo.nix
-    ./services/podman.nix
     ./services/printing.nix
     ./services/sunshine.nix
     ./services/tailscale.nix

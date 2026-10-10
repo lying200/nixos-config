@@ -68,7 +68,7 @@
 
   mySystem.services = {
     tailscale.enable = true;
-    podman.enable = true;
+    docker.enable = true;
   };
 
   system.stateVersion = "25.11";

@@ -23,7 +23,7 @@ modules/                 # 系统级模块
 ├── core/                # locale、fonts、基础包、Nix、nh、nix-index
 ├── hardware/            # GPU adapter、bluetooth、power-management
 ├── desktop/             # gnome、niri、wayland、monitoring（mySystem.desktop.*）
-├── services/            # tailscale、podman、k3s、mihomo 等（mySystem.services.*）
+├── services/            # tailscale、docker、k3s、mihomo 等（mySystem.services.*）
 └── programs/            # fcitx5、steam、dev-tools、nix-ld 等
 home/                    # Home Manager 用户级配置
 ├── common/              # 终端、git、ssh、neovim、direnv、nix-index timer

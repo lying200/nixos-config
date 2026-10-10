@@ -16,7 +16,7 @@
 
     services = {
       tailscale.enable = true;
-      podman.enable = true;
+      docker.enable = true;
       k3s.enable = true;
       flatpak.enable = true;
       printing.enable = true;
