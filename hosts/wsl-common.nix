@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   username,
   ...
 }: {
@@ -24,6 +25,7 @@
   # Windows Paseo connects to the WSL daemon through localhost forwarding.
   services.paseo = {
     enable = true;
+    package = pkgs.paseo;
     user = username;
     group = "users";
     listenAddress = "127.0.0.1";

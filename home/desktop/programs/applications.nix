@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     jetbrains.idea
     jetbrains.goland
@@ -12,7 +8,7 @@
     jetbrains.pycharm
 
     vscode
-    inputs.paseo.packages.${pkgs.stdenv.hostPlatform.system}.desktop
+    paseo.desktop
 
     wechat
     qq

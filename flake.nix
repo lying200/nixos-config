@@ -28,6 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # 仅复用上游 NixOS 服务模块，daemon 和桌面端软件包由 nixpkgs 提供。
     paseo = {
       url = "github:getpaseo/paseo";
       inputs.nixpkgs.follows = "nixpkgs";

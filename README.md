@@ -98,7 +98,7 @@ Claude Code 和 Codex 安装到 `~/.local/bin`，Kimi Code 安装到 `~/.kimi-co
 
 ## WSL Paseo daemon
 
-两台 WSL 主机启用上游 Paseo NixOS 服务，以配置中的普通用户运行，数据保存在 `~/.paseo`。服务包含用户安装的 Agent CLI 路径，CLI 仍需自行安装并登录。
+两台 WSL 主机沿用上游 Paseo NixOS 服务模块，daemon 使用 `pkgs.paseo`，桌面端使用 `pkgs.paseo.desktop`；软件包随 nixpkgs 更新，有二进制缓存时直接下载。daemon 以配置中的普通用户运行，数据保存在 `~/.paseo`。服务包含用户安装的 Agent CLI 路径，CLI 仍需自行安装并登录。
 
 应用配置后，在 Windows Paseo 客户端中手动添加直连地址 `127.0.0.1:6768`（需要 WebSocket URL 时填写 `ws://127.0.0.1:6768`），并选择该 WSL daemon。6768 避开 Windows 桌面 daemon 的默认端口。仅监听本机，不启用 relay，不开放防火墙端口。
 
